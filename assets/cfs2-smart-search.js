@@ -61,7 +61,15 @@
         media.append(image);
       }
     }
-    link.append(media, document.createTextNode(item.title || item.text || ''));
+    const label=document.createElement('span');
+    label.textContent=item.title || item.text || '';
+    if(item.excerpt){
+      const source=document.createElement('small');
+      source.style.display='block';
+      source.textContent='p. '+item.page+' · '+item.excerpt;
+      label.append(source);
+    }
+    link.append(media,label);
     return link;
   }
   function group(title, items, type) {
@@ -79,20 +87,6 @@
     url.searchParams.set('q', query);
     url.searchParams.set('options[prefix]', 'last');
     return url.href;
-  }
-  function termsFor(query) {
-    const stop = new Set(['how','do','i','to','the','a','an','of','for','with','what','is','are','can','you','and','my','on','in','de','la','el','los','las','para','como','que','des','les','une','un','comment']);
-    return (query.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').match(/[a-z0-9]+/g) || [])
-      .filter(t => t.length > 2 && !stop.has(t)).map(t => t.replace(/(ing|es|s)$/, ''));
-  }
-  function findGuides(query) {
-    const terms = termsFor(query);
-    if (!terms.length) return [];
-    return (window.CFS_CLEANING_KOLLEGE || []).map(g => {
-      const hay = termsFor((g.title || '') + ' ' + (g.keywords || ''));
-      const hits = terms.filter(t => hay.some(h => h.startsWith(t) || t.startsWith(h))).length;
-      return { ...g, hits };
-    }).filter(g => g.hits > 0).sort((a,b) => b.hits - a.hits).slice(0,5);
   }
   document.querySelectorAll('[data-cfs2-smart-search]').forEach(form => {
     const input = form.querySelector('input[type="search"]');
@@ -118,7 +112,7 @@
       controller = new AbortController();
       const signal = controller.signal;
       timer = setTimeout(async () => {
-        const guides = findGuides(query);
+        const guideRequest = window.CfsGuideSearch.search(query,5);
         let results = {};
         try {
           const url = new URL(form.action.replace(/\/$/, '') + '/suggest.json');
@@ -130,6 +124,8 @@
         const matches = product ? (await Promise.all((results.products || []).slice(0,4).map(item => dilutionResult(item,signal,form.action)))).filter(Boolean) : [];
         if (current !== revision) return;
         firstMatch = matches.length === 1 ? matches[0] : null;
+        const guides = await guideRequest;
+        if (current !== revision) return;
         const sections = [
           ...group(form.dataset.dilutions, matches, 'product'),
           ...group(form.dataset.guides, guides, 'document'),
