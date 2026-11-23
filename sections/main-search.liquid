@@ -13,6 +13,8 @@
 {%- endif -%}
 
 <script src="{{ 'main-search.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'cfs2-cleaning-kollege-index.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'cfs-knowledge-results.js' | asset_url }}" defer="defer"></script>
 
 <style>
   .template-search__header {
@@ -146,6 +148,7 @@
       {%- endif -%}
     </div>
     {%- if search.performed -%}
+      <section class="page-width cfs-knowledge-results" data-cfs-knowledge-results hidden aria-label="Related cleaning guides"></section>
       {%- if section.settings.enable_sorting
         and section.settings.filter_type == 'vertical'
         and search.filters != empty
