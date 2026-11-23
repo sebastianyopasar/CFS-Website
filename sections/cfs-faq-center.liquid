@@ -1,0 +1,42 @@
+{{ 'cfs-resource-layout.css' | asset_url | stylesheet_tag }}
+<section class="cfs-faq page-width">
+  <header><h1>Frequently asked questions</h1><p>Find answers about CFS, ordering, products and equipment care.</p></header>
+  {% assign topics = 'Company and ordering|Products and equipment|Floor care|Services' | split: '|' %}
+  <nav aria-label="FAQ topics">
+    {% for topic in topics %}
+      {% assign questions = section.blocks | where: 'type', 'question' %}
+      {% for block in questions %}
+        {% if block.settings.topic == topic %}<a href="#faq-{{ section.id }}-{{ topic | handleize }}">{{ topic }}</a>{% break %}{% endif %}
+      {% endfor %}
+    {% endfor %}
+  </nav>
+  {% for topic in topics %}
+    {% capture entries %}
+      {% for block in section.blocks %}
+        {% if block.settings.topic == topic %}
+          <details {{ block.shopify_attributes }}>
+            <summary>{{ block.settings.question | escape }}</summary>
+            <div>{{ block.settings.answer }}</div>
+          </details>
+        {% endif %}
+      {% endfor %}
+    {% endcapture %}
+    {% assign entries = entries | strip %}
+    {% if entries != blank %}
+      <section id="faq-{{ section.id }}-{{ topic | handleize }}"><h2>{{ topic }}</h2>{{ entries }}</section>
+    {% endif %}
+  {% endfor %}
+</section>
+{% schema %}
+{
+  "name": "CFS FAQ Center",
+  "settings": [],
+  "blocks": [{
+    "type":"question","name":"Question","settings":[
+      {"type":"select","id":"topic","label":"Topic","default":"Company and ordering","options":[{"value":"Company and ordering","label":"Company and ordering"},{"value":"Products and equipment","label":"Products and equipment"},{"value":"Floor care","label":"Floor care"},{"value":"Services","label":"Services"}]},
+      {"type":"text","id":"question","label":"Question"},
+      {"type":"richtext","id":"answer","label":"Answer"}
+    ]
+  }]
+}
+{% endschema %}

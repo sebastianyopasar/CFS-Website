@@ -1,28 +1,159 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
-    "pf-a20ad21e": {
-      "type": "pf-a20ad21e",
-      "settings": {}
-    },
     "main": {
-      "type": "main-page",
-      "settings": {
-        "padding_top": 36,
-        "padding_bottom": 28
-      }
+      "type": "cfs-faq-center",
+      "blocks": {
+        "q1": {
+          "type": "question",
+          "settings": {
+            "topic": "Company and ordering",
+            "question": "How long have you been in business?",
+            "answer": "<p>Since 1980.</p>"
+          }
+        },
+        "q2": {
+          "type": "question",
+          "settings": {
+            "topic": "Company and ordering",
+            "question": "Do you deliver?",
+            "answer": "<p>Yes! We have a full-time delivery truck to bring your order right to your front door/loading dock/location.</p>"
+          }
+        },
+        "q3": {
+          "type": "question",
+          "settings": {
+            "topic": "Company and ordering",
+            "question": "Where do you deliver to?",
+            "answer": "<p>We deliver throughout Niagara and the GTA. For orders to be delivered outside of this area we are happy to quote shipping with your order.</p>"
+          }
+        },
+        "q4": {
+          "type": "question",
+          "settings": {
+            "topic": "Company and ordering",
+            "question": "Is there a minimum order?",
+            "answer": "<p>No, however shipping is free on orders over $300 in the Niagara Region or on orders over $500 in the Hamilton/Toronto area. Under these minimums, delivery charges of $9.90 and $14.90 apply respectively. For the rest of Ontario, a $600 order minimum applies for free shipping.</p>"
+          }
+        },
+        "q5": {
+          "type": "question",
+          "settings": {
+            "topic": "Company and ordering",
+            "question": "Are you open to the public?",
+            "answer": "<p>Absolutely! Our showroom is located at 7 Neilson Ave, St.Catharines ON. Our online shop is also open to the public however we do not currently accept payment online. Please provide your contact number with your order and a member of our staff will contact you to co-ordinate payment and shipping.</p>"
+          }
+        },
+        "q6": {
+          "type": "question",
+          "settings": {
+            "topic": "Floor care",
+            "question": "How do I strip and refinish my VCT?",
+            "answer": "<p>We made a step by step video tutorial on refinishing VCT that is up on our youtube. Check it out <a href=\"https://www.youtube.com/watch?v=VPBaGwzsYrk\">HERE</a>. When you’re ready to start the process, let us know and one of our knowledgeable staff members will be happy to help you with any questions you may have.</p>"
+          }
+        },
+        "q7": {
+          "type": "question",
+          "settings": {
+            "topic": "Products and equipment",
+            "question": "How do I know I’m using the right product?",
+            "answer": "<p>If you’re ever unsure if the product you’re thinking of using for a job is the right one, or if you’re concerned about interactions between different chemicals, please allow one of our knowledgeable members of staff assist you. Safety first!</p>"
+          }
+        },
+        "q8": {
+          "type": "question",
+          "settings": {
+            "topic": "Products and equipment",
+            "question": "How do I pick the right machine for my building?",
+            "answer": "<p>Choosing the correct machine for your facility depends on several factors- usage, area, storage, budget etc. The first step is to decide what you want to accomplish with your new machine (scrubbing, burnishing, polishing etc), the second step is to have a professional assessment of your facility’s needs. We have several experts who, like a good tailor, will help you find the perfect fit.</p>"
+          }
+        },
+        "q9": {
+          "type": "question",
+          "settings": {
+            "topic": "Products and equipment",
+            "question": "How do I get rid of urine smell?",
+            "answer": "<p>Once the initial mess has been ‘cleaned’ it is common for an odour to linger on. The easiest and most effective method to defeat biological odours like urine, is to use a biological. We have a specially formulated product (UCT) which contains bacteria that breakdown and digest residual urine on the cellular level so it can’t make that horrible smell anymore. Safe to use on most water safe surfaces, contact us for specific use instructions.</p>"
+          }
+        },
+        "q10": {
+          "type": "question",
+          "settings": {
+            "topic": "Services",
+            "question": "Will you service my machine?",
+            "answer": "<p>We have an experienced service tech who is available to do in-house service/repairs on most commercial vacuums, floor machines and extractors. When you purchase large equipment from us, we have optional preventative maintenance (PM) service you can sign up for to keep your machine working at its best.</p>"
+          }
+        },
+        "q11": {
+          "type": "question",
+          "settings": {
+            "topic": "Services",
+            "question": "Do I have to bring my machine in to your shop for service?",
+            "answer": "<p>It is generally better to bring your machine into our shop for repair if possible. For some larger floor machines which moving to our shop would be too difficult, we offer an on-site repair service. We also offer a pickup service to customers with an account with us.</p>"
+          }
+        },
+        "q12": {
+          "type": "question",
+          "settings": {
+            "topic": "Services",
+            "question": "I’m opening a new store and need my dishwasher set up.",
+            "answer": "<p>We have a trained technician who can set up your dishwasher, so you get optimal results every time. We also offer dishwashers for rent, lease or to buy. Contact us for a quote.</p>"
+          }
+        },
+        "q13": {
+          "type": "question",
+          "settings": {
+            "topic": "Services",
+            "question": "I want to make my building maintenance more efficient, any advice?",
+            "answer": "<p>We offer on-site assessment! We’ll come to you and assess your building or business and suggest ways/products to optimize efficiency and costs for maintenance.</p>"
+          }
+        },
+        "q14": {
+          "type": "question",
+          "settings": {
+            "topic": "Floor care",
+            "question": "How do I choose a floor finish?",
+            "answer": "<p>Start with the floor material, traffic level and the appearance you want. Match the finish to the substrate and consider how often your team can maintain it.</p><p><a href=\"https://cdn.shopify.com/s/files/1/0728/6308/8863/files/Choose_the_Right_Floor_Finish.pdf?v=1777380718#page=1\">Choose the Right Floor Finish · p. 1</a></p>"
+          }
+        },
+        "q15": {
+          "type": "question",
+          "settings": {
+            "topic": "Floor care",
+            "question": "When is mopping enough?",
+            "answer": "<p>Mopping is useful for daily maintenance, loose dirt, footprints and light spills. Embedded grime or heavy buildup can require scrubbing.</p><p><a href=\"https://cdn.shopify.com/s/files/1/0728/6308/8863/files/Scrubbing_vs._Mopping_Floors.pdf?v=1774359876#page=1\">Scrubbing vs. Mopping Floors · p. 1</a></p>"
+          }
+        },
+        "q16": {
+          "type": "question",
+          "settings": {
+            "topic": "Floor care",
+            "question": "What does burnishing do?",
+            "answer": "<p>Burnishing smooths the top layer of floor finish to restore gloss and reduce light scuffs. Pad selection depends on the finish and the equipment.</p><p><a href=\"https://cdn.shopify.com/s/files/1/0728/6308/8863/files/Choosing_the_Right_Pad_for_Floor_Finish_Restoration.pdf?v=1774294327#page=1\">Choosing the Right Pad for Floor Finish Restoration · p. 1</a></p>"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10",
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16"
+      ],
+      "settings": {}
     }
   },
   "order": [
-    "main",
-    "pf-a20ad21e"
+    "main"
   ]
 }

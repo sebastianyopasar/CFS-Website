@@ -1,0 +1,13 @@
+.cfs-faq,.template-search{--cfs-forest:#073e34;--cfs-ink:#142e32;--cfs-line:#d4e1da;--cfs-lime:#bedf26}
+.cfs-faq{max-width:110rem;padding-block:4rem 7rem;color:var(--cfs-ink)}
+.cfs-faq header,.template-search .template-search__header{background:linear-gradient(115deg,#063b31,#096953);color:white;border-radius:12px;padding:clamp(2rem,4vw,5rem);margin-bottom:2.4rem}
+.cfs-faq h1,.template-search .template-search__header h1{color:white;margin:0;font-weight:700}
+.cfs-faq header p{margin:.8rem 0 0}.template-search .template-search__header .field{background:white;border-radius:var(--inputs-radius,0px);color:#142e32}
+.template-search .template-search__header .template-search__search{margin-bottom:0}
+.cfs-faq nav{display:flex;gap:.8rem;flex-wrap:wrap}.cfs-faq nav a{color:var(--cfs-forest);border:1px solid var(--cfs-line);padding:.7rem 1.4rem;border-radius:2rem;text-decoration:none;font-weight:600}
+.cfs-faq section{scroll-margin-top:8rem;margin-top:3.5rem}.cfs-faq details{border-bottom:1px solid var(--cfs-line);padding:1.5rem 0}.cfs-faq summary{display:list-item;cursor:pointer;font-weight:650}.cfs-faq details div{max-width:78ch;line-height:1.6}.cfs-faq a{color:#086449}
+.template-search .cfs-knowledge-results{padding-block:1.5rem 2.4rem}.cfs-knowledge-results h2{font-weight:700;margin:0 0 1.2rem}
+.cfs-knowledge-results .cfs-guide-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,31rem),1fr));gap:1.2rem;list-style:none;margin:0;padding:0}
+.cfs-guide-cards li{padding:0}.cfs-guide-cards a{position:relative;display:grid;align-content:start;gap:.55rem;height:100%;box-sizing:border-box;border:1px solid var(--cfs-line);border-left:4px solid var(--cfs-lime);border-radius:8px;background:#f6faf6;padding:1.5rem 2rem;text-decoration:none;color:var(--cfs-ink)}.cfs-guide-cards a:hover,.cfs-guide-cards a:focus-visible{border-color:#087458;background:#edf6ef}
+.cfs-guide-cards strong{font-size:1.13em;color:var(--cfs-forest)}.cfs-guide-cards small{color:#436754}.cfs-guide-cards p{margin:0;line-height:1.5}.cfs-knowledge-results details{margin-top:1rem}.cfs-knowledge-results summary{display:list-item;cursor:pointer;color:var(--cfs-forest);font-weight:650;margin-bottom:1rem}
+@media(max-width:749px){.cfs-faq{padding-block:2rem 4rem}.template-search .template-search__header{border-radius:0}.cfs-guide-cards a{padding:1.3rem}}
