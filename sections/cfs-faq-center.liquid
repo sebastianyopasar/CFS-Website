@@ -21,7 +21,7 @@
         {% endfor %}
       {% endcapture %}
       {% if count > 0 %}
-        <details class="cfs-faq-topic" id="faq-{{ section.id }}-{{ topic | handleize }}" data-topic="{{ topic | handleize }}">
+        <details name="faq-topics-{{ section.id }}" style="view-transition-name:faq-{{ section.id | handleize }}-{{ topic | handleize }}" class="cfs-faq-topic" id="faq-{{ section.id }}-{{ topic | handleize }}" data-topic="{{ topic | handleize }}">
           <summary class="cfs-faq-topic__toggle">
             <span class="cfs-faq-topic__icon" aria-hidden="true">{{ icon | inline_asset_content }}</span>
             <span class="cfs-faq-topic__label"><strong>{{ topic | escape }}</strong><small>{{ count }} {% if count == 1 %}question{% else %}questions{% endif %}</small></span>
@@ -37,7 +37,7 @@
   .cfs-faq-grid__header { padding:clamp(28px,4vw,60px); margin-bottom:24px; border-radius:16px; background:linear-gradient(110deg,#053b33,#087055); color:white }
   .cfs-faq-grid__header h1 { margin:0; font-size:clamp(30px,4vw,54px); line-height:1.1; font-weight:700; color:inherit }
   .cfs-faq-grid__header p { margin:12px 0 0; line-height:1.5 }
-  .cfs-faq-grid__topics { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; align-items:start }
+  .cfs-faq-grid__topics { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; align-items:stretch }
   .cfs-faq-topic { --accent:#175c84; --tint:#e8f4fb; background:var(--tint); border:1px solid var(--accent); border-top-width:4px; border-radius:12px; scroll-margin-top:8rem }
   .cfs-faq-topic[data-topic="products-and-equipment"] { --accent:#155e57; --tint:#e6f5ef }
   .cfs-faq-topic[data-topic="floor-care"] { --accent:#536324; --tint:#f1f5de }
@@ -61,7 +61,52 @@
   .cfs-faq-answer p { margin:0 0 .7em }.cfs-faq-answer p:last-child { margin:0 }.cfs-faq-answer a { color:var(--accent); text-decoration:underline }
   @media(max-width:1050px){ .cfs-faq-grid__topics { grid-template-columns:repeat(2,minmax(0,1fr)) } }
   @media(max-width:680px){ .cfs-faq-grid__topics { grid-template-columns:1fr; gap:12px }.cfs-faq-topic__toggle { min-height:82px } }
+  .cfs-faq-grid__topics:not(:has(>.cfs-faq-topic[open])) { grid-auto-rows:1fr }
+  .cfs-faq-topic:not([open])>.cfs-faq-topic__toggle { height:100%; box-sizing:border-box }
+  .cfs-faq-topic[open] { grid-column:1 / -1; order:-1 }
+  .cfs-faq-topic__questions { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 clamp(24px,4vw,64px); align-items:start; padding:8px clamp(18px,3vw,44px) 20px }
+  .cfs-faq-question summary { padding-block:19px }
+  .cfs-faq-answer { max-width:70ch }
+  @media(max-width:800px){ .cfs-faq-topic__questions { grid-template-columns:1fr } }
+  @media(prefers-reduced-motion:no-preference){
+    .cfs-faq-grid summary::after { transition:transform .22s ease }
+    @supports (interpolate-size:allow-keywords){
+      .cfs-faq-question { interpolate-size:allow-keywords }
+      .cfs-faq-question::details-content { height:0; overflow:clip; opacity:0; transition:height .24s ease, opacity .2s ease, content-visibility .24s allow-discrete }
+      .cfs-faq-question[open]::details-content { height:auto; opacity:1 }
+    }
+    .cfs-faq-topic[open]>.cfs-faq-topic__questions { animation:cfs-faq-reveal .24s ease-out }
+    @keyframes cfs-faq-reveal { from { opacity:0; transform:translateY(-6px) } to { opacity:1; transform:none } }
+  }
 </style>
+<script>
+(() => {
+  const grid = document.getElementById('faq-title-{{ section.id }}').closest('.cfs-faq-grid').querySelector('.cfs-faq-grid__topics');
+  const topics = Array.from(grid.children);
+  let transition;
+  grid.addEventListener('click', event => {
+    const summary = event.target.closest('.cfs-faq-topic__toggle');
+    if (!summary) return;
+    event.preventDefault();
+    const topic = summary.parentElement;
+    const update = () => {
+      const opening = !topic.open;
+      for (const card of topics) card.open = opening && card === topic;
+      // Keep keyboard navigation in the same order as the cards on screen.
+      const ordered = opening ? [topic, ...topics.filter(card => card !== topic)] : topics;
+      ordered.forEach((card, index) => {
+        if (grid.children[index] !== card) grid.insertBefore(card, grid.children[index]);
+      });
+      summary.focus({preventScroll:true});
+      const bounds = summary.getBoundingClientRect();
+      if (bounds.top < 0 || bounds.bottom > window.innerHeight) summary.scrollIntoView({block:'center',behavior:'instant'});
+    };
+    if (!document.startViewTransition || matchMedia('(prefers-reduced-motion: reduce)').matches) { update(); return; }
+    transition?.skipTransition();
+    transition = document.startViewTransition(update);
+  });
+})();
+</script>
 {% schema %}
 {
   "name": "CFS FAQ Center",
