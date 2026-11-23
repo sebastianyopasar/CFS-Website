@@ -2,7 +2,7 @@
   const root = document.querySelector('[data-cfs-knowledge-results]');
   const query = new URLSearchParams(location.search).get('q')?.trim();
   if (!root || !query) return;
-  const docs = await window.CfsGuideSearch.search(query, 12);
+  const [docs, faqs] = await Promise.all([window.CfsGuideSearch.search(query, 12), window.CfsGuideSearch.searchFaq(query, 6)]);
   function cards(guides) {
     const list = document.createElement('ul');
     list.className = 'cfs-guide-cards';
@@ -12,10 +12,10 @@
       const row = document.createElement('li');
       const link = document.createElement('a');
       link.href = url.href;
-      link.target = '_blank';
+      if (!doc.faq) link.target = '_blank';
       link.rel = 'noopener noreferrer';
       const source = document.createElement('small');
-      source.textContent = doc.page ? 'Cleaning Kollege · PDF · p. '+doc.page : 'Cleaning Kollege · PDF';
+      source.textContent = doc.faq ? 'FAQ' : doc.page ? 'Cleaning Kollege · PDF · p. '+doc.page : 'Cleaning Kollege · PDF';
       const title = document.createElement('strong');
       title.textContent = doc.title;
       link.append(source, title);
@@ -29,10 +29,16 @@
     }
     return list;
   }
-  if (!docs.length) return;
+  if (!docs.length && !faqs.length) return;
+  root.replaceChildren();
+  if (faqs.length) {
+    const heading = document.createElement('h2');
+    heading.textContent = 'Frequently asked questions';
+    root.append(heading, cards(faqs));
+  }
   const heading = document.createElement('h2');
   heading.textContent = 'Cleaning guides';
-  root.replaceChildren(heading, cards(docs.slice(0, 3)));
+  if (docs.length) root.append(heading, cards(docs.slice(0, 3)));
   if (docs.length > 3) {
     const more = document.createElement('details');
     const label = document.createElement('summary');
