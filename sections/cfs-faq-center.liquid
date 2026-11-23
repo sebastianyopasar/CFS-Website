@@ -1,7 +1,7 @@
 {{ 'cfs-resource-layout.css' | asset_url | stylesheet_tag }}
 <section class="cfs-faq page-width">
   <header><h1>Frequently asked questions</h1><p>Find answers about CFS, ordering, products and equipment care.</p></header>
-  {% assign topics = 'Company and ordering|Products and equipment|Floor care|Services' | split: '|' %}
+  {% assign topics = 'Company and ordering|Products and equipment|Floor care|Floor finishes|Floor stripping|Services' | split: '|' %}
   <nav aria-label="FAQ topics">
     {% for topic in topics %}
       {% assign questions = section.blocks | where: 'type', 'question' %}
@@ -33,7 +33,7 @@
   "settings": [],
   "blocks": [{
     "type":"question","name":"Question","settings":[
-      {"type":"select","id":"topic","label":"Topic","default":"Company and ordering","options":[{"value":"Company and ordering","label":"Company and ordering"},{"value":"Products and equipment","label":"Products and equipment"},{"value":"Floor care","label":"Floor care"},{"value":"Services","label":"Services"}]},
+      {"type":"select","id":"topic","label":"Topic","default":"Company and ordering","options":[{"value":"Company and ordering","label":"Company and ordering"},{"value":"Products and equipment","label":"Products and equipment"},{"value":"Floor care","label":"Floor care"},{"value":"Floor finishes","label":"Floor finishes"},{"value":"Floor stripping","label":"Floor stripping"},{"value":"Services","label":"Services"}]},
       {"type":"text","id":"question","label":"Question"},
       {"type":"richtext","id":"answer","label":"Answer"}
     ]

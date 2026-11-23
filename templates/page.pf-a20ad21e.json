@@ -130,6 +130,262 @@
             "question": "What does burnishing do?",
             "answer": "<p>Burnishing smooths the top layer of floor finish to restore gloss and reduce light scuffs. Pad selection depends on the finish and the equipment.</p><p><a href=\"https://cdn.shopify.com/s/files/1/0728/6308/8863/files/Choosing_the_Right_Pad_for_Floor_Finish_Restoration.pdf?v=1774294327#page=1\">Choosing the Right Pad for Floor Finish Restoration · p. 1</a></p>"
           }
+        },
+        "q17": {
+          "type": "question",
+          "settings": {
+            "topic": "Floor finishes",
+            "question": "What is Commercial Floor Finish?",
+            "answer": "<p>A durable acrylic or polymer coating applied over sealed floors (VCT, terrazzo, concrete) to protect the surface and create a glossy, slip-resistant wear layer.</p>"
+          }
+        },
+        "q18": {
+          "type": "question",
+          "settings": {
+            "topic": "Floor finishes",
+            "question": "How is floor finish different from wax?",
+            "answer": "<p>Modern \"finish\" is typically a polymer/acrylic emulsion, not true wax — it's more durable, dries harder, and holds up better to foot traffic and machine buffing.</p>"
+          }
+        },
+        "q19": {
+          "type": "question",
+          "settings": {
+            "topic": "Floor finishes",
+            "question": "How often should floors be refinished?",
+            "answer": "<p>Depends on traffic: high-traffic commercial areas often need a full strip-and-refinish every 6–24 months, with spray buffing or recoating in between.</p>"
+          }
+        },
+        "q20": {
+          "type": "question",
+          "settings": {
+            "topic": "Floor finishes",
+            "question": "What's the difference between recoating and stripping?",
+            "answer": "<p>Recoating adds a fresh finish layer over existing coats (routine maintenance); stripping removes all old finish down to the sealer before reapplying (needed when buildup, yellowing, or damage occurs).</p>"
+          }
+        },
+        "q21": {
+          "type": "question",
+          "settings": {
+            "topic": "Floor finishes",
+            "question": "How many coats of finish should be applied?",
+            "answer": "<p>Typically, 3–5 thin coats, allowing proper dry time between each, rather than fewer thick coats (which crack and haze).</p><p>Follow the rule of 100 plus 1.</p><p>If your floor finish has 20% solids you can apply 6 coats 20% x 5= 100 plus one extra coat)</p><p>If your floor finish has 24% solids you can apply 5 coats 24% x 4= 96 plus one extra coat)</p>"
+          }
+        },
+        "q22": {
+          "type": "question",
+          "settings": {
+            "topic": "Floor finishes",
+            "question": "How long does finish need to dry/cure between coats?",
+            "answer": "<p>Usually 30–45 minutes between coats depending on humidity/temperature; full cure can take 24–72 hours before heavy traffic.</p>"
+          }
+        },
+        "q23": {
+          "type": "question",
+          "settings": {
+            "topic": "Floor finishes",
+            "question": "Can floors be used right after refinishing?",
+            "answer": "<p>Light foot traffic is often fine after a few hours, preferably 24 hours for 95% Curing. Furniture and heavy equipment should be kept off until fully cured.</p>"
+          }
+        },
+        "q24": {
+          "type": "question",
+          "settings": {
+            "topic": "Floor finishes",
+            "question": "What's the difference between high-solids and standard finish?",
+            "answer": "<p>High-solids finish has more polymer content per coat, meaning fewer coats needed for the same durability and gloss.</p>"
+          }
+        },
+        "q25": {
+          "type": "question",
+          "settings": {
+            "topic": "Floor finishes",
+            "question": "Should I use a low-maintenance or daily-maintenance floor finish?",
+            "answer": "<p>In this case it is all about time. If you have equipment and time to maintain your floor 3-7 times per week and you want the results. Have at it!</p>"
+          }
+        },
+        "q26": {
+          "type": "question",
+          "settings": {
+            "topic": "Floor finishes",
+            "question": "Do I need a different finish for VCT vs. concrete vs. wood?",
+            "answer": "<p>Yes — finishes are formulated for specific substrates; using the wrong type can cause poor adhesion or premature wear.</p>"
+          }
+        },
+        "q27": {
+          "type": "question",
+          "settings": {
+            "topic": "Floor finishes",
+            "question": "What does \"high-traffic\" or \"extended durability\" finish mean?",
+            "answer": "<p>These formulas contain higher cross-linking polymers designed to resist scuffing and black heel marks in busy areas like lobbies and hallways.</p>"
+          }
+        },
+        "q28": {
+          "type": "question",
+          "settings": {
+            "topic": "Floor finishes",
+            "question": "Why is my floor finish turning yellow?",
+            "answer": "<p>Common causes: UV exposure, ammonia-based cleaners breaking down the finish, or too many buildup layers without stripping.</p>"
+          }
+        },
+        "q29": {
+          "type": "question",
+          "settings": {
+            "topic": "Floor finishes",
+            "question": "Why does the floor look hazy or streaky after finishing?",
+            "answer": "<p>Usually applicator/mop contamination, finish applied too thick, or poor floor prep (residue from old stripper).</p>"
+          }
+        },
+        "q30": {
+          "type": "question",
+          "settings": {
+            "topic": "Floor finishes",
+            "question": "What causes black marks and scuffing?",
+            "answer": "<p>Rubber-soled shoes and cart wheels; can be minimized with a more durable finish or regular burnishing.</p>"
+          }
+        },
+        "q31": {
+          "type": "question",
+          "settings": {
+            "topic": "Floor finishes",
+            "question": "How do I remove floor finish buildup?",
+            "answer": "<p>A commercial-grade stripper matched to the finish type, followed by a neutral rinse before recoating.</p>"
+          }
+        },
+        "q32": {
+          "type": "question",
+          "settings": {
+            "topic": "Floor finishes",
+            "question": "What cleaners are safe on finished floors?",
+            "answer": "<p>Neutral pH cleaners only — avoid ammonia, bleach, or acidic cleaners, which degrade finish over time.</p>"
+          }
+        },
+        "q33": {
+          "type": "question",
+          "settings": {
+            "topic": "Floor stripping",
+            "question": "What does \"stripping\" a floor mean?",
+            "answer": "<p>Using a chemical stripper to fully dissolve and remove old layers of finish down to the bare sealer or substrate, rather than just adding another coat on top.</p>"
+          }
+        },
+        "q34": {
+          "type": "question",
+          "settings": {
+            "topic": "Floor stripping",
+            "question": "How is stripping different from deep scrubbing?",
+            "answer": "<p>Deep cleaning removes surface dirt; stripping chemically breaks down the finish itself so it can be mopped/wet-vacuumed away.</p>"
+          }
+        },
+        "q35": {
+          "type": "question",
+          "settings": {
+            "topic": "Floor stripping",
+            "question": "How do I know when a floor needs to be stripped vs. just recoated?",
+            "answer": "<p>Signs include yellowing, heavy buildup, embedded dirt/black marks that won't buff out, uneven gloss, or finish that's cracking/peeling.</p>"
+          }
+        },
+        "q36": {
+          "type": "question",
+          "settings": {
+            "topic": "Floor stripping",
+            "question": "What's the basic step-by-step for stripping a floor?",
+            "answer": "<p>Sweep/dust mop, apply stripper solution, let it dwell, agitate with a low-speed buffer or scrub pad, wet-vacuum or mop up the residue, rinse, then let dry before resealing/refinishing.</p>"
+          }
+        },
+        "q37": {
+          "type": "question",
+          "settings": {
+            "topic": "Floor stripping",
+            "question": "How long should stripper dwell before scrubbing?",
+            "answer": "<p>Typically, 5–15 minutes depending on the product and finish buildup — it should stay wet the whole time, so re-wetting may be needed in warm/dry conditions.</p>"
+          }
+        },
+        "q38": {
+          "type": "question",
+          "settings": {
+            "topic": "Floor stripping",
+            "question": "Can floor stripper become ineffective?",
+            "answer": "<p>Yes, Stripper is not what carries your floor finish after stripping. Sometimes just adding some room temperature water to the floor while your stripping can stretch a stripper to improve end results.</p>"
+          }
+        },
+        "q39": {
+          "type": "question",
+          "settings": {
+            "topic": "Floor stripping",
+            "question": "Do I need to rinse after stripping?",
+            "answer": "<p>Yes — a neutral rinse is essential to remove residual stripper/finish sludge; leftover residue causes poor adhesion of the new finish.</p>"
+          }
+        },
+        "q40": {
+          "type": "question",
+          "settings": {
+            "topic": "Floor stripping",
+            "question": "How long should a floor dry before applying new finish?",
+            "answer": "<p>Usually a minimum of 30–60 minutes, but it must be fully dry (no damp spots) — humidity and airflow affect this.</p>"
+          }
+        },
+        "q41": {
+          "type": "question",
+          "settings": {
+            "topic": "Floor stripping",
+            "question": "What's the difference between a \"no-rinse\" and standard stripper?",
+            "answer": "<p>No-rinse strippers are formulated to leave less residue, saving a step, but still often benefit from at least a light rinse on heavy buildup jobs.</p>"
+          }
+        },
+        "q42": {
+          "type": "question",
+          "settings": {
+            "topic": "Floor stripping",
+            "question": "What equipment do I need to strip a floor?",
+            "answer": "<p>Low-speed buffer with a stripping pad, wet vacuum, mop buckets, scraper for edges/corners, and PPE (gloves, eye protection).</p>"
+          }
+        },
+        "q43": {
+          "type": "question",
+          "settings": {
+            "topic": "Floor stripping",
+            "question": "Can I use the same stripper on any type of floor finish?",
+            "answer": "<p>Not always — stripper strength and formulation should match the finish type and substrate (VCT, terrazzo, wood needs specific low-moisture strippers). Consult with your supplier support team.</p>"
+          }
+        },
+        "q44": {
+          "type": "question",
+          "settings": {
+            "topic": "Floor stripping",
+            "question": "Are strippers safe on all floor types?",
+            "answer": "<p>No — wood, some stone, and certain specialty floors can be damaged by standard strippers; always check compatibility first.</p>"
+          }
+        },
+        "q45": {
+          "type": "question",
+          "settings": {
+            "topic": "Floor stripping",
+            "question": "Why is finish still visible after stripping?",
+            "answer": "<p>Usually insufficient dwell time, stripper drying out before agitation, or too few passes with the buffer/scrub pad — may need a second application.</p>"
+          }
+        },
+        "q46": {
+          "type": "question",
+          "settings": {
+            "topic": "Floor stripping",
+            "question": "Why does the floor feel tacky or sticky after stripping?",
+            "answer": "<p>Incomplete rinsing, leaving stripper/finish residue behind — re-rinse until water runs clear.</p>"
+          }
+        },
+        "q47": {
+          "type": "question",
+          "settings": {
+            "topic": "Floor stripping",
+            "question": "What causes dull spots after refinishing a stripped floor?",
+            "answer": "<p>Usually residue left in low spots/edges, or finish applied over an area that wasn't fully dry.</p>"
+          }
+        },
+        "q48": {
+          "type": "question",
+          "settings": {
+            "topic": "Floor stripping",
+            "question": "How do I handle edges and corners a buffer can't reach?",
+            "answer": "<p>Hand-scrub with a stripping pad (Doodle Bug) or scraper, or use an edger attachment, then wet-vac separately.</p>"
+          }
         }
       },
       "block_order": [
@@ -148,7 +404,39 @@
         "q13",
         "q14",
         "q15",
-        "q16"
+        "q16",
+        "q17",
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26",
+        "q27",
+        "q28",
+        "q29",
+        "q30",
+        "q31",
+        "q32",
+        "q33",
+        "q34",
+        "q35",
+        "q36",
+        "q37",
+        "q38",
+        "q39",
+        "q40",
+        "q41",
+        "q42",
+        "q43",
+        "q44",
+        "q45",
+        "q46",
+        "q47",
+        "q48"
       ],
       "settings": {}
     }
