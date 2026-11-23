@@ -59,5 +59,31 @@
     }
     return matches.sort((a,b)=>b.score-a.score || a.title.localeCompare(b.title)).slice(0,limit);
   }
-  window.CfsGuideSearch={search};
+  let faqRequest;
+  async function searchFaq(query, limit) {
+    const words = [...new Set(tokens(query))];
+    if (!words.length) return [];
+    const endpoint = new URL((window.Shopify?.routes?.root || '/').replace(/\/?$/, '/') + 'pages/faq?view=pf-a20ad21e', location.origin);
+    if (!faqRequest) {
+      faqRequest = fetch(endpoint, {signal:AbortSignal.timeout(4000)}).then(async response => {
+        if (!response.ok) throw Error('FAQ unavailable');
+        const page = new DOMParser().parseFromString(await response.text(), 'text/html');
+        return Array.from(page.querySelectorAll('.cfs-faq-question[id]'), el => {
+          const title = el.querySelector('summary').textContent.trim();
+          const answer = Array.from(el.querySelector('.cfs-faq-answer').childNodes, n=>n.textContent).join(' ').replace(/\s+/g,' ').trim();
+          return {title, answer, url:endpoint.href+'#'+el.id, titleWords:new Set(tokens(title)), answerWords:new Set(tokens(answer))};
+        });
+      }).catch(() => { faqRequest = null; return []; });
+    }
+    const ranked = [];
+    for (const entry of await faqRequest) {
+      const titleHits = words.filter(w=>entry.titleWords.has(w)).length;
+      const answerHits = words.filter(w=>entry.titleWords.has(w) || entry.answerWords.has(w)).length;
+      if (answerHits < Math.max(1,Math.ceil(words.length*0.65))) continue;
+      const excerpt = entry.answer.length <= 170 ? entry.answer : entry.answer.slice(0,167).replace(/\s+\S*$/,'')+'…';
+      ranked.push({title:entry.title,url:entry.url,excerpt,faq:true,score:titleHits*4+answerHits});
+    }
+    return ranked.sort((a,b)=>b.score-a.score).slice(0,limit);
+  }
+  window.CfsGuideSearch={search,searchFaq};
 })();
