@@ -1,0 +1,1006 @@
+{% doc %}
+  @prompt
+    Design a modern, premium website section for a commercial cleaning and facility supply company focused on flood recovery solutions. The layout should be clean, spacious, and highly professional, using a minimalist design with excellent visual hierarchy, subtle shadows, rounded corners, and generous white space.
+    
+    At the top of the section, create a full-width introduction area with enough room for:
+    
+    A large headline (H2)
+    A short supporting paragraph below the headline (2–3 sentences)
+    
+    This introductory area is intended to explain how professional products help facilities recover after flooding by eliminating odors, preventing mold, and disinfecting affected surfaces.
+    
+    Below the introduction, create two independent horizontal feature cards, separated by generous vertical spacing so they feel like two distinct product recommendations rather than one continuous layout.
+    
+    First Product Card
+    
+    A large product image area positioned on the left side.
+    The image should appear inside a clean product container with subtle elevation and enough space for a clickable product image.
+    Leave enough room around the product so it becomes the visual focus.
+    On the right side, create a large content area with:
+    Space for a bold product title
+    Space for a short descriptive paragraph
+    Optional area for a "Learn More" or "Shop Now" button beneath the text
+    
+    Second Product Card
+    
+    Reverse the layout for visual balance.
+    
+    The text block should appear on the left.
+    The product image should appear on the right inside the same style product container.
+    Again provide room for:
+    Large product title
+    Description
+    Optional CTA button
+    
+    Leave a comfortable amount of empty space between the text block and the product image so it is immediately obvious which content belongs to which product.
+    
+    The overall design should feel elegant, modern, and easy to scan, using a subtle visual rhythm created by the alternating layouts.
+    
+    The section should be optimized for desktop websites, approximately 1400–1600 pixels wide, with responsive proportions that can easily adapt to tablet and mobile layouts.
+    
+    Use a clean white or very light gray background with subtle accents inspired by water and cleanliness. Avoid excessive gradients, busy graphics, unnecessary decorations, or oversized icons. The design should communicate trust, professionalism, and commercial facility maintenance.
+    
+    Style references: Apple website, Stripe, Linear, Webflow Enterprise, modern SaaS landing pages, premium B2B corporate websites.
+    
+    Important: Use realistic placeholder blocks for the products and text only. Do not include actual product images, logos, brand names, or written copy. The layout should serve as a high-end wireframe/mockup showcasing spacing, alignment, typography hierarchy, clickable product image areas, and call-to-action placement. The result should look polished enough to be handed directly to a UI developer.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-flood-recovery-section-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    background-color: {{ block.settings.background_color }};
+    padding: {{ block.settings.section_padding_top }}px 0 {{ block.settings.section_padding_bottom }}px;
+  }
+
+  .ai-flood-recovery-container-{{ ai_gen_id }} {
+    max-width: {{ block.settings.container_max_width }}px;
+    margin: 0 auto;
+    padding: 0 {{ block.settings.container_padding_horizontal }}px;
+  }
+
+  .ai-flood-recovery-intro-{{ ai_gen_id }} {
+    text-align: {{ block.settings.intro_text_alignment }};
+    margin-bottom: {{ block.settings.intro_bottom_spacing }}px;
+    max-width: {{ block.settings.intro_max_width }}px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .ai-flood-recovery-resource-button-{{ ai_gen_id }} {
+  display: flex;
+  justify-content: {{ block.settings.resource_button_alignment }};
+  margin: 0 0 {{ block.settings.resource_button_bottom_spacing }}px;
+}
+
+.ai-flood-recovery-resource-link-{{ ai_gen_id }} {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: {{ block.settings.resource_button_padding_vertical }}px {{ block.settings.resource_button_padding_horizontal }}px;
+  background: {{ block.settings.resource_button_background }};
+  color: {{ block.settings.resource_button_text_color }};
+  border: 1px solid {{ block.settings.resource_button_border_color }};
+  border-radius: {{ block.settings.resource_button_radius }}px;
+  text-decoration: none;
+  font-size: {{ block.settings.resource_button_font_size }}px;
+  font-weight: 600;
+  transition: all .25s ease;
+}
+
+.ai-flood-recovery-resource-link-{{ ai_gen_id }}:hover {
+  background: {{ block.settings.resource_button_hover_background }};
+  color: {{ block.settings.resource_button_hover_text_color }};
+  border-color: {{ block.settings.resource_button_hover_border_color }};
+  transform: translateY(-2px);
+}
+
+.ai-flood-recovery-resource-link-{{ ai_gen_id }} svg {
+  width:18px;
+  height:18px;
+}
+  .ai-flood-recovery-heading-{{ ai_gen_id }} {
+    font-size: {{ block.settings.heading_size }}px;
+    font-weight: {{ block.settings.heading_weight }};
+    color: {{ block.settings.heading_color }};
+    margin: 0 0 {{ block.settings.heading_bottom_spacing }}px;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  .ai-flood-recovery-intro-text-{{ ai_gen_id }} {
+    font-size: {{ block.settings.intro_text_size }}px;
+    line-height: 1.6;
+    color: {{ block.settings.intro_text_color }};
+    margin: 0;
+    opacity: 0.85;
+  }
+
+  .ai-flood-recovery-card-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    gap: {{ block.settings.card_content_gap }}px;
+    background-color: {{ block.settings.card_background_color }};
+    border-radius: {{ block.settings.card_border_radius }}px;
+    padding: {{ block.settings.card_padding }}px;
+    box-shadow: {{ block.settings.card_shadow_horizontal }}px {{ block.settings.card_shadow_vertical }}px {{ block.settings.card_shadow_blur }}px rgba(0, 0, 0, {{ block.settings.card_shadow_opacity | divided_by: 100.0 }});
+    margin-bottom: {{ block.settings.card_spacing }}px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .ai-flood-recovery-card-{{ ai_gen_id }}:hover {
+    transform: translateY(-4px);
+    box-shadow: {{ block.settings.card_shadow_horizontal }}px {{ block.settings.card_shadow_vertical | plus: 8 }}px {{ block.settings.card_shadow_blur | plus: 10 }}px rgba(0, 0, 0, {{ block.settings.card_shadow_opacity | times: 1.5 | divided_by: 100.0 | at_most: 0.2 }});
+  }
+
+  .ai-flood-recovery-card-{{ ai_gen_id }}:last-child {
+    margin-bottom: 0;
+  }
+
+  .ai-flood-recovery-card-reverse-{{ ai_gen_id }} {
+    flex-direction: row-reverse;
+  }
+
+  .ai-flood-recovery-product-container-{{ ai_gen_id }} {
+    flex: 0 0 {{ block.settings.product_image_width }}%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: {{ block.settings.product_container_bg }};
+    border-radius: {{ block.settings.product_container_radius }}px;
+    padding: {{ block.settings.product_container_padding }}px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  }
+
+  .ai-flood-recovery-product-image-wrapper-{{ ai_gen_id }} {
+    width: 100%;
+    position: relative;
+    cursor: pointer;
+  }
+
+  .ai-flood-recovery-product-image-{{ ai_gen_id }} {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: {{ block.settings.product_image_radius }}px;
+    transition: transform 0.3s ease;
+  }
+
+  .ai-flood-recovery-product-image-wrapper-{{ ai_gen_id }}:hover .ai-flood-recovery-product-image-{{ ai_gen_id }} {
+    transform: scale(1.05);
+  }
+
+  .ai-flood-recovery-product-placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background-color: #f8f9fa;
+    border-radius: {{ block.settings.product_image_radius }}px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .ai-flood-recovery-product-placeholder-{{ ai_gen_id }} svg {
+    width: 60%;
+    height: 60%;
+    opacity: 0.3;
+  }
+
+  .ai-flood-recovery-content-{{ ai_gen_id }} {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: {{ block.settings.content_gap }}px;
+  }
+
+  .ai-flood-recovery-product-title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.product_title_size }}px;
+    font-weight: {{ block.settings.product_title_weight }};
+    color: {{ block.settings.product_title_color }};
+    margin: 0;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+
+  .ai-flood-recovery-product-description-{{ ai_gen_id }} {
+    font-size: {{ block.settings.product_description_size }}px;
+    line-height: 1.6;
+    color: {{ block.settings.product_description_color }};
+    margin: 0;
+    opacity: 0.8;
+  }
+
+  .ai-flood-recovery-cta-{{ ai_gen_id }} {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: {{ block.settings.button_padding_vertical }}px {{ block.settings.button_padding_horizontal }}px;
+    background-color: {{ block.settings.button_background }};
+    color: {{ block.settings.button_text_color }};
+    border: {{ block.settings.button_border_width }}px solid {{ block.settings.button_border_color }};
+    border-radius: {{ block.settings.button_border_radius }}px;
+    font-size: {{ block.settings.button_font_size }}px;
+    font-weight: {{ block.settings.button_font_weight }};
+    text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    align-self: flex-start;
+  }
+
+  .ai-flood-recovery-cta-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.button_hover_background }};
+    color: {{ block.settings.button_hover_text_color }};
+    border-color: {{ block.settings.button_hover_border_color }};
+    transform: translateX(4px);
+  }
+
+  .ai-flood-recovery-cta-icon-{{ ai_gen_id }} {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.3s ease;
+  }
+
+  .ai-flood-recovery-cta-{{ ai_gen_id }}:hover .ai-flood-recovery-cta-icon-{{ ai_gen_id }} {
+    transform: translateX(4px);
+  }
+
+  @media screen and (max-width: 989px) {
+    .ai-flood-recovery-card-{{ ai_gen_id }},
+    .ai-flood-recovery-card-reverse-{{ ai_gen_id }} {
+      flex-direction: column;
+      gap: {{ block.settings.card_content_gap | times: 0.75 }}px;
+    }
+
+    .ai-flood-recovery-product-container-{{ ai_gen_id }} {
+      flex: 0 0 auto;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .ai-flood-recovery-heading-{{ ai_gen_id }} {
+      font-size: {{ block.settings.heading_size | times: 0.7 }}px;
+    }
+
+    .ai-flood-recovery-intro-text-{{ ai_gen_id }} {
+      font-size: {{ block.settings.intro_text_size | times: 0.9 }}px;
+    }
+
+    .ai-flood-recovery-product-title-{{ ai_gen_id }} {
+      font-size: {{ block.settings.product_title_size | times: 0.85 }}px;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-flood-recovery-section-{{ ai_gen_id }} {
+      padding: {{ block.settings.section_padding_top | times: 0.6 }}px 0 {{ block.settings.section_padding_bottom | times: 0.6 }}px;
+    }
+
+    .ai-flood-recovery-container-{{ ai_gen_id }} {
+      padding: 0 {{ block.settings.container_padding_horizontal | times: 0.5 }}px;
+    }
+
+    .ai-flood-recovery-card-{{ ai_gen_id }} {
+      padding: {{ block.settings.card_padding | times: 0.6 }}px;
+    }
+
+    .ai-flood-recovery-intro-{{ ai_gen_id }} {
+      margin-bottom: {{ block.settings.intro_bottom_spacing | times: 0.7 }}px;
+    }
+  }
+{% endstyle %}
+
+<flood-recovery-section-{{ ai_gen_id }} class="ai-flood-recovery-section-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-flood-recovery-container-{{ ai_gen_id }}">
+    {% if block.settings.show_intro %}
+      <div class="ai-flood-recovery-intro-{{ ai_gen_id }}">
+        {% if block.settings.heading != blank %}
+          <h2 class="ai-flood-recovery-heading-{{ ai_gen_id }}">{{ block.settings.heading }}</h2>
+        {% endif %}
+        {% if block.settings.intro_text != blank %}
+          <div class="ai-flood-recovery-intro-text-{{ ai_gen_id }}">{{ block.settings.intro_text }}</div>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    {% if block.settings.show_product_1 %}
+      <div class="ai-flood-recovery-card-{{ ai_gen_id }}">
+        <div class="ai-flood-recovery-product-container-{{ ai_gen_id }}">
+          {% if block.settings.product_1 != blank %}
+            <a href="{{ block.settings.product_1.url }}" class="ai-flood-recovery-product-image-wrapper-{{ ai_gen_id }}">
+              {% if block.settings.product_1.featured_image %}
+                <img
+                  src="{{ block.settings.product_1.featured_image | image_url: width: 800 }}"
+                  alt="{{ block.settings.product_1.featured_image.alt | escape }}"
+                  class="ai-flood-recovery-product-image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="800"
+                  height="800"
+                >
+              {% else %}
+                <div class="ai-flood-recovery-product-placeholder-{{ ai_gen_id }}">
+                  {{ 'product-1' | placeholder_svg_tag }}
+                </div>
+              {% endif %}
+            </a>
+          {% else %}
+            <div class="ai-flood-recovery-product-placeholder-{{ ai_gen_id }}">
+              {{ 'product-1' | placeholder_svg_tag }}
+            </div>
+          {% endif %}
+        </div>
+
+        <div class="ai-flood-recovery-content-{{ ai_gen_id }}">
+          {% if block.settings.product_1_title != blank %}
+            <h3 class="ai-flood-recovery-product-title-{{ ai_gen_id }}">{{ block.settings.product_1_title }}</h3>
+          {% elsif block.settings.product_1 != blank %}
+            <h3 class="ai-flood-recovery-product-title-{{ ai_gen_id }}">{{ block.settings.product_1.title }}</h3>
+          {% endif %}
+
+          {% if block.settings.product_1_description != blank %}
+            <div class="ai-flood-recovery-product-description-{{ ai_gen_id }}">{{ block.settings.product_1_description }}</div>
+          {% endif %}
+
+          {% if block.settings.show_product_1_cta %}
+            {% if block.settings.product_1 != blank %}
+              <a href="{{ block.settings.product_1.url }}" class="ai-flood-recovery-cta-{{ ai_gen_id }}">
+                {{ block.settings.product_1_cta_text }}
+                <svg class="ai-flood-recovery-cta-icon-{{ ai_gen_id }}" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            {% elsif block.settings.product_1_cta_url != blank %}
+              <a href="{{ block.settings.product_1_cta_url }}" class="ai-flood-recovery-cta-{{ ai_gen_id }}">
+                {{ block.settings.product_1_cta_text }}
+                <svg class="ai-flood-recovery-cta-icon-{{ ai_gen_id }}" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            {% endif %}
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+
+    {% if block.settings.show_product_2 %}
+      <div class="ai-flood-recovery-card-{{ ai_gen_id }} ai-flood-recovery-card-reverse-{{ ai_gen_id }}">
+        <div class="ai-flood-recovery-product-container-{{ ai_gen_id }}">
+          {% if block.settings.product_2 != blank %}
+            <a href="{{ block.settings.product_2.url }}" class="ai-flood-recovery-product-image-wrapper-{{ ai_gen_id }}">
+              {% if block.settings.product_2.featured_image %}
+                <img
+                  src="{{ block.settings.product_2.featured_image | image_url: width: 800 }}"
+                  alt="{{ block.settings.product_2.featured_image.alt | escape }}"
+                  class="ai-flood-recovery-product-image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="800"
+                  height="800"
+                >
+              {% else %}
+                <div class="ai-flood-recovery-product-placeholder-{{ ai_gen_id }}">
+                  {{ 'product-2' | placeholder_svg_tag }}
+                </div>
+              {% endif %}
+            </a>
+          {% else %}
+            <div class="ai-flood-recovery-product-placeholder-{{ ai_gen_id }}">
+              {{ 'product-2' | placeholder_svg_tag }}
+            </div>
+          {% endif %}
+        </div>
+
+        <div class="ai-flood-recovery-content-{{ ai_gen_id }}">
+          {% if block.settings.product_2_title != blank %}
+            <h3 class="ai-flood-recovery-product-title-{{ ai_gen_id }}">{{ block.settings.product_2_title }}</h3>
+          {% elsif block.settings.product_2 != blank %}
+            <h3 class="ai-flood-recovery-product-title-{{ ai_gen_id }}">{{ block.settings.product_2.title }}</h3>
+          {% endif %}
+
+          {% if block.settings.product_2_description != blank %}
+            <div class="ai-flood-recovery-product-description-{{ ai_gen_id }}">{{ block.settings.product_2_description }}</div>
+          {% endif %}
+
+          {% if block.settings.show_product_2_cta %}
+            {% if block.settings.product_2 != blank %}
+              <a href="{{ block.settings.product_2.url }}" class="ai-flood-recovery-cta-{{ ai_gen_id }}">
+                {{ block.settings.product_2_cta_text }}
+                <svg class="ai-flood-recovery-cta-icon-{{ ai_gen_id }}" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            {% elsif block.settings.product_2_cta_url != blank %}
+              <a href="{{ block.settings.product_2_cta_url }}" class="ai-flood-recovery-cta-{{ ai_gen_id }}">
+                {{ block.settings.product_2_cta_text }}
+                <svg class="ai-flood-recovery-cta-icon-{{ ai_gen_id }}" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            {% endif %}
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</flood-recovery-section-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class FloodRecoverySection{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.setupAccessibility();
+      }
+
+      setupAccessibility() {
+        const cards = this.querySelectorAll('.ai-flood-recovery-card-{{ ai_gen_id }}');
+        cards.forEach((card, index) => {
+          card.setAttribute('role', 'article');
+          card.setAttribute('aria-label', `Product recommendation ${index + 1}`);
+        });
+      }
+    }
+
+    customElements.define('flood-recovery-section-{{ ai_gen_id }}', FloodRecoverySection{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Flood recovery products",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Introduction"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_intro",
+      "label": "Show introduction",
+      "default": true
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Professional Flood Recovery Solutions"
+    },
+    {
+      "type": "richtext",
+      "id": "intro_text",
+      "label": "Introduction text",
+      "default": "<p>Restore your facility quickly and safely with commercial-grade products designed to eliminate odors, prevent mold growth, and thoroughly disinfect flood-affected areas.</p>"
+    },
+    {
+      "type": "select",
+      "id": "intro_text_alignment",
+      "label": "Text alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "intro_max_width",
+      "label": "Introduction max width",
+      "min": 600,
+      "max": 1200,
+      "step": 50,
+      "unit": "px",
+      "default": 900
+    },
+    {
+      "type": "range",
+      "id": "intro_bottom_spacing",
+      "label": "Bottom spacing",
+      "min": 40,
+      "max": 120,
+      "step": 10,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "header",
+      "content": "Product 1"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_product_1",
+      "label": "Show product 1",
+      "default": true
+    },
+    {
+      "type": "product",
+      "id": "product_1",
+      "label": "Product"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "product_1_title",
+      "label": "Custom title"
+    },
+    {
+      "type": "richtext",
+      "id": "product_1_description",
+      "label": "Description",
+      "default": "<p>Professional-grade solution for comprehensive odor elimination and surface restoration in commercial facilities.</p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_product_1_cta",
+      "label": "Show call to action",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "product_1_cta_text",
+      "label": "Button text",
+      "default": "Learn more"
+    },
+    {
+      "type": "url",
+      "id": "product_1_cta_url",
+      "label": "Custom button link"
+    },
+    {
+      "type": "header",
+      "content": "Product 2"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_product_2",
+      "label": "Show product 2",
+      "default": true
+    },
+    {
+      "type": "product",
+      "id": "product_2",
+      "label": "Product"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "product_2_title",
+      "label": "Custom title"
+    },
+    {
+      "type": "richtext",
+      "id": "product_2_description",
+      "label": "Description",
+      "default": "<p>Advanced antimicrobial treatment to prevent mold growth and ensure long-term protection for your facility.</p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_product_2_cta",
+      "label": "Show call to action",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "product_2_cta_text",
+      "label": "Button text",
+      "default": "Learn more"
+    },
+    {
+      "type": "url",
+      "id": "product_2_cta_url",
+      "label": "Custom button link"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "container_max_width",
+      "label": "Container max width",
+      "min": 1200,
+      "max": 1600,
+      "step": 50,
+      "unit": "px",
+      "default": 1400
+    },
+    {
+      "type": "range",
+      "id": "section_padding_top",
+      "label": "Top padding",
+      "min": 40,
+      "max": 120,
+      "step": 10,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "section_padding_bottom",
+      "label": "Bottom padding",
+      "min": 40,
+      "max": 120,
+      "step": 10,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "container_padding_horizontal",
+      "label": "Horizontal padding",
+      "min": 20,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "card_spacing",
+      "label": "Space between cards",
+      "min": 40,
+      "max": 120,
+      "step": 10,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "card_content_gap",
+      "label": "Card content gap",
+      "min": 40,
+      "max": 100,
+      "step": 10,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "content_gap",
+      "label": "Text content gap",
+      "min": 16,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "product_image_width",
+      "label": "Product image width",
+      "min": 30,
+      "max": 50,
+      "step": 5,
+      "unit": "%",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "card_background_color",
+      "label": "Card background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "product_container_bg",
+      "label": "Product container background",
+      "default": "#f8f9fa"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading",
+      "default": "#0e1b4d"
+    },
+    {
+      "type": "color",
+      "id": "intro_text_color",
+      "label": "Introduction text",
+      "default": "#0e1b4d"
+    },
+    {
+      "type": "color",
+      "id": "product_title_color",
+      "label": "Product title",
+      "default": "#0e1b4d"
+    },
+    {
+      "type": "color",
+      "id": "product_description_color",
+      "label": "Product description",
+      "default": "#0e1b4d"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading size",
+      "min": 32,
+      "max": 72,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "heading_weight",
+      "label": "Heading weight",
+      "min": 400,
+      "max": 700,
+      "step": 100,
+      "default": 600
+    },
+    {
+      "type": "range",
+      "id": "heading_bottom_spacing",
+      "label": "Heading bottom spacing",
+      "min": 12,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "intro_text_size",
+      "label": "Introduction text size",
+      "min": 14,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "product_title_size",
+      "label": "Product title size",
+      "min": 20,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "product_title_weight",
+      "label": "Product title weight",
+      "min": 400,
+      "max": 700,
+      "step": 100,
+      "default": 600
+    },
+    {
+      "type": "range",
+      "id": "product_description_size",
+      "label": "Product description size",
+      "min": 14,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Card style"
+    },
+    {
+      "type": "range",
+      "id": "card_padding",
+      "label": "Card padding",
+      "min": 30,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "label": "Card border radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "card_shadow_horizontal",
+      "label": "Shadow horizontal",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "card_shadow_vertical",
+      "label": "Shadow vertical",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "card_shadow_blur",
+      "label": "Shadow blur",
+      "min": 10,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "card_shadow_opacity",
+      "label": "Shadow opacity",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "%",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Product container"
+    },
+    {
+      "type": "range",
+      "id": "product_container_padding",
+      "label": "Container padding",
+      "min": 20,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "product_container_radius",
+      "label": "Container border radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "product_image_radius",
+      "label": "Image border radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Button style"
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Background",
+      "default": "#0e1b4d"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_border_color",
+      "label": "Border color",
+      "default": "#0e1b4d"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_background",
+      "label": "Hover background",
+      "default": "#4770db"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_text_color",
+      "label": "Hover text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_border_color",
+      "label": "Hover border color",
+      "default": "#4770db"
+    },
+    {
+      "type": "range",
+      "id": "button_padding_vertical",
+      "label": "Vertical padding",
+      "min": 8,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "button_padding_horizontal",
+      "label": "Horizontal padding",
+      "min": 16,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "button_border_width",
+      "label": "Border width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "button_font_size",
+      "label": "Font size",
+      "min": 12,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "button_font_weight",
+      "label": "Font weight",
+      "min": 400,
+      "max": 700,
+      "step": 100,
+      "default": 500
+    }
+  ],
+  "presets": [
+    {
+      "name": "Flood recovery products"
+    }
+  ]
+}
+{% endschema %}

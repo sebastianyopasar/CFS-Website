@@ -1,0 +1,755 @@
+{% doc %}
+  @prompt
+    Create a modern, responsive website interface inspired by a professional cleaning product index system. The design should function as a structured product catalog that displays all products in a clear, scannable grid layout.
+    
+    Each product must be presented as a compact card containing:
+    
+    A large bold number as the primary visual element (product identifier)
+    Product name
+    A short one-line functional description
+    Optional size or format (e.g., gallons)
+    
+    Group all products into clearly separated categories such as:
+    
+    All Purpose Cleaners
+    Glass and Surface Cleaners
+    Disinfectants and Sanitizers
+    Food Service
+    Odor Control
+    Floor and Carpet Care
+    Degreasers
+    
+    Each category should have a clear title and subtle visual separation.
+    
+    The layout should:
+    
+    Use a multi-column grid system (desktop: 4–5 columns, mobile: 1–2 columns)
+    Prioritize readability and fast scanning
+    Maintain consistent spacing and alignment
+    Use minimal but professional colors (light background, dark text, subtle category accents)
+    
+    Add interactive features:
+    
+    Search bar to find products by name or number
+    Filters by category
+    Hover effect on product cards
+    Clickable cards that lead to a detailed product page
+    
+    The design should feel like a hybrid between a dashboard and a catalog:
+    clean, efficient, professional, and optimized for operational use rather than marketing.
+    
+    Avoid clutter. Focus on clarity, hierarchy, and usability.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-product-catalog-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    padding: 40px 20px;
+    background-color: {{ block.settings.background_color }};
+  }
+
+  .ai-product-catalog__container-{{ ai_gen_id }} {
+    max-width: 1600px;
+    margin: 0 auto;
+  }
+
+  .ai-product-catalog__header-{{ ai_gen_id }} {
+    margin-bottom: 32px;
+  }
+
+  .ai-product-catalog__title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.title_size }}px;
+    color: {{ block.settings.text_color }};
+    margin: 0 0 8px 0;
+    font-weight: 700;
+  }
+
+  .ai-product-catalog__subtitle-{{ ai_gen_id }} {
+    font-size: {{ block.settings.subtitle_size }}px;
+    color: {{ block.settings.text_color }};
+    opacity: 0.7;
+    margin: 0 0 24px 0;
+  }
+
+  .ai-product-catalog__controls-{{ ai_gen_id }} {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+  }
+
+  .ai-product-catalog__search-{{ ai_gen_id }} {
+    flex: 1;
+    min-width: 250px;
+    position: relative;
+  }
+
+  .ai-product-catalog__search-input-{{ ai_gen_id }} {
+    width: 100%;
+    padding: 12px 16px 12px 44px;
+    border: 1px solid {{ block.settings.border_color }};
+    border-radius: {{ block.settings.input_radius }}px;
+    font-size: 15px;
+    background-color: {{ block.settings.input_background }};
+    color: {{ block.settings.text_color }};
+  }
+
+  .ai-product-catalog__search-icon-{{ ai_gen_id }} {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    color: {{ block.settings.text_color }};
+    opacity: 0.5;
+  }
+
+  .ai-product-catalog__filter-{{ ai_gen_id }} {
+    position: relative;
+  }
+
+  .ai-product-catalog__filter-button-{{ ai_gen_id }} {
+    padding: 12px 20px;
+    border: 1px solid {{ block.settings.border_color }};
+    border-radius: {{ block.settings.input_radius }}px;
+    background-color: {{ block.settings.input_background }};
+    color: {{ block.settings.text_color }};
+    cursor: pointer;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .ai-product-catalog__filter-dropdown-{{ ai_gen_id }} {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    background-color: {{ block.settings.input_background }};
+    border: 1px solid {{ block.settings.border_color }};
+    border-radius: {{ block.settings.input_radius }}px;
+    padding: 8px 0;
+    min-width: 200px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    display: none;
+  }
+
+  .ai-product-catalog__filter-dropdown-{{ ai_gen_id }}.active {
+    display: block;
+  }
+
+  .ai-product-catalog__filter-option-{{ ai_gen_id }} {
+    padding: 10px 16px;
+    cursor: pointer;
+    font-size: 14px;
+    color: {{ block.settings.text_color }};
+  }
+
+  .ai-product-catalog__filter-option-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.hover_background }};
+  }
+
+  .ai-product-catalog__filter-option-{{ ai_gen_id }}.active {
+    background-color: {{ block.settings.category_accent }};
+    color: #ffffff;
+  }
+
+  .ai-product-catalog__category-{{ ai_gen_id }} {
+    margin-bottom: 48px;
+  }
+
+  .ai-product-catalog__category-{{ ai_gen_id }}.hidden {
+    display: none;
+  }
+
+  .ai-product-catalog__category-title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.category_title_size }}px;
+    color: {{ block.settings.text_color }};
+    margin: 0 0 20px 0;
+    padding-bottom: 12px;
+    border-bottom: 2px solid {{ block.settings.category_accent }};
+    font-weight: 600;
+  }
+
+  .ai-product-catalog__grid-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat({{ block.settings.columns_desktop }}, 1fr);
+    gap: {{ block.settings.card_spacing }}px;
+  }
+
+  .ai-product-catalog__card-{{ ai_gen_id }} {
+    background-color: {{ block.settings.card_background }};
+    border: 1px solid {{ block.settings.border_color }};
+    border-radius: {{ block.settings.card_radius }}px;
+    padding: 20px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+  }
+
+  .ai-product-catalog__card-{{ ai_gen_id }}:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    border-color: {{ block.settings.category_accent }};
+  }
+
+  .ai-product-catalog__card-{{ ai_gen_id }}.hidden {
+    display: none;
+  }
+
+  .ai-product-catalog__card-number-{{ ai_gen_id }} {
+    font-size: {{ block.settings.number_size }}px;
+    font-weight: 700;
+    color: {{ block.settings.category_accent }};
+    margin: 0 0 12px 0;
+    line-height: 1;
+  }
+
+  .ai-product-catalog__card-name-{{ ai_gen_id }} {
+    font-size: {{ block.settings.product_name_size }}px;
+    font-weight: 600;
+    color: {{ block.settings.text_color }};
+    margin: 0 0 8px 0;
+    line-height: 1.3;
+  }
+
+  .ai-product-catalog__card-description-{{ ai_gen_id }} {
+    font-size: {{ block.settings.description_size }}px;
+    color: {{ block.settings.text_color }};
+    opacity: 0.7;
+    margin: 0 0 8px 0;
+    line-height: 1.4;
+  }
+
+  .ai-product-catalog__card-size-{{ ai_gen_id }} {
+    font-size: {{ block.settings.size_text_size }}px;
+    color: {{ block.settings.text_color }};
+    opacity: 0.5;
+    margin: 0;
+    font-style: italic;
+  }
+
+  .ai-product-catalog__no-results-{{ ai_gen_id }} {
+    text-align: center;
+    padding: 60px 20px;
+    color: {{ block.settings.text_color }};
+    opacity: 0.6;
+    display: none;
+  }
+
+  .ai-product-catalog__no-results-{{ ai_gen_id }}.active {
+    display: block;
+  }
+
+  @media screen and (max-width: 989px) {
+    .ai-product-catalog__grid-{{ ai_gen_id }} {
+      grid-template-columns: repeat({{ block.settings.columns_tablet }}, 1fr);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-product-catalog__grid-{{ ai_gen_id }} {
+      grid-template-columns: repeat({{ block.settings.columns_mobile }}, 1fr);
+    }
+
+    .ai-product-catalog__controls-{{ ai_gen_id }} {
+      flex-direction: column;
+    }
+
+    .ai-product-catalog__search-{{ ai_gen_id }} {
+      width: 100%;
+    }
+
+    .ai-product-catalog__filter-button-{{ ai_gen_id }} {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .ai-product-catalog__filter-dropdown-{{ ai_gen_id }} {
+      left: 0;
+      right: 0;
+    }
+  }
+{% endstyle %}
+
+<product-catalog-{{ ai_gen_id }} class="ai-product-catalog-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-product-catalog__container-{{ ai_gen_id }}">
+    {% if block.settings.title != blank or block.settings.subtitle != blank %}
+      <div class="ai-product-catalog__header-{{ ai_gen_id }}">
+        {% if block.settings.title != blank %}
+          <h2 class="ai-product-catalog__title-{{ ai_gen_id }}">{{ block.settings.title }}</h2>
+        {% endif %}
+        {% if block.settings.subtitle != blank %}
+          <p class="ai-product-catalog__subtitle-{{ ai_gen_id }}">{{ block.settings.subtitle }}</p>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <div class="ai-product-catalog__controls-{{ ai_gen_id }}">
+      <div class="ai-product-catalog__search-{{ ai_gen_id }}">
+        <svg class="ai-product-catalog__search-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+        <input
+          type="text"
+          class="ai-product-catalog__search-input-{{ ai_gen_id }}"
+          placeholder="Search by product name or number..."
+          aria-label="Search products"
+        >
+      </div>
+
+      <div class="ai-product-catalog__filter-{{ ai_gen_id }}">
+        <button class="ai-product-catalog__filter-button-{{ ai_gen_id }}" aria-label="Filter by category">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+          </svg>
+          Filter by Category
+        </button>
+        <div class="ai-product-catalog__filter-dropdown-{{ ai_gen_id }}">
+          <div class="ai-product-catalog__filter-option-{{ ai_gen_id }} active" data-category="all">All Categories</div>
+          <div class="ai-product-catalog__filter-option-{{ ai_gen_id }}" data-category="all-purpose">All Purpose Cleaners</div>
+          <div class="ai-product-catalog__filter-option-{{ ai_gen_id }}" data-category="glass-surface">Glass and Surface Cleaners</div>
+          <div class="ai-product-catalog__filter-option-{{ ai_gen_id }}" data-category="disinfectants">Disinfectants and Sanitizers</div>
+          <div class="ai-product-catalog__filter-option-{{ ai_gen_id }}" data-category="food-service">Food Service</div>
+          <div class="ai-product-catalog__filter-option-{{ ai_gen_id }}" data-category="odor-control">Odor Control</div>
+          <div class="ai-product-catalog__filter-option-{{ ai_gen_id }}" data-category="floor-carpet">Floor and Carpet Care</div>
+          <div class="ai-product-catalog__filter-option-{{ ai_gen_id }}" data-category="degreasers">Degreasers</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ai-product-catalog__category-{{ ai_gen_id }}" data-category="all-purpose">
+      <h3 class="ai-product-catalog__category-title-{{ ai_gen_id }}">All Purpose Cleaners</h3>
+      <div class="ai-product-catalog__grid-{{ ai_gen_id }}">
+        {% if block.settings.collection != blank %}
+          {% for product in block.settings.collection.products limit: 50 %}
+            <a
+              href="{{ product.url }}"
+              class="ai-product-catalog__card-{{ ai_gen_id }}"
+              data-product-name="{{ product.title | downcase }}"
+              data-product-number="{{ forloop.index }}"
+              data-category="all-purpose"
+            >
+              <div class="ai-product-catalog__card-number-{{ ai_gen_id }}">{{ forloop.index | prepend: '00' | slice: -3, 3 }}</div>
+              <h4 class="ai-product-catalog__card-name-{{ ai_gen_id }}">{{ product.title }}</h4>
+              {% if product.description != blank %}
+                <p class="ai-product-catalog__card-description-{{ ai_gen_id }}">{{ product.description | strip_html | truncate: 80 }}</p>
+              {% endif %}
+              {% if product.variants.first.title != 'Default Title' %}
+                <p class="ai-product-catalog__card-size-{{ ai_gen_id }}">{{ product.variants.first.title }}</p>
+              {% endif %}
+            </a>
+          {% endfor %}
+        {% else %}
+          {% for i in (1..8) %}
+            <a
+              href="#"
+              class="ai-product-catalog__card-{{ ai_gen_id }}"
+              data-product-name="sample product {{ i }}"
+              data-product-number="{{ i }}"
+              data-category="all-purpose"
+            >
+              <div class="ai-product-catalog__card-number-{{ ai_gen_id }}">{{ i | prepend: '00' | slice: -3, 3 }}</div>
+              <h4 class="ai-product-catalog__card-name-{{ ai_gen_id }}">Sample Product {{ i }}</h4>
+              <p class="ai-product-catalog__card-description-{{ ai_gen_id }}">Professional cleaning solution for multiple surfaces</p>
+              <p class="ai-product-catalog__card-size-{{ ai_gen_id }}">Available in 1 gallon</p>
+            </a>
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="ai-product-catalog__category-{{ ai_gen_id }}" data-category="glass-surface">
+      <h3 class="ai-product-catalog__category-title-{{ ai_gen_id }}">Glass and Surface Cleaners</h3>
+      <div class="ai-product-catalog__grid-{{ ai_gen_id }}">
+        {% for i in (9..12) %}
+          <a
+            href="#"
+            class="ai-product-catalog__card-{{ ai_gen_id }}"
+            data-product-name="glass cleaner {{ i }}"
+            data-product-number="{{ i }}"
+            data-category="glass-surface"
+          >
+            <div class="ai-product-catalog__card-number-{{ ai_gen_id }}">{{ i | prepend: '00' | slice: -3, 3 }}</div>
+            <h4 class="ai-product-catalog__card-name-{{ ai_gen_id }}">Glass Cleaner {{ i }}</h4>
+            <p class="ai-product-catalog__card-description-{{ ai_gen_id }}">Streak-free formula for glass and mirrors</p>
+            <p class="ai-product-catalog__card-size-{{ ai_gen_id }}">32 oz spray bottle</p>
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="ai-product-catalog__category-{{ ai_gen_id }}" data-category="disinfectants">
+      <h3 class="ai-product-catalog__category-title-{{ ai_gen_id }}">Disinfectants and Sanitizers</h3>
+      <div class="ai-product-catalog__grid-{{ ai_gen_id }}">
+        {% for i in (13..18) %}
+          <a
+            href="#"
+            class="ai-product-catalog__card-{{ ai_gen_id }}"
+            data-product-name="disinfectant {{ i }}"
+            data-product-number="{{ i }}"
+            data-category="disinfectants"
+          >
+            <div class="ai-product-catalog__card-number-{{ ai_gen_id }}">{{ i | prepend: '00' | slice: -3, 3 }}</div>
+            <h4 class="ai-product-catalog__card-name-{{ ai_gen_id }}">Disinfectant {{ i }}</h4>
+            <p class="ai-product-catalog__card-description-{{ ai_gen_id }}">Hospital-grade disinfectant kills 99.9% of germs</p>
+            <p class="ai-product-catalog__card-size-{{ ai_gen_id }}">1 gallon concentrate</p>
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="ai-product-catalog__no-results-{{ ai_gen_id }}">
+      <p>No products found matching your search.</p>
+    </div>
+  </div>
+</product-catalog-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class ProductCatalog{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.searchInput = this.querySelector('.ai-product-catalog__search-input-{{ ai_gen_id }}');
+        this.filterButton = this.querySelector('.ai-product-catalog__filter-button-{{ ai_gen_id }}');
+        this.filterDropdown = this.querySelector('.ai-product-catalog__filter-dropdown-{{ ai_gen_id }}');
+        this.filterOptions = this.querySelectorAll('.ai-product-catalog__filter-option-{{ ai_gen_id }}');
+        this.cards = this.querySelectorAll('.ai-product-catalog__card-{{ ai_gen_id }}');
+        this.categories = this.querySelectorAll('.ai-product-catalog__category-{{ ai_gen_id }}');
+        this.noResults = this.querySelector('.ai-product-catalog__no-results-{{ ai_gen_id }}');
+        this.currentCategory = 'all';
+      }
+
+      connectedCallback() {
+        this.setupEventListeners();
+      }
+
+      setupEventListeners() {
+        this.searchInput.addEventListener('input', () => this.handleSearch());
+
+        this.filterButton.addEventListener('click', () => {
+          this.filterDropdown.classList.toggle('active');
+        });
+
+        this.filterOptions.forEach(option => {
+          option.addEventListener('click', () => {
+            this.filterOptions.forEach(opt => opt.classList.remove('active'));
+            option.classList.add('active');
+            this.currentCategory = option.dataset.category;
+            this.filterDropdown.classList.remove('active');
+            this.handleFilter();
+          });
+        });
+
+        document.addEventListener('click', (e) => {
+          if (!e.target.closest('.ai-product-catalog__filter-{{ ai_gen_id }}')) {
+            this.filterDropdown.classList.remove('active');
+          }
+        });
+      }
+
+      handleSearch() {
+        const searchTerm = this.searchInput.value.toLowerCase().trim();
+        let visibleCount = 0;
+
+        this.cards.forEach(card => {
+          const productName = card.dataset.productName;
+          const productNumber = card.dataset.productNumber;
+          const categoryMatch = this.currentCategory === 'all' || card.dataset.category === this.currentCategory;
+          const searchMatch = searchTerm === '' || 
+                            productName.includes(searchTerm) || 
+                            productNumber.includes(searchTerm);
+
+          if (categoryMatch && searchMatch) {
+            card.classList.remove('hidden');
+            visibleCount++;
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+
+        this.updateCategoryVisibility();
+        this.noResults.classList.toggle('active', visibleCount === 0);
+      }
+
+      handleFilter() {
+        let visibleCount = 0;
+        const searchTerm = this.searchInput.value.toLowerCase().trim();
+
+        this.cards.forEach(card => {
+          const categoryMatch = this.currentCategory === 'all' || card.dataset.category === this.currentCategory;
+          const searchMatch = searchTerm === '' || 
+                            card.dataset.productName.includes(searchTerm) || 
+                            card.dataset.productNumber.includes(searchTerm);
+
+          if (categoryMatch && searchMatch) {
+            card.classList.remove('hidden');
+            visibleCount++;
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+
+        this.updateCategoryVisibility();
+        this.noResults.classList.toggle('active', visibleCount === 0);
+      }
+
+      updateCategoryVisibility() {
+        this.categories.forEach(category => {
+          const categoryType = category.dataset.category;
+          const hasVisibleCards = Array.from(category.querySelectorAll('.ai-product-catalog__card-{{ ai_gen_id }}')).some(card => !card.classList.contains('hidden'));
+
+          if (this.currentCategory === 'all') {
+            category.classList.toggle('hidden', !hasVisibleCards);
+          } else {
+            category.classList.toggle('hidden', categoryType !== this.currentCategory || !hasVisibleCards);
+          }
+        });
+      }
+    }
+
+    customElements.define('product-catalog-{{ ai_gen_id }}', ProductCatalog{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Product catalog",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "title",
+      "label": "Title",
+      "default": "Product Index"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Browse our complete catalog of professional cleaning products"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Columns on desktop",
+      "min": 3,
+      "max": 6,
+      "step": 1,
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "columns_tablet",
+      "label": "Columns on tablet",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Columns on mobile",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        }
+      ],
+      "default": "1"
+    },
+    {
+      "type": "range",
+      "id": "card_spacing",
+      "label": "Card spacing",
+      "min": 8,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Title size",
+      "min": 20,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "subtitle_size",
+      "label": "Subtitle size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "category_title_size",
+      "label": "Category title size",
+      "min": 16,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "number_size",
+      "label": "Product number size",
+      "min": 24,
+      "max": 56,
+      "step": 2,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "product_name_size",
+      "label": "Product name size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "description_size",
+      "label": "Description size",
+      "min": 11,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "size_text_size",
+      "label": "Size text size",
+      "min": 10,
+      "max": 14,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#f8f9fa"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#0e1b4d"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Card background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border",
+      "default": "#e0e0e0"
+    },
+    {
+      "type": "color",
+      "id": "category_accent",
+      "label": "Category accent",
+      "default": "#4770db"
+    },
+    {
+      "type": "color",
+      "id": "input_background",
+      "label": "Input background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "hover_background",
+      "label": "Hover background",
+      "default": "#f0f0f0"
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Card border radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "input_radius",
+      "label": "Input border radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product catalog"
+    }
+  ]
+}
+{% endschema %}

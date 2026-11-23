@@ -1,0 +1,750 @@
+{% doc %}
+  @prompt
+    Act as an expert web designer and create a visually captivating, modern, and trustworthy "Why Choose Us" section for the Corporate Facility Supply website. The section should feature a two-column split layout with a bold, clean headline and a concise paragraph highlighting our legacy of continuous improvement since 1979 and our Canadian scale across sectors like supermarkets, greenhouses, and large enterprises. Incorporate three key highlights using icons to represent our 40+ years of excellence, nationwide Canadian operations, and versatile facility solutions, followed by a prominent call-to-action button, while designing the right column to display a high-quality, professional visual collage of the clean and well-stocked environments we serve to build immediate trust and engagement with visitors.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-why-choose-us-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    padding: {{ block.settings.section_padding_top }}px 0 {{ block.settings.section_padding_bottom }}px;
+    background-color: {{ block.settings.background_color }};
+  }
+
+  .ai-why-choose-us-container-{{ ai_gen_id }} {
+    max-width: {{ block.settings.container_width }}px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .ai-why-choose-us-grid-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: {{ block.settings.column_gap }}px;
+    align-items: center;
+  }
+
+  .ai-why-choose-us-content-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: {{ block.settings.content_spacing }}px;
+  }
+
+  .ai-why-choose-us-headline-{{ ai_gen_id }} {
+    font-size: {{ block.settings.headline_size }}px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: {{ block.settings.headline_color }};
+    margin: 0;
+  }
+
+  .ai-why-choose-us-description-{{ ai_gen_id }} {
+    font-size: {{ block.settings.description_size }}px;
+    line-height: 1.6;
+    color: {{ block.settings.text_color }};
+    margin: 0;
+  }
+
+  .ai-why-choose-us-highlights-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: {{ block.settings.highlight_spacing }}px;
+    margin-top: 8px;
+  }
+
+  .ai-why-choose-us-highlight-{{ ai_gen_id }} {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .ai-why-choose-us-icon-{{ ai_gen_id }} {
+    flex-shrink: 0;
+    width: {{ block.settings.icon_size }}px;
+    height: {{ block.settings.icon_size }}px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: {{ block.settings.icon_background }};
+    border-radius: {{ block.settings.icon_border_radius }}px;
+    color: {{ block.settings.icon_color }};
+  }
+
+  .ai-why-choose-us-icon-{{ ai_gen_id }} svg {
+    width: calc({{ block.settings.icon_size }}px * 0.6);
+    height: calc({{ block.settings.icon_size }}px * 0.6);
+  }
+
+  .ai-why-choose-us-highlight-text-{{ ai_gen_id }} {
+    flex: 1;
+  }
+
+  .ai-why-choose-us-highlight-title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.highlight_title_size }}px;
+    font-weight: 600;
+    color: {{ block.settings.headline_color }};
+    margin: 0 0 4px;
+  }
+
+  .ai-why-choose-us-highlight-desc-{{ ai_gen_id }} {
+    font-size: {{ block.settings.highlight_desc_size }}px;
+    line-height: 1.5;
+    color: {{ block.settings.text_color }};
+    margin: 0;
+  }
+
+  .ai-why-choose-us-cta-{{ ai_gen_id }} {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: {{ block.settings.button_padding_vertical }}px {{ block.settings.button_padding_horizontal }}px;
+    background-color: {{ block.settings.button_background }};
+    color: {{ block.settings.button_text_color }};
+    font-size: {{ block.settings.button_font_size }}px;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: {{ block.settings.button_border_radius }}px;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    margin-top: 8px;
+  }
+
+  .ai-why-choose-us-cta-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.button_hover_background }};
+    color: {{ block.settings.button_hover_text_color }};
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .ai-why-choose-us-image-wrapper-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: {{ block.settings.image_min_height }}px;
+    border-radius: {{ block.settings.image_border_radius }}px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  }
+
+  .ai-why-choose-us-image-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .ai-why-choose-us-image-placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .ai-why-choose-us-image-placeholder-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: 100%;
+    max-width: 400px;
+    max-height: 400px;
+  }
+
+  .ai-why-choose-us-empty-state-{{ ai_gen_id }} {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 20px;
+    font-size: 14px;
+    color: #666;
+    text-align: center;
+    pointer-events: none;
+  }
+
+  @media screen and (max-width: 989px) {
+    .ai-why-choose-us-grid-{{ ai_gen_id }} {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    .ai-why-choose-us-headline-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.headline_size }}px * 0.8);
+    }
+
+    .ai-why-choose-us-description-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.description_size }}px * 0.95);
+    }
+
+    .ai-why-choose-us-image-wrapper-{{ ai_gen_id }} {
+      min-height: 400px;
+    }
+
+    .ai-why-choose-us-grid-{{ ai_gen_id }} {
+      {% if block.settings.mobile_layout == 'image_first' %}
+        grid-template-areas: "image" "content";
+      {% else %}
+        grid-template-areas: "content" "image";
+      {% endif %}
+    }
+
+    .ai-why-choose-us-content-{{ ai_gen_id }} {
+      {% if block.settings.mobile_layout == 'image_first' %}
+        grid-area: content;
+      {% else %}
+        grid-area: content;
+      {% endif %}
+    }
+
+    .ai-why-choose-us-image-wrapper-{{ ai_gen_id }} {
+      {% if block.settings.mobile_layout == 'image_first' %}
+        grid-area: image;
+      {% else %}
+        grid-area: image;
+      {% endif %}
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-why-choose-us-{{ ai_gen_id }} {
+      padding: {{ block.settings.section_padding_top | times: 0.7 }}px 0 {{ block.settings.section_padding_bottom | times: 0.7 }}px;
+    }
+
+    .ai-why-choose-us-headline-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.headline_size }}px * 0.65);
+    }
+
+    .ai-why-choose-us-icon-{{ ai_gen_id }} {
+      width: calc({{ block.settings.icon_size }}px * 0.85);
+      height: calc({{ block.settings.icon_size }}px * 0.85);
+    }
+
+    .ai-why-choose-us-cta-{{ ai_gen_id }} {
+      width: 100%;
+      text-align: center;
+    }
+  }
+{% endstyle %}
+
+<why-choose-us-{{ ai_gen_id }} class="ai-why-choose-us-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-why-choose-us-container-{{ ai_gen_id }}">
+    <div class="ai-why-choose-us-grid-{{ ai_gen_id }}">
+      <div class="ai-why-choose-us-content-{{ ai_gen_id }}">
+        {% if block.settings.headline != blank %}
+          <h2 class="ai-why-choose-us-headline-{{ ai_gen_id }}">{{ block.settings.headline }}</h2>
+        {% endif %}
+
+        {% if block.settings.description != blank %}
+          <div class="ai-why-choose-us-description-{{ ai_gen_id }}">
+            {{ block.settings.description }}
+          </div>
+        {% endif %}
+
+        <div class="ai-why-choose-us-highlights-{{ ai_gen_id }}">
+          {% if block.settings.highlight_1_enabled %}
+            <div class="ai-why-choose-us-highlight-{{ ai_gen_id }}">
+              <div class="ai-why-choose-us-icon-{{ ai_gen_id }}">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                </svg>
+              </div>
+              <div class="ai-why-choose-us-highlight-text-{{ ai_gen_id }}">
+                {% if block.settings.highlight_1_title != blank %}
+                  <h3 class="ai-why-choose-us-highlight-title-{{ ai_gen_id }}">{{ block.settings.highlight_1_title }}</h3>
+                {% endif %}
+                {% if block.settings.highlight_1_description != blank %}
+                  <p class="ai-why-choose-us-highlight-desc-{{ ai_gen_id }}">{{ block.settings.highlight_1_description }}</p>
+                {% endif %}
+              </div>
+            </div>
+          {% endif %}
+
+          {% if block.settings.highlight_2_enabled %}
+            <div class="ai-why-choose-us-highlight-{{ ai_gen_id }}">
+              <div class="ai-why-choose-us-icon-{{ ai_gen_id }}">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+                  <path d="M2 12h20"></path>
+                </svg>
+              </div>
+              <div class="ai-why-choose-us-highlight-text-{{ ai_gen_id }}">
+                {% if block.settings.highlight_2_title != blank %}
+                  <h3 class="ai-why-choose-us-highlight-title-{{ ai_gen_id }}">{{ block.settings.highlight_2_title }}</h3>
+                {% endif %}
+                {% if block.settings.highlight_2_description != blank %}
+                  <p class="ai-why-choose-us-highlight-desc-{{ ai_gen_id }}">{{ block.settings.highlight_2_description }}</p>
+                {% endif %}
+              </div>
+            </div>
+          {% endif %}
+
+          {% if block.settings.highlight_3_enabled %}
+            <div class="ai-why-choose-us-highlight-{{ ai_gen_id }}">
+              <div class="ai-why-choose-us-icon-{{ ai_gen_id }}">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                  <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                </svg>
+              </div>
+              <div class="ai-why-choose-us-highlight-text-{{ ai_gen_id }}">
+                {% if block.settings.highlight_3_title != blank %}
+                  <h3 class="ai-why-choose-us-highlight-title-{{ ai_gen_id }}">{{ block.settings.highlight_3_title }}</h3>
+                {% endif %}
+                {% if block.settings.highlight_3_description != blank %}
+                  <p class="ai-why-choose-us-highlight-desc-{{ ai_gen_id }}">{{ block.settings.highlight_3_description }}</p>
+                {% endif %}
+              </div>
+            </div>
+          {% endif %}
+        </div>
+
+        {% if block.settings.cta_text != blank %}
+          <a href="{{ block.settings.cta_link }}" class="ai-why-choose-us-cta-{{ ai_gen_id }}">
+            {{ block.settings.cta_text }}
+          </a>
+        {% endif %}
+      </div>
+
+      <div class="ai-why-choose-us-image-wrapper-{{ ai_gen_id }}">
+        {% if block.settings.image %}
+          <img
+            src="{{ block.settings.image | image_url: width: 1200 }}"
+            alt="{{ block.settings.image.alt | escape }}"
+            loading="lazy"
+            width="{{ block.settings.image.width }}"
+            height="{{ block.settings.image.height }}"
+            class="ai-why-choose-us-image-{{ ai_gen_id }}"
+          >
+        {% else %}
+          <div class="ai-why-choose-us-image-placeholder-{{ ai_gen_id }}">
+            {{ 'hero-apparel-1' | placeholder_svg_tag }}
+            <div class="ai-why-choose-us-empty-state-{{ ai_gen_id }}">
+              Next, add an image showcasing your facilities
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</why-choose-us-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class WhyChooseUs{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.setupAccessibility();
+      }
+
+      setupAccessibility() {
+        const cta = this.querySelector('.ai-why-choose-us-cta-{{ ai_gen_id }}');
+        if (cta && !cta.getAttribute('href')) {
+          cta.setAttribute('role', 'button');
+          cta.setAttribute('tabindex', '0');
+        }
+      }
+    }
+
+    customElements.define('why-choose-us-{{ ai_gen_id }}', WhyChooseUs{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Why choose us",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "headline",
+      "label": "Headline",
+      "default": "Why Choose Corporate Facility Supply"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Since 1979, we've been committed to continuous improvement and excellence in facility supply solutions. Serving supermarkets, greenhouses, and large enterprises across Canada, we deliver the quality and reliability your operations demand.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Highlight 1"
+    },
+    {
+      "type": "checkbox",
+      "id": "highlight_1_enabled",
+      "label": "Enable highlight 1",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "highlight_1_title",
+      "label": "Title",
+      "default": "40+ Years of Excellence"
+    },
+    {
+      "type": "text",
+      "id": "highlight_1_description",
+      "label": "Description",
+      "default": "Trusted since 1979 for quality and reliability"
+    },
+    {
+      "type": "header",
+      "content": "Highlight 2"
+    },
+    {
+      "type": "checkbox",
+      "id": "highlight_2_enabled",
+      "label": "Enable highlight 2",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "highlight_2_title",
+      "label": "Title",
+      "default": "Nationwide Canadian Operations"
+    },
+    {
+      "type": "text",
+      "id": "highlight_2_description",
+      "label": "Description",
+      "default": "Coast-to-coast service and support"
+    },
+    {
+      "type": "header",
+      "content": "Highlight 3"
+    },
+    {
+      "type": "checkbox",
+      "id": "highlight_3_enabled",
+      "label": "Enable highlight 3",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "highlight_3_title",
+      "label": "Title",
+      "default": "Versatile Facility Solutions"
+    },
+    {
+      "type": "text",
+      "id": "highlight_3_description",
+      "label": "Description",
+      "default": "Packaging, food service, cleaning, and safety products"
+    },
+    {
+      "type": "header",
+      "content": "Call to action"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Button text",
+      "default": "Explore Our Solutions"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "range",
+      "id": "image_min_height",
+      "label": "Minimum height",
+      "min": 300,
+      "max": 700,
+      "step": 50,
+      "unit": "px",
+      "default": 500
+    },
+    {
+      "type": "range",
+      "id": "image_border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "container_width",
+      "label": "Container width",
+      "min": 1000,
+      "max": 1600,
+      "step": 100,
+      "unit": "px",
+      "default": 1400
+    },
+    {
+      "type": "range",
+      "id": "column_gap",
+      "label": "Column gap",
+      "min": 20,
+      "max": 100,
+      "step": 10,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "content_spacing",
+      "label": "Content spacing",
+      "min": 16,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "highlight_spacing",
+      "label": "Highlight spacing",
+      "min": 12,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "select",
+      "id": "mobile_layout",
+      "label": "Mobile layout",
+      "options": [
+        {
+          "value": "content_first",
+          "label": "Content first"
+        },
+        {
+          "value": "image_first",
+          "label": "Image first"
+        }
+      ],
+      "default": "content_first"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "headline_color",
+      "label": "Headline",
+      "default": "#0e1b4d"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#4a5568"
+    },
+    {
+      "type": "color",
+      "id": "icon_background",
+      "label": "Icon background",
+      "default": "#4770db"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "headline_size",
+      "label": "Headline size",
+      "min": 24,
+      "max": 64,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "description_size",
+      "label": "Description size",
+      "min": 14,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "highlight_title_size",
+      "label": "Highlight title size",
+      "min": 14,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "highlight_desc_size",
+      "label": "Highlight description size",
+      "min": 12,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "header",
+      "content": "Icon style"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "label": "Icon size",
+      "min": 40,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "icon_border_radius",
+      "label": "Icon border radius",
+      "min": 0,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Button style"
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Background",
+      "default": "#0e1b4d"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_background",
+      "label": "Hover background",
+      "default": "#4770db"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_text_color",
+      "label": "Hover text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "button_font_size",
+      "label": "Font size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "button_padding_vertical",
+      "label": "Vertical padding",
+      "min": 8,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "button_padding_horizontal",
+      "label": "Horizontal padding",
+      "min": 16,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "section_padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "section_padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 80
+    }
+  ],
+  "presets": [
+    {
+      "name": "Why choose us"
+    }
+  ]
+}
+{% endschema %}

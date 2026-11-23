@@ -1,0 +1,834 @@
+{% doc %}
+  @prompt
+    Create a 'Service Solutions' section for our Shopify store using a 4-pillar interactive accordion or 'click-to-expand' layout.
+    
+    Design Requirements:
+    
+    Desktop: 4 horizontal columns that expand on click.
+    
+    Mobile: 4 vertical stacked cards that expand.
+    
+    Branding: Use professional, industrial-toned colors with high-quality icons for each pillar.
+    
+    Pillar Content:
+    
+    Pillar 1: Hygiene & Washroom Solutions. Headline: 'Professional Setups, Zero Cost.' Content: Focus on free dispenser installation via partners like Kruger and Tork. Mention affordable products and multiple sizing solutions.
+    
+    Pillar 2: Industrial Equipment. Headline: 'Buy or Rent: Scalable Cleaning.' Content: Showcase Dishwashers and Scrubber machines from market-leading vendors. Highlight the 'Rent vs. Buy' flexibility and high client satisfaction.
+    
+    Pillar 3: Smart Chemical Dispensing. Headline: 'Precision Dilution, Maximum Savings.' Content: Explain the setup of chemical dispensers for concentrates. Mention applications for spray bottles, jugs, and mop buckets to reduce costs.
+    
+    Pillar 4: Technical Expertise & Training. Headline: 'Expert Support & Demos.' Content: Highlight our technician-led training sessions, documentation access, and preferential service for clients.
+    
+    Call to Action (CTA): Every expanded section must include a prominent 'Request an On-Site Demo' button linking to our contact form."
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-service-solutions-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    padding: {{ block.settings.section_padding_top }}px 20px {{ block.settings.section_padding_bottom }}px;
+    background-color: {{ block.settings.background_color }};
+  }
+
+  .ai-service-solutions__container-{{ ai_gen_id }} {
+    max-width: {{ block.settings.max_width }}px;
+    margin: 0 auto;
+  }
+
+  .ai-service-solutions__header-{{ ai_gen_id }} {
+    text-align: center;
+    margin-bottom: 50px;
+  }
+
+  .ai-service-solutions__title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.title_size }}px;
+    color: {{ block.settings.title_color }};
+    margin: 0 0 15px;
+    font-weight: 700;
+  }
+
+  .ai-service-solutions__subtitle-{{ ai_gen_id }} {
+    font-size: {{ block.settings.subtitle_size }}px;
+    color: {{ block.settings.subtitle_color }};
+    margin: 0;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .ai-service-solutions__pillars-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+
+  .ai-service-solutions__pillar-{{ ai_gen_id }} {
+    background-color: {{ block.settings.pillar_bg_color }};
+    border: {{ block.settings.pillar_border_width }}px solid {{ block.settings.pillar_border_color }};
+    border-radius: {{ block.settings.pillar_border_radius }}px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .ai-service-solutions__pillar-{{ ai_gen_id }}:hover {
+    border-color: {{ block.settings.pillar_hover_border_color }};
+    box-shadow: 0 4px 12px rgba(14, 27, 77, 0.15);
+  }
+
+  .ai-service-solutions__pillar-header-{{ ai_gen_id }} {
+    padding: 30px 20px;
+    text-align: center;
+    background-color: {{ block.settings.pillar_header_bg }};
+    transition: background-color 0.3s ease;
+  }
+
+  .ai-service-solutions__pillar-{{ ai_gen_id }}.active .ai-service-solutions__pillar-header-{{ ai_gen_id }} {
+    background-color: {{ block.settings.pillar_active_header_bg }};
+  }
+
+  .ai-service-solutions__icon-wrapper-{{ ai_gen_id }} {
+    width: {{ block.settings.icon_size }}px;
+    height: {{ block.settings.icon_size }}px;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: {{ block.settings.icon_bg_color }};
+    border-radius: 50%;
+  }
+
+  .ai-service-solutions__icon-wrapper-{{ ai_gen_id }} svg {
+    width: calc({{ block.settings.icon_size }}px * 0.5);
+    height: calc({{ block.settings.icon_size }}px * 0.5);
+    fill: {{ block.settings.icon_color }};
+  }
+
+  .ai-service-solutions__pillar-title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.pillar_title_size }}px;
+    color: {{ block.settings.pillar_title_color }};
+    margin: 0 0 10px;
+    font-weight: 600;
+  }
+
+  .ai-service-solutions__pillar-headline-{{ ai_gen_id }} {
+    font-size: {{ block.settings.pillar_headline_size }}px;
+    color: {{ block.settings.pillar_headline_color }};
+    margin: 0;
+    font-weight: 500;
+  }
+
+  .ai-service-solutions__pillar-content-{{ ai_gen_id }} {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+    padding: 0 20px;
+  }
+
+  .ai-service-solutions__pillar-{{ ai_gen_id }}.active .ai-service-solutions__pillar-content-{{ ai_gen_id }} {
+    max-height: 600px;
+    padding: 20px;
+  }
+
+  .ai-service-solutions__pillar-description-{{ ai_gen_id }} {
+    font-size: {{ block.settings.description_size }}px;
+    color: {{ block.settings.description_color }};
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  .ai-service-solutions__cta-button-{{ ai_gen_id }} {
+    display: inline-block;
+    padding: 14px 28px;
+    background-color: {{ block.settings.cta_bg_color }};
+    color: {{ block.settings.cta_text_color }};
+    text-decoration: none;
+    border-radius: {{ block.settings.cta_border_radius }}px;
+    font-weight: 600;
+    font-size: {{ block.settings.cta_font_size }}px;
+    transition: all 0.3s ease;
+    border: 2px solid {{ block.settings.cta_bg_color }};
+    text-align: center;
+    width: 100%;
+  }
+
+  .ai-service-solutions__cta-button-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.cta_hover_bg_color }};
+    border-color: {{ block.settings.cta_hover_bg_color }};
+    color: {{ block.settings.cta_hover_text_color }};
+  }
+
+  .ai-service-solutions__expand-icon-{{ ai_gen_id }} {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    width: 24px;
+    height: 24px;
+    transition: transform 0.3s ease;
+  }
+
+  .ai-service-solutions__expand-icon-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: 100%;
+    fill: {{ block.settings.pillar_title_color }};
+  }
+
+  .ai-service-solutions__pillar-{{ ai_gen_id }}.active .ai-service-solutions__expand-icon-{{ ai_gen_id }} {
+    transform: rotate(180deg);
+  }
+
+  @media screen and (max-width: 989px) {
+    .ai-service-solutions__pillars-{{ ai_gen_id }} {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+
+    .ai-service-solutions__title-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.title_size }}px * 0.8);
+    }
+
+    .ai-service-solutions__subtitle-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.subtitle_size }}px * 0.9);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-service-solutions__pillars-{{ ai_gen_id }} {
+      grid-template-columns: 1fr;
+      gap: 15px;
+    }
+
+    .ai-service-solutions__pillar-header-{{ ai_gen_id }} {
+      padding: 25px 15px;
+    }
+
+    .ai-service-solutions__pillar-content-{{ ai_gen_id }} {
+      padding: 0 15px;
+    }
+
+    .ai-service-solutions__pillar-{{ ai_gen_id }}.active .ai-service-solutions__pillar-content-{{ ai_gen_id }} {
+      padding: 15px;
+    }
+
+    .ai-service-solutions__title-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.title_size }}px * 0.7);
+    }
+
+    .ai-service-solutions__subtitle-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.subtitle_size }}px * 0.85);
+    }
+  }
+{% endstyle %}
+
+<service-solutions-{{ ai_gen_id }} class="ai-service-solutions-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-service-solutions__container-{{ ai_gen_id }}">
+    {% if block.settings.section_title != blank or block.settings.section_subtitle != blank %}
+      <div class="ai-service-solutions__header-{{ ai_gen_id }}">
+        {% if block.settings.section_title != blank %}
+          <h2 class="ai-service-solutions__title-{{ ai_gen_id }}">{{ block.settings.section_title }}</h2>
+        {% endif %}
+        {% if block.settings.section_subtitle != blank %}
+          <p class="ai-service-solutions__subtitle-{{ ai_gen_id }}">{{ block.settings.section_subtitle }}</p>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <div class="ai-service-solutions__pillars-{{ ai_gen_id }}">
+      {% for i in (1..4) %}
+        {% liquid
+          assign pillar_enabled_key = 'pillar_' | append: i | append: '_enabled'
+          assign pillar_title_key = 'pillar_' | append: i | append: '_title'
+          assign pillar_headline_key = 'pillar_' | append: i | append: '_headline'
+          assign pillar_description_key = 'pillar_' | append: i | append: '_description'
+          assign pillar_icon_key = 'pillar_' | append: i | append: '_icon'
+
+          assign pillar_enabled = block.settings[pillar_enabled_key]
+          assign pillar_title = block.settings[pillar_title_key]
+          assign pillar_headline = block.settings[pillar_headline_key]
+          assign pillar_description = block.settings[pillar_description_key]
+          assign pillar_icon = block.settings[pillar_icon_key]
+        %}
+
+        {% if pillar_enabled %}
+          <div class="ai-service-solutions__pillar-{{ ai_gen_id }}" data-pillar="{{ i }}">
+            <div class="ai-service-solutions__pillar-header-{{ ai_gen_id }}">
+              <div class="ai-service-solutions__icon-wrapper-{{ ai_gen_id }}">
+                {% case pillar_icon %}
+                  {% when 'hygiene' %}
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                      <path d="M12 2C9.24 2 7 4.24 7 7c0 1.77.94 3.32 2.34 4.19C8.5 12.27 8 13.58 8 15v5c0 1.1.9 2 2 2h4c1.1 0 2-.9 2-2v-5c0-1.42-.5-2.73-1.34-3.81C16.06 10.32 17 8.77 17 7c0-2.76-2.24-5-5-5zm0 2c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm-2 11h4v5h-4v-5z"/>
+                    </svg>
+                  {% when 'equipment' %}
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                      <path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"/>
+                    </svg>
+                  {% when 'chemical' %}
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                      <path d="M7 2v2h1v14c0 2.21 1.79 4 4 4s4-1.79 4-4V4h1V2H7zm2 2h6v3h-2V5h-2v2H9V4zm0 5h6v9c0 1.1-.9 2-2 2s-2-.9-2-2V9z"/>
+                    </svg>
+                  {% when 'training' %}
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                      <path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/>
+                    </svg>
+                {% endcase %}
+              </div>
+              <h3 class="ai-service-solutions__pillar-title-{{ ai_gen_id }}">{{ pillar_title }}</h3>
+              <p class="ai-service-solutions__pillar-headline-{{ ai_gen_id }}">{{ pillar_headline }}</p>
+              <div class="ai-service-solutions__expand-icon-{{ ai_gen_id }}">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+                </svg>
+              </div>
+            </div>
+            <div class="ai-service-solutions__pillar-content-{{ ai_gen_id }}">
+              <div class="ai-service-solutions__pillar-description-{{ ai_gen_id }}">
+                {{ pillar_description }}
+              </div>
+              <a href="{{ block.settings.cta_link }}" class="ai-service-solutions__cta-button-{{ ai_gen_id }}">
+                {{ block.settings.cta_text }}
+              </a>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</service-solutions-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class ServiceSolutions{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.pillars = this.querySelectorAll('.ai-service-solutions__pillar-{{ ai_gen_id }}');
+        this.setupEventListeners();
+      }
+
+      setupEventListeners() {
+        this.pillars.forEach((pillar) => {
+          const header = pillar.querySelector('.ai-service-solutions__pillar-header-{{ ai_gen_id }}');
+          
+          header.addEventListener('click', () => {
+            const isActive = pillar.classList.contains('active');
+            
+            this.pillars.forEach((p) => {
+              p.classList.remove('active');
+            });
+            
+            if (!isActive) {
+              pillar.classList.add('active');
+            }
+          });
+        });
+      }
+    }
+
+    customElements.define('service-solutions-{{ ai_gen_id }}', ServiceSolutions{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Service solutions",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section header"
+    },
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Title",
+      "default": "Service Solutions"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Title size",
+      "min": 20,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 42
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#0e1b4d"
+    },
+    {
+      "type": "textarea",
+      "id": "section_subtitle",
+      "label": "Subtitle",
+      "default": "Comprehensive facility solutions tailored to your operational needs"
+    },
+    {
+      "type": "range",
+      "id": "subtitle_size",
+      "label": "Subtitle size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle color",
+      "default": "#666666"
+    },
+    {
+      "type": "header",
+      "content": "Section style"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#f8f9fa"
+    },
+    {
+      "type": "range",
+      "id": "section_padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "section_padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Maximum width",
+      "min": 1000,
+      "max": 1600,
+      "step": 100,
+      "unit": "px",
+      "default": 1400
+    },
+    {
+      "type": "header",
+      "content": "Pillar cards"
+    },
+    {
+      "type": "color",
+      "id": "pillar_bg_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "pillar_header_bg",
+      "label": "Header background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "pillar_active_header_bg",
+      "label": "Active header background",
+      "default": "#f0f4ff"
+    },
+    {
+      "type": "range",
+      "id": "pillar_border_width",
+      "label": "Border width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 2
+    },
+    {
+      "type": "color",
+      "id": "pillar_border_color",
+      "label": "Border color",
+      "default": "#e0e0e0"
+    },
+    {
+      "type": "color",
+      "id": "pillar_hover_border_color",
+      "label": "Hover border color",
+      "default": "#4770db"
+    },
+    {
+      "type": "range",
+      "id": "pillar_border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Icons"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "label": "Icon size",
+      "min": 40,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 70
+    },
+    {
+      "type": "color",
+      "id": "icon_bg_color",
+      "label": "Icon background",
+      "default": "#4770db"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "pillar_title_size",
+      "label": "Pillar title size",
+      "min": 14,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "color",
+      "id": "pillar_title_color",
+      "label": "Pillar title color",
+      "default": "#0e1b4d"
+    },
+    {
+      "type": "range",
+      "id": "pillar_headline_size",
+      "label": "Headline size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "color",
+      "id": "pillar_headline_color",
+      "label": "Headline color",
+      "default": "#4770db"
+    },
+    {
+      "type": "range",
+      "id": "description_size",
+      "label": "Description size",
+      "min": 12,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description color",
+      "default": "#555555"
+    },
+    {
+      "type": "header",
+      "content": "Call to action"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Button text",
+      "default": "Request an On-Site Demo"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button link"
+    },
+    {
+      "type": "range",
+      "id": "cta_font_size",
+      "label": "Button font size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "cta_bg_color",
+      "label": "Button background",
+      "default": "#0e1b4d"
+    },
+    {
+      "type": "color",
+      "id": "cta_text_color",
+      "label": "Button text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "cta_hover_bg_color",
+      "label": "Button hover background",
+      "default": "#4770db"
+    },
+    {
+      "type": "color",
+      "id": "cta_hover_text_color",
+      "label": "Button hover text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "cta_border_radius",
+      "label": "Button border radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 26
+    },
+    {
+      "type": "header",
+      "content": "Pillar 1"
+    },
+    {
+      "type": "checkbox",
+      "id": "pillar_1_enabled",
+      "label": "Enable pillar 1",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "pillar_1_icon",
+      "label": "Icon",
+      "options": [
+        {
+          "value": "hygiene",
+          "label": "Hygiene"
+        },
+        {
+          "value": "equipment",
+          "label": "Equipment"
+        },
+        {
+          "value": "chemical",
+          "label": "Chemical"
+        },
+        {
+          "value": "training",
+          "label": "Training"
+        }
+      ],
+      "default": "hygiene"
+    },
+    {
+      "type": "text",
+      "id": "pillar_1_title",
+      "label": "Title",
+      "default": "Hygiene & Washroom Solutions"
+    },
+    {
+      "type": "text",
+      "id": "pillar_1_headline",
+      "label": "Headline",
+      "default": "Professional Setups, Zero Cost"
+    },
+    {
+      "type": "richtext",
+      "id": "pillar_1_description",
+      "label": "Description",
+      "default": "<p>Free dispenser installation via partners like Kruger and Tork. Affordable products with multiple sizing solutions to meet your facility's needs.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Pillar 2"
+    },
+    {
+      "type": "checkbox",
+      "id": "pillar_2_enabled",
+      "label": "Enable pillar 2",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "pillar_2_icon",
+      "label": "Icon",
+      "options": [
+        {
+          "value": "hygiene",
+          "label": "Hygiene"
+        },
+        {
+          "value": "equipment",
+          "label": "Equipment"
+        },
+        {
+          "value": "chemical",
+          "label": "Chemical"
+        },
+        {
+          "value": "training",
+          "label": "Training"
+        }
+      ],
+      "default": "equipment"
+    },
+    {
+      "type": "text",
+      "id": "pillar_2_title",
+      "label": "Title",
+      "default": "Industrial Equipment"
+    },
+    {
+      "type": "text",
+      "id": "pillar_2_headline",
+      "label": "Headline",
+      "default": "Buy or Rent: Scalable Cleaning"
+    },
+    {
+      "type": "richtext",
+      "id": "pillar_2_description",
+      "label": "Description",
+      "default": "<p>Dishwashers and scrubber machines from market-leading vendors. Flexible rent vs. buy options with high client satisfaction ratings.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Pillar 3"
+    },
+    {
+      "type": "checkbox",
+      "id": "pillar_3_enabled",
+      "label": "Enable pillar 3",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "pillar_3_icon",
+      "label": "Icon",
+      "options": [
+        {
+          "value": "hygiene",
+          "label": "Hygiene"
+        },
+        {
+          "value": "equipment",
+          "label": "Equipment"
+        },
+        {
+          "value": "chemical",
+          "label": "Chemical"
+        },
+        {
+          "value": "training",
+          "label": "Training"
+        }
+      ],
+      "default": "chemical"
+    },
+    {
+      "type": "text",
+      "id": "pillar_3_title",
+      "label": "Title",
+      "default": "Smart Chemical Dispensing"
+    },
+    {
+      "type": "text",
+      "id": "pillar_3_headline",
+      "label": "Headline",
+      "default": "Precision Dilution, Maximum Savings"
+    },
+    {
+      "type": "richtext",
+      "id": "pillar_3_description",
+      "label": "Description",
+      "default": "<p>Chemical dispensers for concentrates with applications for spray bottles, jugs, and mop buckets to reduce costs and improve efficiency.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Pillar 4"
+    },
+    {
+      "type": "checkbox",
+      "id": "pillar_4_enabled",
+      "label": "Enable pillar 4",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "pillar_4_icon",
+      "label": "Icon",
+      "options": [
+        {
+          "value": "hygiene",
+          "label": "Hygiene"
+        },
+        {
+          "value": "equipment",
+          "label": "Equipment"
+        },
+        {
+          "value": "chemical",
+          "label": "Chemical"
+        },
+        {
+          "value": "training",
+          "label": "Training"
+        }
+      ],
+      "default": "training"
+    },
+    {
+      "type": "text",
+      "id": "pillar_4_title",
+      "label": "Title",
+      "default": "Technical Expertise & Training"
+    },
+    {
+      "type": "text",
+      "id": "pillar_4_headline",
+      "label": "Headline",
+      "default": "Expert Support & Demos"
+    },
+    {
+      "type": "richtext",
+      "id": "pillar_4_description",
+      "label": "Description",
+      "default": "<p>Technician-led training sessions, comprehensive documentation access, and preferential service for all clients.</p>"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Service solutions"
+    }
+  ]
+}
+{% endschema %}

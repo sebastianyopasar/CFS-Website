@@ -1,0 +1,526 @@
+{% doc %}
+  @prompt
+    Act as an expert web designer and create a brand partner and distributor section for the Corporate Facility Supply website, positioned directly below the "Why Choose Us" section. The design should feature a clean, elegant brand logo carousel or a sleek, minimalist logo grid displaying trusted vendor partnerships with industry-leading manufacturers such as Essity, Kruger, Tennant, Kärcher, Hawk, and CAA. Include a bold, welcoming headline and a brief subtext explaining that these premium brand relationships are essential to our operations, enabling us to deliver the highest level of quality and service to our clients throughout Southern Ontario.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-brand-partners-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    padding: {{ block.settings.section_padding_top }}px 0 {{ block.settings.section_padding_bottom }}px;
+    background-color: {{ block.settings.background_color }};
+  }
+
+  .ai-brand-partners-container-{{ ai_gen_id }} {
+    max-width: {{ block.settings.container_width }}px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .ai-brand-partners-header-{{ ai_gen_id }} {
+    text-align: {{ block.settings.text_alignment }};
+    margin-bottom: {{ block.settings.header_spacing }}px;
+  }
+
+  .ai-brand-partners-heading-{{ ai_gen_id }} {
+    font-size: {{ block.settings.heading_size }}px;
+    font-weight: {{ block.settings.heading_weight }};
+    color: {{ block.settings.heading_color }};
+    margin: 0 0 {{ block.settings.subtext_spacing }}px;
+    line-height: 1.2;
+  }
+
+  .ai-brand-partners-subtext-{{ ai_gen_id }} {
+    font-size: {{ block.settings.subtext_size }}px;
+    color: {{ block.settings.subtext_color }};
+    line-height: 1.6;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .ai-brand-partners-grid-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat({{ block.settings.columns_desktop }}, 1fr);
+    gap: {{ block.settings.grid_gap }}px;
+    align-items: center;
+  }
+
+  .ai-brand-partners-logo-wrapper-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: {{ block.settings.logo_padding }}px;
+    background-color: {{ block.settings.logo_background }};
+    border-radius: {{ block.settings.logo_border_radius }}px;
+    border: {{ block.settings.logo_border_width }}px solid {{ block.settings.logo_border_color }};
+    transition: all 0.3s ease;
+    min-height: {{ block.settings.logo_min_height }}px;
+  }
+
+  .ai-brand-partners-logo-wrapper-{{ ai_gen_id }}:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  }
+
+  .ai-brand-partners-logo-{{ ai_gen_id }} {
+    width: 100%;
+    height: auto;
+    max-width: {{ block.settings.logo_max_width }}px;
+    object-fit: contain;
+    filter: grayscale({{ block.settings.logo_grayscale }}%);
+    opacity: {{ block.settings.logo_opacity }};
+    transition: all 0.3s ease;
+  }
+
+  .ai-brand-partners-logo-wrapper-{{ ai_gen_id }}:hover .ai-brand-partners-logo-{{ ai_gen_id }} {
+    filter: grayscale(0%);
+    opacity: 1;
+  }
+
+  .ai-brand-partners-logo-placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f4f4f4;
+    border-radius: {{ block.settings.logo_border_radius }}px;
+  }
+
+  .ai-brand-partners-logo-placeholder-{{ ai_gen_id }} svg {
+    width: 60%;
+    height: 60%;
+    opacity: 0.3;
+  }
+
+  @media screen and (max-width: 989px) {
+    .ai-brand-partners-grid-{{ ai_gen_id }} {
+      grid-template-columns: repeat({{ block.settings.columns_tablet }}, 1fr);
+    }
+
+    .ai-brand-partners-heading-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.heading_size }}px * 0.85);
+    }
+
+    .ai-brand-partners-subtext-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.subtext_size }}px * 0.95);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-brand-partners-grid-{{ ai_gen_id }} {
+      grid-template-columns: repeat({{ block.settings.columns_mobile }}, 1fr);
+    }
+
+    .ai-brand-partners-{{ ai_gen_id }} {
+      padding: {{ block.settings.section_padding_top | times: 0.7 }}px 0 {{ block.settings.section_padding_bottom | times: 0.7 }}px;
+    }
+
+    .ai-brand-partners-heading-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.heading_size }}px * 0.7);
+    }
+
+    .ai-brand-partners-subtext-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.subtext_size }}px * 0.9);
+    }
+  }
+{% endstyle %}
+
+<brand-partners-{{ ai_gen_id }} class="ai-brand-partners-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-brand-partners-container-{{ ai_gen_id }}">
+    <div class="ai-brand-partners-header-{{ ai_gen_id }}">
+      {% if block.settings.heading != blank %}
+        <h2 class="ai-brand-partners-heading-{{ ai_gen_id }}">{{ block.settings.heading }}</h2>
+      {% endif %}
+      {% if block.settings.subtext != blank %}
+        <div class="ai-brand-partners-subtext-{{ ai_gen_id }}">{{ block.settings.subtext }}</div>
+      {% endif %}
+    </div>
+
+    <div class="ai-brand-partners-grid-{{ ai_gen_id }}">
+      {% for i in (1..6) %}
+        {% liquid
+          assign logo_key = 'logo_' | append: i
+          assign logo = block.settings[logo_key]
+        %}
+        
+        <div class="ai-brand-partners-logo-wrapper-{{ ai_gen_id }}">
+          {% if logo != blank %}
+            <img
+              src="{{ logo | image_url: width: 400 }}"
+              alt="{{ logo.alt | escape }}"
+              loading="lazy"
+              width="{{ logo.width }}"
+              height="{{ logo.height }}"
+              class="ai-brand-partners-logo-{{ ai_gen_id }}"
+            >
+          {% else %}
+            <div class="ai-brand-partners-logo-placeholder-{{ ai_gen_id }}">
+              {{ 'image' | placeholder_svg_tag }}
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</brand-partners-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class BrandPartners{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.setupAccessibility();
+      }
+
+      setupAccessibility() {
+        const logos = this.querySelectorAll('.ai-brand-partners-logo-{{ ai_gen_id }}');
+        logos.forEach((logo) => {
+          if (!logo.alt || logo.alt.trim() === '') {
+            logo.setAttribute('alt', 'Brand partner logo');
+          }
+        });
+      }
+    }
+
+    customElements.define('brand-partners-{{ ai_gen_id }}', BrandPartners{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Brand partners",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Trusted by Industry Leaders"
+    },
+    {
+      "type": "richtext",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "<p>Our premium brand partnerships with industry-leading manufacturers enable us to deliver the highest level of quality and service to our clients throughout Southern Ontario.</p>"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Brand logos"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_1",
+      "label": "Logo 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_2",
+      "label": "Logo 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_3",
+      "label": "Logo 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_4",
+      "label": "Logo 4"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_5",
+      "label": "Logo 5"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_6",
+      "label": "Logo 6"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Columns on desktop",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "columns_tablet",
+      "label": "Columns on tablet",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "columns_mobile",
+      "label": "Columns on mobile",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "label": "Grid gap",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "container_width",
+      "label": "Container width",
+      "min": 1000,
+      "max": 1600,
+      "step": 100,
+      "unit": "px",
+      "default": 1400
+    },
+    {
+      "type": "header",
+      "content": "Logo style"
+    },
+    {
+      "type": "range",
+      "id": "logo_max_width",
+      "label": "Logo max width",
+      "min": 80,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "default": 180
+    },
+    {
+      "type": "range",
+      "id": "logo_min_height",
+      "label": "Logo min height",
+      "min": 60,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "logo_padding",
+      "label": "Logo padding",
+      "min": 10,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "logo_border_radius",
+      "label": "Logo border radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "logo_border_width",
+      "label": "Logo border width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "color",
+      "id": "logo_background",
+      "label": "Logo background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "logo_border_color",
+      "label": "Logo border color",
+      "default": "#e5e5e5"
+    },
+    {
+      "type": "range",
+      "id": "logo_grayscale",
+      "label": "Logo grayscale",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "unit": "%",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "logo_opacity",
+      "label": "Logo opacity",
+      "min": 0,
+      "max": 1,
+      "step": 0.1,
+      "default": 0.7
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading size",
+      "min": 20,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "select",
+      "id": "heading_weight",
+      "label": "Heading weight",
+      "options": [
+        {
+          "value": "400",
+          "label": "Normal"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semi-bold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "range",
+      "id": "subtext_size",
+      "label": "Subtext size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#f9f9f9"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading",
+      "default": "#0e1b4d"
+    },
+    {
+      "type": "color",
+      "id": "subtext_color",
+      "label": "Subtext",
+      "default": "#666666"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "section_padding_top",
+      "label": "Top padding",
+      "min": 20,
+      "max": 120,
+      "step": 10,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "section_padding_bottom",
+      "label": "Bottom padding",
+      "min": 20,
+      "max": 120,
+      "step": 10,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "header_spacing",
+      "label": "Header spacing",
+      "min": 20,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "subtext_spacing",
+      "label": "Subtext spacing",
+      "min": 10,
+      "max": 40,
+      "step": 5,
+      "unit": "px",
+      "default": 15
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brand partners"
+    }
+  ]
+}
+{% endschema %}

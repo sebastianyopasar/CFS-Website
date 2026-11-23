@@ -1,0 +1,743 @@
+{% doc %}
+  @prompt
+    Create a custom Shopify Liquid section for a "Knowledge Base & Resource Portal". The design should feature a clean, professional 2x2 grid on desktop that stacks to a single column on mobile.
+    
+    Here are the specific requirements for the layout and schema:
+    
+    1. Overall Section Settings:
+    
+    Section Title (Text setting, default: "Corporate Knowledge Base & Resource Portal")
+    
+    Section Subtitle (Rich text setting, default: "Technical documentation, training resources, and operational guides for facility management professionals")
+    
+    2. Grid & Styling Requirements:
+    
+    Four distinct card containers (2 columns x 2 rows on desktop).
+    
+    Cards should have a subtle border, rounded corners, and a light background to match a clean corporate UI design.
+    
+    Cards 1, 2, and 3 must feature a custom CSS scrollable container (max-height: 300px; overflow-y: auto;) for their link lists. This is critical so the cards remain a uniform size even when loaded with 100+ links.
+    
+    Include an HTML text box setting for a custom SVG icon at the top of each card.
+    
+    3. Card 1: Machine Specifications & Support
+    
+    Title: "Machine Specifications & Support"
+    
+    Content: A Rich Text setting for a description explaining general maintenance and noting that for highly precise machine documentation, the user should contact support.
+    
+    Links: A setting to select a Shopify Navigation Menu (link_list). Loop through this menu and output it as a list of links inside the scrollable container.
+    
+    Button: A "Contact Us" button with customizable text and URL settings.
+    
+    4. Card 2: Cut Data Sheets & Product Documentation
+    
+    Title: "Cut Data Sheets & Product Documentation"
+    
+    Content: A Rich text setting for a brief introductory sentence.
+    
+    Links: A setting to select a Shopify Navigation Menu (link_list) to handle 100+ cut sheet links. Output these inside the scrollable container.
+    
+    5. Card 3: Brochures and How-To's
+    
+    Title: "Brochures and How-To's"
+    
+    Content: A Rich text setting for a brief introductory sentence.
+    
+    Links: A setting to select a Shopify Navigation Menu (link_list). Output these inside the scrollable container.
+    
+    6. Card 4: Safety Data Sheets (SDS)
+    
+    Title: "Safety Data Sheets (SDS)"
+    
+    Content: A Rich Text setting for a brief description (e.g., "Access our complete SDS repository for all chemical products").
+    
+    Button: A prominent button with customizable text (e.g., "View SDS Library") and a URL setting to redirect the user to the dedicated SDS page.
+    
+    Please provide the complete, ready-to-use Liquid code. Include the {% schema %}, the HTML structure, and the necessary CSS within a <style> tag to ensure the grid responsiveness and the scrollable link containers work perfectly. Ensure the schema allows for easy management within the Shopify theme editor.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-knowledge-base-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    padding: 60px 20px;
+    background-color: {{ block.settings.section_background_color }};
+  }
+
+  .ai-knowledge-base-container-{{ ai_gen_id }} {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .ai-knowledge-base-header-{{ ai_gen_id }} {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .ai-knowledge-base-title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.title_font_size }}px;
+    color: {{ block.settings.title_color }};
+    margin: 0 0 16px;
+    font-weight: 600;
+  }
+
+  .ai-knowledge-base-subtitle-{{ ai_gen_id }} {
+    font-size: {{ block.settings.subtitle_font_size }}px;
+    color: {{ block.settings.subtitle_color }};
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  .ai-knowledge-base-grid-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: {{ block.settings.grid_gap }}px;
+  }
+
+  .ai-knowledge-base-card-{{ ai_gen_id }} {
+    background-color: {{ block.settings.card_background_color }};
+    border: {{ block.settings.card_border_thickness }}px solid {{ block.settings.card_border_color }};
+    border-radius: {{ block.settings.card_border_radius }}px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ai-knowledge-base-card-icon-{{ ai_gen_id }} {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+  }
+
+  .ai-knowledge-base-card-icon-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .ai-knowledge-base-card-title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.card_title_font_size }}px;
+    color: {{ block.settings.card_title_color }};
+    margin: 0 0 16px;
+    font-weight: 600;
+  }
+
+  .ai-knowledge-base-card-content-{{ ai_gen_id }} {
+    font-size: {{ block.settings.card_text_font_size }}px;
+    color: {{ block.settings.card_text_color }};
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+
+  .ai-knowledge-base-scrollable-{{ ai_gen_id }} {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    padding-right: 8px;
+  }
+
+  .ai-knowledge-base-scrollable-{{ ai_gen_id }}::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .ai-knowledge-base-scrollable-{{ ai_gen_id }}::-webkit-scrollbar-track {
+    background: {{ block.settings.scrollbar_track_color }};
+    border-radius: 3px;
+  }
+
+  .ai-knowledge-base-scrollable-{{ ai_gen_id }}::-webkit-scrollbar-thumb {
+    background: {{ block.settings.scrollbar_thumb_color }};
+    border-radius: 3px;
+  }
+
+  .ai-knowledge-base-scrollable-{{ ai_gen_id }}::-webkit-scrollbar-thumb:hover {
+    background: {{ block.settings.scrollbar_thumb_hover_color }};
+  }
+
+  .ai-knowledge-base-link-list-{{ ai_gen_id }} {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .ai-knowledge-base-link-item-{{ ai_gen_id }} {
+    margin-bottom: 12px;
+  }
+
+  .ai-knowledge-base-link-{{ ai_gen_id }} {
+    color: {{ block.settings.link_color }};
+    text-decoration: none;
+    font-size: {{ block.settings.link_font_size }}px;
+    display: flex;
+    align-items: center;
+    transition: color 0.2s ease;
+  }
+
+  .ai-knowledge-base-link-{{ ai_gen_id }}:hover {
+    color: {{ block.settings.link_hover_color }};
+    text-decoration: underline;
+  }
+
+  .ai-knowledge-base-link-{{ ai_gen_id }}::before {
+    content: "→";
+    margin-right: 8px;
+    font-weight: bold;
+  }
+
+  .ai-knowledge-base-button-{{ ai_gen_id }} {
+    display: inline-block;
+    padding: 14px 28px;
+    background-color: {{ block.settings.button_background_color }};
+    color: {{ block.settings.button_text_color }};
+    text-decoration: none;
+    border-radius: {{ block.settings.button_border_radius }}px;
+    font-size: {{ block.settings.button_font_size }}px;
+    font-weight: 600;
+    text-align: center;
+    transition: background-color 0.2s ease;
+    border: none;
+    cursor: pointer;
+  }
+
+  .ai-knowledge-base-button-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.button_hover_background_color }};
+  }
+
+  .ai-knowledge-base-card-no-scroll-{{ ai_gen_id }} {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-knowledge-base-{{ ai_gen_id }} {
+      padding: 40px 16px;
+    }
+
+    .ai-knowledge-base-grid-{{ ai_gen_id }} {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    .ai-knowledge-base-card-{{ ai_gen_id }} {
+      padding: 24px;
+    }
+
+    .ai-knowledge-base-title-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.title_font_size }}px * 0.8);
+    }
+
+    .ai-knowledge-base-subtitle-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.subtitle_font_size }}px * 0.9);
+    }
+
+    .ai-knowledge-base-card-title-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.card_title_font_size }}px * 0.9);
+    }
+  }
+{% endstyle %}
+
+<knowledge-base-{{ ai_gen_id }} class="ai-knowledge-base-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-knowledge-base-container-{{ ai_gen_id }}">
+    <div class="ai-knowledge-base-header-{{ ai_gen_id }}">
+      {% if block.settings.section_title != blank %}
+        <h2 class="ai-knowledge-base-title-{{ ai_gen_id }}">{{ block.settings.section_title }}</h2>
+      {% endif %}
+      {% if block.settings.section_subtitle != blank %}
+        <div class="ai-knowledge-base-subtitle-{{ ai_gen_id }}">{{ block.settings.section_subtitle }}</div>
+      {% endif %}
+    </div>
+
+    <div class="ai-knowledge-base-grid-{{ ai_gen_id }}">
+      <div class="ai-knowledge-base-card-{{ ai_gen_id }}">
+        {% if block.settings.card1_icon != blank %}
+          <div class="ai-knowledge-base-card-icon-{{ ai_gen_id }}">
+            {{ block.settings.card1_icon }}
+          </div>
+        {% endif %}
+        <h3 class="ai-knowledge-base-card-title-{{ ai_gen_id }}">{{ block.settings.card1_title }}</h3>
+        {% if block.settings.card1_content != blank %}
+          <div class="ai-knowledge-base-card-content-{{ ai_gen_id }}">{{ block.settings.card1_content }}</div>
+        {% endif %}
+        {% if block.settings.card1_menu != blank %}
+          <div class="ai-knowledge-base-scrollable-{{ ai_gen_id }}">
+            <ul class="ai-knowledge-base-link-list-{{ ai_gen_id }}">
+              {% for link in linklists[block.settings.card1_menu].links %}
+                <li class="ai-knowledge-base-link-item-{{ ai_gen_id }}">
+                  <a href="{{ link.url }}" class="ai-knowledge-base-link-{{ ai_gen_id }}">{{ link.title }}</a>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+        {% if block.settings.card1_button_text != blank and block.settings.card1_button_url != blank %}
+          <a href="{{ block.settings.card1_button_url }}" class="ai-knowledge-base-button-{{ ai_gen_id }}">
+            {{ block.settings.card1_button_text }}
+          </a>
+        {% endif %}
+      </div>
+
+      <div class="ai-knowledge-base-card-{{ ai_gen_id }}">
+        {% if block.settings.card2_icon != blank %}
+          <div class="ai-knowledge-base-card-icon-{{ ai_gen_id }}">
+            {{ block.settings.card2_icon }}
+          </div>
+        {% endif %}
+        <h3 class="ai-knowledge-base-card-title-{{ ai_gen_id }}">{{ block.settings.card2_title }}</h3>
+        {% if block.settings.card2_content != blank %}
+          <div class="ai-knowledge-base-card-content-{{ ai_gen_id }}">{{ block.settings.card2_content }}</div>
+        {% endif %}
+        {% if block.settings.card2_menu != blank %}
+          <div class="ai-knowledge-base-scrollable-{{ ai_gen_id }}">
+            <ul class="ai-knowledge-base-link-list-{{ ai_gen_id }}">
+              {% for link in linklists[block.settings.card2_menu].links %}
+                <li class="ai-knowledge-base-link-item-{{ ai_gen_id }}">
+                  <a href="{{ link.url }}" class="ai-knowledge-base-link-{{ ai_gen_id }}">{{ link.title }}</a>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="ai-knowledge-base-card-{{ ai_gen_id }}">
+        {% if block.settings.card3_icon != blank %}
+          <div class="ai-knowledge-base-card-icon-{{ ai_gen_id }}">
+            {{ block.settings.card3_icon }}
+          </div>
+        {% endif %}
+        <h3 class="ai-knowledge-base-card-title-{{ ai_gen_id }}">{{ block.settings.card3_title }}</h3>
+        {% if block.settings.card3_content != blank %}
+          <div class="ai-knowledge-base-card-content-{{ ai_gen_id }}">{{ block.settings.card3_content }}</div>
+        {% endif %}
+        {% if block.settings.card3_menu != blank %}
+          <div class="ai-knowledge-base-scrollable-{{ ai_gen_id }}">
+            <ul class="ai-knowledge-base-link-list-{{ ai_gen_id }}">
+              {% for link in linklists[block.settings.card3_menu].links %}
+                <li class="ai-knowledge-base-link-item-{{ ai_gen_id }}">
+                  <a href="{{ link.url }}" class="ai-knowledge-base-link-{{ ai_gen_id }}">{{ link.title }}</a>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="ai-knowledge-base-card-{{ ai_gen_id }}">
+        <div class="ai-knowledge-base-card-no-scroll-{{ ai_gen_id }}">
+          <div>
+            {% if block.settings.card4_icon != blank %}
+              <div class="ai-knowledge-base-card-icon-{{ ai_gen_id }}">
+                {{ block.settings.card4_icon }}
+              </div>
+            {% endif %}
+            <h3 class="ai-knowledge-base-card-title-{{ ai_gen_id }}">{{ block.settings.card4_title }}</h3>
+            {% if block.settings.card4_content != blank %}
+              <div class="ai-knowledge-base-card-content-{{ ai_gen_id }}">{{ block.settings.card4_content }}</div>
+            {% endif %}
+          </div>
+          {% if block.settings.card4_button_text != blank and block.settings.card4_button_url != blank %}
+            <a href="{{ block.settings.card4_button_url }}" class="ai-knowledge-base-button-{{ ai_gen_id }}">
+              {{ block.settings.card4_button_text }}
+            </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</knowledge-base-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class KnowledgeBase{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.initScrollBehavior();
+      }
+
+      initScrollBehavior() {
+        const scrollContainers = this.querySelectorAll('.ai-knowledge-base-scrollable-{{ ai_gen_id }}');
+        scrollContainers.forEach(container => {
+          container.addEventListener('scroll', function() {
+            if (this.scrollTop > 0) {
+              this.style.borderTop = '1px solid rgba(0, 0, 0, 0.1)';
+            } else {
+              this.style.borderTop = 'none';
+            }
+          });
+        });
+      }
+    }
+
+    customElements.define('knowledge-base-{{ ai_gen_id }}', KnowledgeBase{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Knowledge base portal",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section settings"
+    },
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section title",
+      "default": "Corporate Knowledge Base & Resource Portal"
+    },
+    {
+      "type": "richtext",
+      "id": "section_subtitle",
+      "label": "Section subtitle",
+      "default": "<p>Technical documentation, training resources, and operational guides for facility management professionals</p>"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "label": "Title font size",
+      "min": 20,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "subtitle_font_size",
+      "label": "Subtitle font size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "section_background_color",
+      "label": "Background color",
+      "default": "#f8f9fa"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#0e1b4d"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle color",
+      "default": "#4a5568"
+    },
+    {
+      "type": "header",
+      "content": "Grid settings"
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "label": "Grid gap",
+      "min": 16,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "header",
+      "content": "Card style"
+    },
+    {
+      "type": "color",
+      "id": "card_background_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Border color",
+      "default": "#e2e8f0"
+    },
+    {
+      "type": "range",
+      "id": "card_border_thickness",
+      "label": "Border thickness",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "card_title_font_size",
+      "label": "Card title font size",
+      "min": 16,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "card_text_font_size",
+      "label": "Card text font size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "card_title_color",
+      "label": "Card title color",
+      "default": "#0e1b4d"
+    },
+    {
+      "type": "color",
+      "id": "card_text_color",
+      "label": "Card text color",
+      "default": "#4a5568"
+    },
+    {
+      "type": "header",
+      "content": "Link style"
+    },
+    {
+      "type": "range",
+      "id": "link_font_size",
+      "label": "Link font size",
+      "min": 12,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "Link color",
+      "default": "#4770db"
+    },
+    {
+      "type": "color",
+      "id": "link_hover_color",
+      "label": "Link hover color",
+      "default": "#0e1b4d"
+    },
+    {
+      "type": "header",
+      "content": "Scrollbar style"
+    },
+    {
+      "type": "color",
+      "id": "scrollbar_track_color",
+      "label": "Track color",
+      "default": "#f1f5f9"
+    },
+    {
+      "type": "color",
+      "id": "scrollbar_thumb_color",
+      "label": "Thumb color",
+      "default": "#cbd5e0"
+    },
+    {
+      "type": "color",
+      "id": "scrollbar_thumb_hover_color",
+      "label": "Thumb hover color",
+      "default": "#a0aec0"
+    },
+    {
+      "type": "header",
+      "content": "Button style"
+    },
+    {
+      "type": "range",
+      "id": "button_font_size",
+      "label": "Button font size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "label": "Button border radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "color",
+      "id": "button_background_color",
+      "label": "Button background color",
+      "default": "#0e1b4d"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_background_color",
+      "label": "Button hover background",
+      "default": "#4770db"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Card 1: Machine specifications"
+    },
+    {
+      "type": "html",
+      "id": "card1_icon",
+      "label": "Icon SVG"
+    },
+    {
+      "type": "text",
+      "id": "card1_title",
+      "label": "Title",
+      "default": "Machine Specifications & Support"
+    },
+    {
+      "type": "richtext",
+      "id": "card1_content",
+      "label": "Description",
+      "default": "<p>Access general maintenance guides and operational documentation. For highly precise machine specifications, please contact our technical support team.</p>"
+    },
+    {
+      "type": "link_list",
+      "id": "card1_menu",
+      "label": "Navigation menu"
+    },
+    {
+      "type": "text",
+      "id": "card1_button_text",
+      "label": "Button text",
+      "default": "Contact Us"
+    },
+    {
+      "type": "url",
+      "id": "card1_button_url",
+      "label": "Button URL"
+    },
+    {
+      "type": "header",
+      "content": "Card 2: Cut data sheets"
+    },
+    {
+      "type": "html",
+      "id": "card2_icon",
+      "label": "Icon SVG"
+    },
+    {
+      "type": "text",
+      "id": "card2_title",
+      "label": "Title",
+      "default": "Cut Data Sheets & Product Documentation"
+    },
+    {
+      "type": "richtext",
+      "id": "card2_content",
+      "label": "Description",
+      "default": "<p>Browse our comprehensive library of product cut sheets and technical specifications.</p>"
+    },
+    {
+      "type": "link_list",
+      "id": "card2_menu",
+      "label": "Navigation menu"
+    },
+    {
+      "type": "header",
+      "content": "Card 3: Brochures"
+    },
+    {
+      "type": "html",
+      "id": "card3_icon",
+      "label": "Icon SVG"
+    },
+    {
+      "type": "text",
+      "id": "card3_title",
+      "label": "Title",
+      "default": "Brochures and How-To's"
+    },
+    {
+      "type": "richtext",
+      "id": "card3_content",
+      "label": "Description",
+      "default": "<p>Explore product brochures, installation guides, and step-by-step tutorials.</p>"
+    },
+    {
+      "type": "link_list",
+      "id": "card3_menu",
+      "label": "Navigation menu"
+    },
+    {
+      "type": "header",
+      "content": "Card 4: Safety data sheets"
+    },
+    {
+      "type": "html",
+      "id": "card4_icon",
+      "label": "Icon SVG"
+    },
+    {
+      "type": "text",
+      "id": "card4_title",
+      "label": "Title",
+      "default": "Safety Data Sheets (SDS)"
+    },
+    {
+      "type": "richtext",
+      "id": "card4_content",
+      "label": "Description",
+      "default": "<p>Access our complete SDS repository for all chemical products. Stay compliant and informed with up-to-date safety information.</p>"
+    },
+    {
+      "type": "text",
+      "id": "card4_button_text",
+      "label": "Button text",
+      "default": "View SDS Library"
+    },
+    {
+      "type": "url",
+      "id": "card4_button_url",
+      "label": "Button URL"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Knowledge base portal"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,660 @@
+{% doc %}
+  @prompt
+    Act as an expert web designer and create a new section for the Corporate Facility Supply website that showcases our three main proprietary brands: EcoStandard Solutions, Precision, and Contractor's Choice. The design should feature three distinct brand highlight blocks.Make it clickable to redirect to a different link. Each block must follow a two-column layout with descriptive text on the left and the brand logo on the right. Include an engaging headline and a brief text intro highlighting that we offer more than 120 proprietary products formulated for the high standards of our Southern Ontario clients.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-brand-showcase-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    padding: {{ block.settings.section_padding_top }}px 0 {{ block.settings.section_padding_bottom }}px;
+    background-color: {{ block.settings.background_color }};
+  }
+
+  .ai-brand-showcase__container-{{ ai_gen_id }} {
+    max-width: {{ block.settings.container_width }}px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .ai-brand-showcase__header-{{ ai_gen_id }} {
+    text-align: {{ block.settings.text_alignment }};
+    margin-bottom: {{ block.settings.header_spacing }}px;
+  }
+
+  .ai-brand-showcase__headline-{{ ai_gen_id }} {
+    font-size: {{ block.settings.headline_size }}px;
+    color: {{ block.settings.headline_color }};
+    margin: 0 0 {{ block.settings.headline_margin }}px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .ai-brand-showcase__intro-{{ ai_gen_id }} {
+    font-size: {{ block.settings.intro_size }}px;
+    color: {{ block.settings.intro_color }};
+    margin: 0;
+    line-height: 1.6;
+    max-width: 800px;
+    margin-left: {% if block.settings.text_alignment == 'center' %}auto{% else %}0{% endif %};
+    margin-right: {% if block.settings.text_alignment == 'center' %}auto{% else %}0{% endif %};
+  }
+
+  .ai-brand-showcase__brands-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: {{ block.settings.brand_spacing }}px;
+    margin-top: {{ block.settings.brands_top_margin }}px;
+  }
+
+  .ai-brand-showcase__brand-{{ ai_gen_id }} {
+    display: block;
+    text-decoration: none;
+    background-color: {{ block.settings.brand_bg_color }};
+    border-radius: {{ block.settings.brand_border_radius }}px;
+    padding: {{ block.settings.brand_padding }}px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: {{ block.settings.brand_border_width }}px solid {{ block.settings.brand_border_color }};
+  }
+
+  .ai-brand-showcase__brand-{{ ai_gen_id }}:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(14, 27, 77, 0.12);
+  }
+
+  .ai-brand-showcase__brand-content-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: {{ block.settings.content_gap }}px;
+    align-items: center;
+  }
+
+  .ai-brand-showcase__text-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .ai-brand-showcase__brand-name-{{ ai_gen_id }} {
+    font-size: {{ block.settings.brand_name_size }}px;
+    color: {{ block.settings.brand_name_color }};
+    margin: 0;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .ai-brand-showcase__brand-description-{{ ai_gen_id }} {
+    font-size: {{ block.settings.brand_description_size }}px;
+    color: {{ block.settings.brand_description_color }};
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  .ai-brand-showcase__logo-wrapper-{{ ai_gen_id }} {
+    flex-shrink: 0;
+    width: {{ block.settings.logo_width }}px;
+    height: {{ block.settings.logo_height }}px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: {{ block.settings.logo_bg_color }};
+    border-radius: {{ block.settings.logo_border_radius }}px;
+    padding: {{ block.settings.logo_padding }}px;
+  }
+
+  .ai-brand-showcase__logo-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .ai-brand-showcase__logo-placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f4f4f4;
+    border-radius: {{ block.settings.logo_border_radius }}px;
+  }
+
+  .ai-brand-showcase__logo-placeholder-{{ ai_gen_id }} svg {
+    width: 60%;
+    height: 60%;
+    opacity: 0.3;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-brand-showcase__headline-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.headline_size }}px * 0.75);
+    }
+
+    .ai-brand-showcase__intro-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.intro_size }}px * 0.9);
+    }
+
+    .ai-brand-showcase__brand-content-{{ ai_gen_id }} {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .ai-brand-showcase__logo-wrapper-{{ ai_gen_id }} {
+      width: 100%;
+      max-width: 200px;
+      margin: 0 auto;
+    }
+
+    .ai-brand-showcase__text-{{ ai_gen_id }} {
+      text-align: center;
+    }
+
+    .ai-brand-showcase__brand-name-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.brand_name_size }}px * 0.9);
+    }
+
+    .ai-brand-showcase__brand-description-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.brand_description_size }}px * 0.9);
+    }
+  }
+{% endstyle %}
+
+<brand-showcase-{{ ai_gen_id }} class="ai-brand-showcase-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-brand-showcase__container-{{ ai_gen_id }}">
+    <div class="ai-brand-showcase__header-{{ ai_gen_id }}">
+      {% if block.settings.headline != blank %}
+        <h2 class="ai-brand-showcase__headline-{{ ai_gen_id }}">
+          {{ block.settings.headline }}
+        </h2>
+      {% endif %}
+      
+      {% if block.settings.intro_text != blank %}
+        <div class="ai-brand-showcase__intro-{{ ai_gen_id }}">
+          {{ block.settings.intro_text }}
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="ai-brand-showcase__brands-{{ ai_gen_id }}">
+      {% for i in (1..3) %}
+        {% liquid
+          assign brand_enabled_key = 'brand_' | append: i | append: '_enabled'
+          assign brand_name_key = 'brand_' | append: i | append: '_name'
+          assign brand_description_key = 'brand_' | append: i | append: '_description'
+          assign brand_logo_key = 'brand_' | append: i | append: '_logo'
+          assign brand_link_key = 'brand_' | append: i | append: '_link'
+
+          assign brand_enabled = block.settings[brand_enabled_key]
+          assign brand_name = block.settings[brand_name_key]
+          assign brand_description = block.settings[brand_description_key]
+          assign brand_logo = block.settings[brand_logo_key]
+          assign brand_link = block.settings[brand_link_key]
+        %}
+
+        {% if brand_enabled %}
+          <a 
+            href="{{ brand_link }}" 
+            class="ai-brand-showcase__brand-{{ ai_gen_id }}"
+            {% if brand_link == blank %}aria-disabled="true" style="pointer-events: none;"{% endif %}
+          >
+            <div class="ai-brand-showcase__brand-content-{{ ai_gen_id }}">
+              <div class="ai-brand-showcase__text-{{ ai_gen_id }}">
+                {% if brand_name != blank %}
+                  <h3 class="ai-brand-showcase__brand-name-{{ ai_gen_id }}">
+                    {{ brand_name }}
+                  </h3>
+                {% endif %}
+                
+                {% if brand_description != blank %}
+                  <div class="ai-brand-showcase__brand-description-{{ ai_gen_id }}">
+                    {{ brand_description }}
+                  </div>
+                {% endif %}
+              </div>
+
+              <div class="ai-brand-showcase__logo-wrapper-{{ ai_gen_id }}">
+                {% if brand_logo %}
+                  <img
+                    src="{{ brand_logo | image_url: width: 400 }}"
+                    alt="{{ brand_name | escape }}"
+                    class="ai-brand-showcase__logo-{{ ai_gen_id }}"
+                    loading="lazy"
+                    width="400"
+                    height="400"
+                  >
+                {% else %}
+                  <div class="ai-brand-showcase__logo-placeholder-{{ ai_gen_id }}">
+                    {{ 'image' | placeholder_svg_tag }}
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          </a>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</brand-showcase-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class BrandShowcase{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.setupAccessibility();
+      }
+
+      setupAccessibility() {
+        const brandLinks = this.querySelectorAll('.ai-brand-showcase__brand-{{ ai_gen_id }}');
+        
+        brandLinks.forEach((link) => {
+          if (!link.getAttribute('href') || link.getAttribute('href') === '') {
+            link.setAttribute('role', 'article');
+            link.removeAttribute('href');
+          }
+        });
+      }
+    }
+
+    customElements.define('brand-showcase-{{ ai_gen_id }}', BrandShowcase{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Brand showcase",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section header"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "Our Proprietary Brands"
+    },
+    {
+      "type": "textarea",
+      "id": "intro_text",
+      "label": "Introduction text",
+      "default": "We offer more than 120 proprietary products formulated for the high standards of our Southern Ontario clients."
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "range",
+      "id": "headline_size",
+      "label": "Headline size",
+      "min": 24,
+      "max": 64,
+      "step": 2,
+      "unit": "px",
+      "default": 42
+    },
+    {
+      "type": "range",
+      "id": "intro_size",
+      "label": "Introduction size",
+      "min": 14,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "header",
+      "content": "Brand 1"
+    },
+    {
+      "type": "checkbox",
+      "id": "brand_1_enabled",
+      "label": "Enable brand 1",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "brand_1_name",
+      "label": "Brand name",
+      "default": "EcoStandard Solutions"
+    },
+    {
+      "type": "textarea",
+      "id": "brand_1_description",
+      "label": "Description",
+      "default": "Environmentally responsible cleaning and facility maintenance products that meet rigorous performance standards."
+    },
+    {
+      "type": "image_picker",
+      "id": "brand_1_logo",
+      "label": "Logo"
+    },
+    {
+      "type": "url",
+      "id": "brand_1_link",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Brand 2"
+    },
+    {
+      "type": "checkbox",
+      "id": "brand_2_enabled",
+      "label": "Enable brand 2",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "brand_2_name",
+      "label": "Brand name",
+      "default": "Precision"
+    },
+    {
+      "type": "textarea",
+      "id": "brand_2_description",
+      "label": "Description",
+      "default": "Professional-grade tools and equipment engineered for accuracy and reliability in demanding commercial environments."
+    },
+    {
+      "type": "image_picker",
+      "id": "brand_2_logo",
+      "label": "Logo"
+    },
+    {
+      "type": "url",
+      "id": "brand_2_link",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Brand 3"
+    },
+    {
+      "type": "checkbox",
+      "id": "brand_3_enabled",
+      "label": "Enable brand 3",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "brand_3_name",
+      "label": "Brand name",
+      "default": "Contractor's Choice"
+    },
+    {
+      "type": "textarea",
+      "id": "brand_3_description",
+      "label": "Description",
+      "default": "Heavy-duty supplies trusted by contractors for superior durability and performance on the toughest job sites."
+    },
+    {
+      "type": "image_picker",
+      "id": "brand_3_logo",
+      "label": "Logo"
+    },
+    {
+      "type": "url",
+      "id": "brand_3_link",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "container_width",
+      "label": "Container width",
+      "min": 1000,
+      "max": 1600,
+      "step": 100,
+      "unit": "px",
+      "default": 1200
+    },
+    {
+      "type": "range",
+      "id": "section_padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "section_padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "header_spacing",
+      "label": "Header spacing",
+      "min": 20,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "headline_margin",
+      "label": "Headline margin",
+      "min": 8,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "brands_top_margin",
+      "label": "Brands top margin",
+      "min": 20,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "brand_spacing",
+      "label": "Space between brands",
+      "min": 16,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "content_gap",
+      "label": "Content gap",
+      "min": 20,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Brand card style"
+    },
+    {
+      "type": "range",
+      "id": "brand_padding",
+      "label": "Card padding",
+      "min": 20,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "brand_border_radius",
+      "label": "Card border radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "brand_border_width",
+      "label": "Card border width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "brand_name_size",
+      "label": "Brand name size",
+      "min": 18,
+      "max": 36,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "brand_description_size",
+      "label": "Description size",
+      "min": 14,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Logo style"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "label": "Logo width",
+      "min": 100,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "default": 180
+    },
+    {
+      "type": "range",
+      "id": "logo_height",
+      "label": "Logo height",
+      "min": 80,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 120
+    },
+    {
+      "type": "range",
+      "id": "logo_padding",
+      "label": "Logo padding",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "logo_border_radius",
+      "label": "Logo border radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "headline_color",
+      "label": "Headline",
+      "default": "#0e1b4d"
+    },
+    {
+      "type": "color",
+      "id": "intro_color",
+      "label": "Introduction",
+      "default": "#0e1b4d"
+    },
+    {
+      "type": "color",
+      "id": "brand_bg_color",
+      "label": "Brand card background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "brand_border_color",
+      "label": "Brand card border",
+      "default": "#e5e5e5"
+    },
+    {
+      "type": "color",
+      "id": "brand_name_color",
+      "label": "Brand name",
+      "default": "#0e1b4d"
+    },
+    {
+      "type": "color",
+      "id": "brand_description_color",
+      "label": "Brand description",
+      "default": "#0e1b4d"
+    },
+    {
+      "type": "color",
+      "id": "logo_bg_color",
+      "label": "Logo background",
+      "default": "#f8f8f8"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brand showcase"
+    }
+  ]
+}
+{% endschema %}

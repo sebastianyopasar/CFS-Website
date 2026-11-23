@@ -1,0 +1,199 @@
+{% doc %}
+  @prompt
+    Please generate an announcement bar that allows to personalize colour, text font, size, and text inside it, I like it! just two changes. the first one, I would like to be able to change their bar width. And the second one, I would like to have a white padding option above and below this announcement bar
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-announcement-bar-wrapper-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    background-color: {{ block.settings.outer_background_color }};
+    padding: {{ block.settings.outer_padding_top }}px 0 {{ block.settings.outer_padding_bottom }}px 0;
+  }
+
+  .ai-announcement-bar-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.bar_width }}%;
+    max-width: 100%;
+    margin: 0 auto;
+    background-color: {{ block.settings.background_color }};
+    padding: {{ block.settings.padding_vertical }}px 20px;
+    text-align: {{ block.settings.text_alignment }};
+  }
+
+  .ai-announcement-bar__text-{{ ai_gen_id }} {
+    color: {{ block.settings.text_color }};
+    font-family: {{ block.settings.text_font.family }}, {{ block.settings.text_font.fallback_families }};
+    font-weight: {{ block.settings.text_font.weight }};
+    font-style: {{ block.settings.text_font.style }};
+    font-size: {{ block.settings.text_size }}px;
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-announcement-bar__text-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.text_size }}px * 0.9);
+    }
+  }
+{% endstyle %}
+
+<announcement-bar-{{ ai_gen_id }}
+  class="ai-announcement-bar-wrapper-{{ ai_gen_id }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="ai-announcement-bar-{{ ai_gen_id }}">
+    {% if block.settings.announcement_text != blank %}
+      <p class="ai-announcement-bar__text-{{ ai_gen_id }}">
+        {{ block.settings.announcement_text }}
+      </p>
+    {% else %}
+      <p class="ai-announcement-bar__text-{{ ai_gen_id }}">
+        Add your announcement text here
+      </p>
+    {% endif %}
+  </div>
+</announcement-bar-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class AnnouncementBar{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+    }
+
+    customElements.define('announcement-bar-{{ ai_gen_id }}', AnnouncementBar{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Announcement bar",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "textarea",
+      "id": "announcement_text",
+      "label": "Announcement text",
+      "default": "Welcome to our store! Free shipping on orders over $50."
+    },
+    {
+      "type": "header",
+      "content": "Text style"
+    },
+    {
+      "type": "font_picker",
+      "id": "text_font",
+      "label": "Font",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Text size",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Bar background",
+      "default": "#0e1b4d"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "outer_background_color",
+      "label": "Outer background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "bar_width",
+      "label": "Bar width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "padding_vertical",
+      "label": "Bar vertical padding",
+      "min": 5,
+      "max": 40,
+      "step": 5,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "outer_padding_top",
+      "label": "Outer padding top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "outer_padding_bottom",
+      "label": "Outer padding bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Announcement bar"
+    }
+  ]
+}
+{% endschema %}

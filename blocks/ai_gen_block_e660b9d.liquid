@@ -1,0 +1,140 @@
+{% doc %}
+  @prompt
+    Generate a small section like a small header where I can just add a short concise text. Blue background, white letters, Allow me to do more than one line
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-text-header-{{ ai_gen_id }} {
+    background-color: {{ block.settings.background_color }};
+    padding: {{ block.settings.padding_vertical }}px {{ block.settings.padding_horizontal }}px;
+    text-align: {{ block.settings.text_alignment }};
+  }
+
+  .ai-text-header__content-{{ ai_gen_id }} {
+    max-width: {{ block.settings.max_width }}px;
+    margin: 0 auto;
+  }
+
+  .ai-text-header__text-{{ ai_gen_id }} {
+    color: {{ block.settings.text_color }};
+    font-size: {{ block.settings.font_size }}px;
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-text-header__text-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.font_size }}px * 0.85);
+    }
+  }
+{% endstyle %}
+
+<div class="ai-text-header-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-text-header__content-{{ ai_gen_id }}">
+    {% if block.settings.text != blank %}
+      <div class="ai-text-header__text-{{ ai_gen_id }}">{{ block.settings.text }}</div>
+    {% else %}
+      <div class="ai-text-header__text-{{ ai_gen_id }}">Add your text here</div>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Text header",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Important announcement</p>"
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#4770db"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "padding_vertical",
+      "min": 4,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Vertical padding",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "label": "Horizontal padding",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 600,
+      "max": 1600,
+      "step": 100,
+      "unit": "px",
+      "label": "Maximum width",
+      "default": 1200
+    }
+  ],
+  "presets": [
+    {
+      "name": "Text header"
+    }
+  ]
+}
+{% endschema %}

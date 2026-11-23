@@ -1,0 +1,651 @@
+{% doc %}
+  @prompt
+    Responsive Promo Layout - Fixed mobile aspect ratio for embedded image text.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-promo-layout-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    padding: {{ block.settings.section_padding }}px;
+    background-color: {{ block.settings.section_background }};
+  }
+
+  .ai-promo-layout__container-{{ ai_gen_id }} {
+    max-width: {{ block.settings.section_width }}px;
+    margin: 0 auto;
+    height: {{ block.settings.section_height }}px;
+  }
+
+  .ai-promo-layout__grid-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: {{ block.settings.left_column_width }}% {{ 100 | minus: block.settings.left_column_width }}%;
+    gap: {{ block.settings.column_gap }}px;
+    height: 100%;
+  }
+
+  .ai-promo-layout__left-column-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: {{ block.settings.card_gap }}px;
+    height: 100%;
+  }
+
+  .ai-promo-layout__card-{{ ai_gen_id }} {
+    position: relative;
+    flex: 1;
+    overflow: hidden;
+    border-radius: {{ block.settings.card_1_border_radius }}px;
+    height: {{ block.settings.card_height }}px;
+  }
+
+  .ai-promo-layout__card-{{ ai_gen_id }}:nth-child(2) {
+    border-radius: {{ block.settings.card_2_border_radius }}px;
+  }
+
+  .ai-promo-layout__card-link-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  .ai-promo-layout__card-image-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+
+  .ai-promo-layout__card-link-{{ ai_gen_id }}:hover .ai-promo-layout__card-image-{{ ai_gen_id }} {
+    transform: scale(1.05);
+  }
+
+  .ai-promo-layout__card-overlay-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: {{ block.settings.overlay_color }};
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .ai-promo-layout__card-link-{{ ai_gen_id }}:hover .ai-promo-layout__card-overlay-{{ ai_gen_id }} {
+    opacity: {{ block.settings.overlay_opacity }};
+  }
+
+  .ai-promo-layout__overlay-title-{{ ai_gen_id }} {
+    color: {{ block.settings.overlay_text_color }};
+    font-size: {{ block.settings.overlay_title_size }}px;
+    font-weight: 700;
+    margin: 0 0 8px 0;
+    line-height: 1.2;
+  }
+
+  .ai-promo-layout__overlay-description-{{ ai_gen_id }} {
+    color: {{ block.settings.overlay_text_color }};
+    font-size: {{ block.settings.overlay_description_size }}px;
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  .ai-promo-layout__right-column-{{ ai_gen_id }} {
+    position: relative;
+    overflow: hidden;
+    border-radius: {{ block.settings.large_image_border_radius }}px;
+    height: 100%;
+  }
+
+  .ai-promo-layout__large-link-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  .ai-promo-layout__large-image-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+
+  .ai-promo-layout__large-link-{{ ai_gen_id }}:hover .ai-promo-layout__large-image-{{ ai_gen_id }} {
+    transform: scale(1.05);
+  }
+
+  .ai-promo-layout__large-overlay-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: {{ block.settings.overlay_color }};
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .ai-promo-layout__large-link-{{ ai_gen_id }}:hover .ai-promo-layout__large-overlay-{{ ai_gen_id }} {
+    opacity: {{ block.settings.overlay_opacity }};
+  }
+
+  .ai-promo-layout__placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .ai-promo-layout__placeholder-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: 100%;
+    max-width: 300px;
+    max-height: 300px;
+    opacity: 0.3;
+  }
+
+  .ai-promo-layout__empty-state-{{ ai_gen_id }} {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 20px;
+    font-size: 14px;
+    color: #666;
+    text-align: center;
+    pointer-events: none;
+  }
+
+  /* AJUSTE MÓVIL EXACTO SIN RECORTE DE IMÁGENES CON TEXTO ENCASTRADO */
+  @media screen and (max-width: 749px) {
+    .ai-promo-layout-{{ ai_gen_id }} {
+      padding: 12px 10px !important;
+    }
+
+    .ai-promo-layout__container-{{ ai_gen_id }} {
+      height: auto !important;
+    }
+
+    .ai-promo-layout__grid-{{ ai_gen_id }} {
+      grid-template-columns: 1fr !important;
+      gap: {{ block.settings.mobile_gap }}px;
+    }
+
+    .ai-promo-layout__left-column-{{ ai_gen_id }} {
+      gap: {{ block.settings.mobile_gap }}px;
+      height: auto !important;
+    }
+
+    .ai-promo-layout__card-{{ ai_gen_id }} {
+      height: {{ block.settings.mobile_card_height }}px !important;
+    }
+
+    .ai-promo-layout__right-column-{{ ai_gen_id }} {
+      height: auto !important;
+      max-height: none !important;
+    }
+
+    /* Muestra la imagen completa sin recortar bordes ni textos quemados */
+    .ai-promo-layout__large-image-{{ ai_gen_id }} {
+      height: auto !important;
+      max-height: 450px;
+      object-fit: contain !important;
+      background-color: #f8f9fa;
+    }
+
+    .ai-promo-layout__card-overlay-{{ ai_gen_id }},
+    .ai-promo-layout__large-overlay-{{ ai_gen_id }} {
+      padding: 10px !important;
+    }
+
+    .ai-promo-layout__overlay-title-{{ ai_gen_id }} {
+      font-size: 16px !important;
+    }
+
+    .ai-promo-layout__overlay-description-{{ ai_gen_id }} {
+      font-size: 12px !important;
+    }
+  }
+{% endstyle %}
+
+<promo-layout-{{ ai_gen_id }} class="ai-promo-layout-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-promo-layout__container-{{ ai_gen_id }}">
+    <div class="ai-promo-layout__grid-{{ ai_gen_id }}">
+      <div class="ai-promo-layout__left-column-{{ ai_gen_id }}">
+        <div class="ai-promo-layout__card-{{ ai_gen_id }}">
+          {% if block.settings.card_1_link != blank %}
+            <a href="{{ block.settings.card_1_link }}" class="ai-promo-layout__card-link-{{ ai_gen_id }}">
+          {% else %}
+            <div class="ai-promo-layout__card-link-{{ ai_gen_id }}">
+          {% endif %}
+            {% if block.settings.card_1_image %}
+              <img
+                src="{{ block.settings.card_1_image | image_url: width: 1200 }}"
+                alt="{{ block.settings.card_1_image.alt | escape }}"
+                loading="lazy"
+                width="{{ block.settings.card_1_image.width }}"
+                height="{{ block.settings.card_1_image.height }}"
+                class="ai-promo-layout__card-image-{{ ai_gen_id }}"
+              >
+            {% else %}
+              <div class="ai-promo-layout__placeholder-{{ ai_gen_id }}">
+                {{ 'image' | placeholder_svg_tag }}
+                <div class="ai-promo-layout__empty-state-{{ ai_gen_id }}">
+                  Add image for card 1
+                </div>
+              </div>
+            {% endif %}
+            {% if block.settings.card_1_title != blank or block.settings.card_1_description != blank %}
+              <div class="ai-promo-layout__card-overlay-{{ ai_gen_id }}">
+                {% if block.settings.card_1_title != blank %}
+                  <h3 class="ai-promo-layout__overlay-title-{{ ai_gen_id }}">{{ block.settings.card_1_title }}</h3>
+                {% endif %}
+                {% if block.settings.card_1_description != blank %}
+                  <p class="ai-promo-layout__overlay-description-{{ ai_gen_id }}">{{ block.settings.card_1_description }}</p>
+                {% endif %}
+              </div>
+            {% endif %}
+          {% if block.settings.card_1_link != blank %}
+            </a>
+          {% else %}
+            </div>
+          {% endif %}
+        </div>
+
+        <div class="ai-promo-layout__card-{{ ai_gen_id }}">
+          {% if block.settings.card_2_link != blank %}
+            <a href="{{ block.settings.card_2_link }}" class="ai-promo-layout__card-link-{{ ai_gen_id }}">
+          {% else %}
+            <div class="ai-promo-layout__card-link-{{ ai_gen_id }}">
+          {% endif %}
+            {% if block.settings.card_2_image %}
+              <img
+                src="{{ block.settings.card_2_image | image_url: width: 1200 }}"
+                alt="{{ block.settings.card_2_image.alt | escape }}"
+                loading="lazy"
+                width="{{ block.settings.card_2_image.width }}"
+                height="{{ block.settings.card_2_image.height }}"
+                class="ai-promo-layout__card-image-{{ ai_gen_id }}"
+              >
+            {% else %}
+              <div class="ai-promo-layout__placeholder-{{ ai_gen_id }}">
+                {{ 'image' | placeholder_svg_tag }}
+                <div class="ai-promo-layout__empty-state-{{ ai_gen_id }}">
+                  Add image for card 2
+                </div>
+              </div>
+            {% endif %}
+            {% if block.settings.card_2_title != blank or block.settings.card_2_description != blank %}
+              <div class="ai-promo-layout__card-overlay-{{ ai_gen_id }}">
+                {% if block.settings.card_2_title != blank %}
+                  <h3 class="ai-promo-layout__overlay-title-{{ ai_gen_id }}">{{ block.settings.card_2_title }}</h3>
+                {% endif %}
+                {% if block.settings.card_2_description != blank %}
+                  <p class="ai-promo-layout__overlay-description-{{ ai_gen_id }}">{{ block.settings.card_2_description }}</p>
+                {% endif %}
+              </div>
+            {% endif %}
+          {% if block.settings.card_2_link != blank %}
+            </a>
+          {% else %}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="ai-promo-layout__right-column-{{ ai_gen_id }}">
+        {% if block.settings.large_image_link != blank %}
+          <a href="{{ block.settings.large_image_link }}" class="ai-promo-layout__large-link-{{ ai_gen_id }}">
+        {% else %}
+          <div class="ai-promo-layout__large-link-{{ ai_gen_id }}">
+        {% endif %}
+          {% if block.settings.large_image %}
+            <img
+              src="{{ block.settings.large_image | image_url: width: 1600 }}"
+              alt="{{ block.settings.large_image.alt | escape }}"
+              loading="lazy"
+              width="{{ block.settings.large_image.width }}"
+              height="{{ block.settings.large_image.height }}"
+              class="ai-promo-layout__large-image-{{ ai_gen_id }}"
+            >
+          {% else %}
+            <div class="ai-promo-layout__placeholder-{{ ai_gen_id }}">
+              {{ 'image' | placeholder_svg_tag }}
+              <div class="ai-promo-layout__empty-state-{{ ai_gen_id }}">
+                Add large promotional image
+              </div>
+            </div>
+          {% endif %}
+          {% if block.settings.large_image_title != blank or block.settings.large_image_description != blank %}
+            <div class="ai-promo-layout__large-overlay-{{ ai_gen_id }}">
+              {% if block.settings.large_image_title != blank %}
+                <h3 class="ai-promo-layout__overlay-title-{{ ai_gen_id }}">{{ block.settings.large_image_title }}</h3>
+              {% endif %}
+              {% if block.settings.large_image_description != blank %}
+                <p class="ai-promo-layout__overlay-description-{{ ai_gen_id }}">{{ block.settings.large_image_description }}</p>
+              {% endif %}
+            </div>
+          {% endif %}
+        {% if block.settings.large_image_link != blank %}
+          </a>
+        {% else %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</promo-layout-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class PromoLayout{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.adjustHeights();
+        window.addEventListener('resize', () => this.adjustHeights());
+      }
+
+      adjustHeights() {
+        const rightColumn = this.querySelector('.ai-promo-layout__right-column-{{ ai_gen_id }}');
+        if (window.innerWidth > 749) {
+          const leftColumn = this.querySelector('.ai-promo-layout__left-column-{{ ai_gen_id }}');
+          if (leftColumn && rightColumn) {
+            rightColumn.style.height = leftColumn.offsetHeight + 'px';
+          }
+        } else if (rightColumn) {
+          rightColumn.style.height = ''; 
+        }
+      }
+    }
+
+    customElements.define('promo-layout-{{ ai_gen_id }}', PromoLayout{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Two column promo layout",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section layout"
+    },
+    {
+      "type": "range",
+      "id": "section_width",
+      "label": "Section width",
+      "min": 1000,
+      "max": 1600,
+      "step": 100,
+      "unit": "px",
+      "default": 1400
+    },
+    {
+      "type": "range",
+      "id": "section_height",
+      "label": "Section height",
+      "min": 400,
+      "max": 800,
+      "step": 20,
+      "unit": "px",
+      "default": 600
+    },
+    {
+      "type": "range",
+      "id": "section_padding",
+      "label": "Section padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "color",
+      "id": "section_background",
+      "label": "Section background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "left_column_width",
+      "label": "Left column width",
+      "min": 30,
+      "max": 70,
+      "step": 5,
+      "unit": "%",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "column_gap",
+      "label": "Gap between columns",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "label": "Gap between cards",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Card 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "card_1_image",
+      "label": "Image"
+    },
+    {
+      "type": "url",
+      "id": "card_1_link",
+      "label": "Link"
+    },
+    {
+      "type": "text",
+      "id": "card_1_title",
+      "label": "Overlay title"
+    },
+    {
+      "type": "textarea",
+      "id": "card_1_description",
+      "label": "Overlay description"
+    },
+    {
+      "type": "range",
+      "id": "card_1_border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "card_height",
+      "label": "Card height",
+      "min": 150,
+      "max": 400,
+      "step": 10,
+      "unit": "px",
+      "default": 280
+    },
+    {
+      "type": "header",
+      "content": "Card 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "card_2_image",
+      "label": "Image"
+    },
+    {
+      "type": "url",
+      "id": "card_2_link",
+      "label": "Link"
+    },
+    {
+      "type": "text",
+      "id": "card_2_title",
+      "label": "Overlay title"
+    },
+    {
+      "type": "textarea",
+      "id": "card_2_description",
+      "label": "Overlay description"
+    },
+    {
+      "type": "range",
+      "id": "card_2_border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Large promotional image"
+    },
+    {
+      "type": "image_picker",
+      "id": "large_image",
+      "label": "Image"
+    },
+    {
+      "type": "url",
+      "id": "large_image_link",
+      "label": "Link"
+    },
+    {
+      "type": "text",
+      "id": "large_image_title",
+      "label": "Overlay title"
+    },
+    {
+      "type": "textarea",
+      "id": "large_image_description",
+      "label": "Overlay description"
+    },
+    {
+      "type": "range",
+      "id": "large_image_border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Overlay style"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Overlay background",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Overlay opacity",
+      "min": 0,
+      "max": 1,
+      "step": 0.1,
+      "default": 0.8
+    },
+    {
+      "type": "color",
+      "id": "overlay_text_color",
+      "label": "Overlay text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "overlay_title_size",
+      "label": "Title size",
+      "min": 16,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "overlay_description_size",
+      "label": "Description size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Mobile layout"
+    },
+    {
+      "type": "range",
+      "id": "mobile_gap",
+      "label": "Gap between elements",
+      "min": 8,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "mobile_card_height",
+      "label": "Card height",
+      "min": 120,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "default": 180
+    }
+  ],
+  "presets": [
+    {
+      "name": "Two column promo layout"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,1195 @@
+{% doc %}
+  @prompt
+    Generate a modern, highly scannable corporate knowledge base and resource portal page for a commercial facility supply company. 
+    
+    Structure the layout cleanly using a visual grid or multi-column sections with clear icons and actionable buttons. Avoid generic walls of text or simple bulleted link lists. 
+    
+    Organize the layout into the following distinct operational segments:
+    
+    1. "Commercial Equipment & Machinery Hub": Focus on machine types like Industrial Dishwashers and Floor Scrubber Machines. Include dedicated sub-sections or cards for "Proper Machine Operation Guides" and "Preventative Maintenance Checklists".
+    2. "Product Optimization & How-To Guides": Dedicated to educational training resources showing clients how to make the safest and most efficient use of our specialized chemical product lines.
+    3. "Technical Downloads & Documentation": A section specifically for "Equipment Cut Data Sheets", printable dilution guides, and quick reference brochures.
+    4. "Quick Resource Shortcuts": Include high-visibility short links directing users to our master Safety Data Sheets (SDS) repository and our automated Product Finder tool.
+    
+    Apply an authoritative, professional B2B tone. Use clean content cards with concise, descriptive headings, high-contrast action buttons for downloads, and a clear visual hierarchy that helps operational managers and cleaning crews find machine answers in seconds.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-knowledge-base-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: {{ block.settings.section_padding }}px 20px;
+  }
+
+  .ai-knowledge-base-header-{{ ai_gen_id }} {
+    text-align: center;
+    margin-bottom: {{ block.settings.section_spacing }}px;
+  }
+
+  .ai-knowledge-base-title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.title_size }}px;
+    color: {{ block.settings.title_color }};
+    margin: 0 0 12px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .ai-knowledge-base-subtitle-{{ ai_gen_id }} {
+    font-size: {{ block.settings.subtitle_size }}px;
+    color: {{ block.settings.subtitle_color }};
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .ai-knowledge-base-grid-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: {{ block.settings.card_gap }}px;
+    margin-bottom: {{ block.settings.section_spacing }}px;
+  }
+
+  .ai-knowledge-base-category-{{ ai_gen_id }} {
+    background-color: {{ block.settings.card_background }};
+    border: {{ block.settings.card_border_thickness }}px solid {{ block.settings.card_border_color }};
+    border-radius: {{ block.settings.card_border_radius }}px;
+    padding: {{ block.settings.card_padding }}px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .ai-knowledge-base-category-header-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid {{ block.settings.divider_color }};
+  }
+
+  .ai-knowledge-base-icon-{{ ai_gen_id }} {
+    width: {{ block.settings.icon_size }}px;
+    height: {{ block.settings.icon_size }}px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: {{ block.settings.icon_background }};
+    border-radius: {{ block.settings.icon_border_radius }}px;
+    color: {{ block.settings.icon_color }};
+  }
+
+  .ai-knowledge-base-icon-{{ ai_gen_id }} svg {
+    width: calc({{ block.settings.icon_size }}px * 0.6);
+    height: calc({{ block.settings.icon_size }}px * 0.6);
+  }
+
+  .ai-knowledge-base-category-title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.category_title_size }}px;
+    color: {{ block.settings.category_title_color }};
+    margin: 0;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .ai-knowledge-base-subsection-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .ai-knowledge-base-subsection-title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.subsection_title_size }}px;
+    color: {{ block.settings.subsection_title_color }};
+    margin: 0;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .ai-knowledge-base-link-list-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .ai-knowledge-base-link-item-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .ai-knowledge-base-link-item-{{ ai_gen_id }}::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background-color: {{ block.settings.bullet_color }};
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .ai-knowledge-base-link-{{ ai_gen_id }} {
+    color: {{ block.settings.link_color }};
+    text-decoration: none;
+    font-size: {{ block.settings.link_size }}px;
+    line-height: 1.5;
+    transition: color 0.2s ease;
+  }
+
+  .ai-knowledge-base-link-{{ ai_gen_id }}:hover {
+    color: {{ block.settings.link_hover_color }};
+    text-decoration: underline;
+  }
+
+  .ai-knowledge-base-button-{{ ai_gen_id }} {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: {{ block.settings.button_padding_vertical }}px {{ block.settings.button_padding_horizontal }}px;
+    background-color: {{ block.settings.button_background }};
+    color: {{ block.settings.button_text_color }};
+    border: {{ block.settings.button_border_thickness }}px solid {{ block.settings.button_border_color }};
+    border-radius: {{ block.settings.button_border_radius }}px;
+    font-size: {{ block.settings.button_text_size }}px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+  }
+
+  .ai-knowledge-base-button-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.button_hover_background }};
+    color: {{ block.settings.button_hover_text_color }};
+    border-color: {{ block.settings.button_hover_border_color }};
+  }
+
+  .ai-knowledge-base-button-{{ ai_gen_id }} svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .ai-knowledge-base-shortcuts-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: {{ block.settings.card_gap }}px;
+  }
+
+  .ai-knowledge-base-shortcut-card-{{ ai_gen_id }} {
+    background-color: {{ block.settings.shortcut_background }};
+    border: {{ block.settings.card_border_thickness }}px solid {{ block.settings.shortcut_border_color }};
+    border-radius: {{ block.settings.card_border_radius }}px;
+    padding: {{ block.settings.card_padding }}px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+  }
+
+  .ai-knowledge-base-shortcut-icon-{{ ai_gen_id }} {
+    width: {{ block.settings.shortcut_icon_size }}px;
+    height: {{ block.settings.shortcut_icon_size }}px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: {{ block.settings.shortcut_icon_background }};
+    border-radius: 50%;
+    color: {{ block.settings.shortcut_icon_color }};
+  }
+
+  .ai-knowledge-base-shortcut-icon-{{ ai_gen_id }} svg {
+    width: calc({{ block.settings.shortcut_icon_size }}px * 0.5);
+    height: calc({{ block.settings.shortcut_icon_size }}px * 0.5);
+  }
+
+  .ai-knowledge-base-shortcut-title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.shortcut_title_size }}px;
+    color: {{ block.settings.shortcut_title_color }};
+    margin: 0;
+    font-weight: 700;
+  }
+
+  .ai-knowledge-base-shortcut-description-{{ ai_gen_id }} {
+    font-size: {{ block.settings.shortcut_description_size }}px;
+    color: {{ block.settings.shortcut_description_color }};
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-knowledge-base-grid-{{ ai_gen_id }} {
+      grid-template-columns: 1fr;
+    }
+
+    .ai-knowledge-base-shortcuts-{{ ai_gen_id }} {
+      grid-template-columns: 1fr;
+    }
+
+    .ai-knowledge-base-title-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.title_size }}px * 0.8);
+    }
+
+    .ai-knowledge-base-category-title-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.category_title_size }}px * 0.9);
+    }
+  }
+{% endstyle %}
+
+<knowledge-base-{{ ai_gen_id }} class="ai-knowledge-base-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  {% if block.settings.show_header %}
+    <div class="ai-knowledge-base-header-{{ ai_gen_id }}">
+      {% if block.settings.main_title != blank %}
+        <h1 class="ai-knowledge-base-title-{{ ai_gen_id }}">{{ block.settings.main_title }}</h1>
+      {% endif %}
+      {% if block.settings.main_subtitle != blank %}
+        <p class="ai-knowledge-base-subtitle-{{ ai_gen_id }}">{{ block.settings.main_subtitle }}</p>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  <div class="ai-knowledge-base-grid-{{ ai_gen_id }}">
+    {% if block.settings.show_equipment_hub %}
+      <div class="ai-knowledge-base-category-{{ ai_gen_id }}">
+        <div class="ai-knowledge-base-category-header-{{ ai_gen_id }}">
+          <div class="ai-knowledge-base-icon-{{ ai_gen_id }}">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+              <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+            </svg>
+          </div>
+          <h2 class="ai-knowledge-base-category-title-{{ ai_gen_id }}">{{ block.settings.equipment_title }}</h2>
+        </div>
+
+        <div class="ai-knowledge-base-subsection-{{ ai_gen_id }}">
+          <h3 class="ai-knowledge-base-subsection-title-{{ ai_gen_id }}">{{ block.settings.equipment_subsection_1_title }}</h3>
+          <ul class="ai-knowledge-base-link-list-{{ ai_gen_id }}">
+            {% if block.settings.equipment_link_1_text != blank %}
+              <li class="ai-knowledge-base-link-item-{{ ai_gen_id }}">
+                <a href="{{ block.settings.equipment_link_1_url }}" class="ai-knowledge-base-link-{{ ai_gen_id }}">{{ block.settings.equipment_link_1_text }}</a>
+              </li>
+            {% endif %}
+            {% if block.settings.equipment_link_2_text != blank %}
+              <li class="ai-knowledge-base-link-item-{{ ai_gen_id }}">
+                <a href="{{ block.settings.equipment_link_2_url }}" class="ai-knowledge-base-link-{{ ai_gen_id }}">{{ block.settings.equipment_link_2_text }}</a>
+              </li>
+            {% endif %}
+            {% if block.settings.equipment_link_3_text != blank %}
+              <li class="ai-knowledge-base-link-item-{{ ai_gen_id }}">
+                <a href="{{ block.settings.equipment_link_3_url }}" class="ai-knowledge-base-link-{{ ai_gen_id }}">{{ block.settings.equipment_link_3_text }}</a>
+              </li>
+            {% endif %}
+          </ul>
+        </div>
+
+        <div class="ai-knowledge-base-subsection-{{ ai_gen_id }}">
+          <h3 class="ai-knowledge-base-subsection-title-{{ ai_gen_id }}">{{ block.settings.equipment_subsection_2_title }}</h3>
+          <ul class="ai-knowledge-base-link-list-{{ ai_gen_id }}">
+            {% if block.settings.equipment_link_4_text != blank %}
+              <li class="ai-knowledge-base-link-item-{{ ai_gen_id }}">
+                <a href="{{ block.settings.equipment_link_4_url }}" class="ai-knowledge-base-link-{{ ai_gen_id }}">{{ block.settings.equipment_link_4_text }}</a>
+              </li>
+            {% endif %}
+            {% if block.settings.equipment_link_5_text != blank %}
+              <li class="ai-knowledge-base-link-item-{{ ai_gen_id }}">
+                <a href="{{ block.settings.equipment_link_5_url }}" class="ai-knowledge-base-link-{{ ai_gen_id }}">{{ block.settings.equipment_link_5_text }}</a>
+              </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    {% endif %}
+
+    {% if block.settings.show_product_optimization %}
+      <div class="ai-knowledge-base-category-{{ ai_gen_id }}">
+        <div class="ai-knowledge-base-category-header-{{ ai_gen_id }}">
+          <div class="ai-knowledge-base-icon-{{ ai_gen_id }}">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+              <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+            </svg>
+          </div>
+          <h2 class="ai-knowledge-base-category-title-{{ ai_gen_id }}">{{ block.settings.optimization_title }}</h2>
+        </div>
+
+        <ul class="ai-knowledge-base-link-list-{{ ai_gen_id }}">
+          {% if block.settings.optimization_link_1_text != blank %}
+            <li class="ai-knowledge-base-link-item-{{ ai_gen_id }}">
+              <a href="{{ block.settings.optimization_link_1_url }}" class="ai-knowledge-base-link-{{ ai_gen_id }}">{{ block.settings.optimization_link_1_text }}</a>
+            </li>
+          {% endif %}
+          {% if block.settings.optimization_link_2_text != blank %}
+            <li class="ai-knowledge-base-link-item-{{ ai_gen_id }}">
+              <a href="{{ block.settings.optimization_link_2_url }}" class="ai-knowledge-base-link-{{ ai_gen_id }}">{{ block.settings.optimization_link_2_text }}</a>
+            </li>
+          {% endif %}
+          {% if block.settings.optimization_link_3_text != blank %}
+            <li class="ai-knowledge-base-link-item-{{ ai_gen_id }}">
+              <a href="{{ block.settings.optimization_link_3_url }}" class="ai-knowledge-base-link-{{ ai_gen_id }}">{{ block.settings.optimization_link_3_text }}</a>
+            </li>
+          {% endif %}
+          {% if block.settings.optimization_link_4_text != blank %}
+            <li class="ai-knowledge-base-link-item-{{ ai_gen_id }}">
+              <a href="{{ block.settings.optimization_link_4_url }}" class="ai-knowledge-base-link-{{ ai_gen_id }}">{{ block.settings.optimization_link_4_text }}</a>
+            </li>
+          {% endif %}
+          {% if block.settings.optimization_link_5_text != blank %}
+            <li class="ai-knowledge-base-link-item-{{ ai_gen_id }}">
+              <a href="{{ block.settings.optimization_link_5_url }}" class="ai-knowledge-base-link-{{ ai_gen_id }}">{{ block.settings.optimization_link_5_text }}</a>
+            </li>
+          {% endif %}
+        </ul>
+
+        {% if block.settings.optimization_button_text != blank %}
+          <a href="{{ block.settings.optimization_button_url }}" class="ai-knowledge-base-button-{{ ai_gen_id }}">
+            {{ block.settings.optimization_button_text }}
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14"></path>
+              <path d="m12 5 7 7-7 7"></path>
+            </svg>
+          </a>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    {% if block.settings.show_technical_downloads %}
+      <div class="ai-knowledge-base-category-{{ ai_gen_id }}">
+        <div class="ai-knowledge-base-category-header-{{ ai_gen_id }}">
+          <div class="ai-knowledge-base-icon-{{ ai_gen_id }}">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+          </div>
+          <h2 class="ai-knowledge-base-category-title-{{ ai_gen_id }}">{{ block.settings.downloads_title }}</h2>
+        </div>
+
+        <ul class="ai-knowledge-base-link-list-{{ ai_gen_id }}">
+          {% if block.settings.downloads_link_1_text != blank %}
+            <li class="ai-knowledge-base-link-item-{{ ai_gen_id }}">
+              <a href="{{ block.settings.downloads_link_1_url }}" class="ai-knowledge-base-link-{{ ai_gen_id }}">{{ block.settings.downloads_link_1_text }}</a>
+            </li>
+          {% endif %}
+          {% if block.settings.downloads_link_2_text != blank %}
+            <li class="ai-knowledge-base-link-item-{{ ai_gen_id }}">
+              <a href="{{ block.settings.downloads_link_2_url }}" class="ai-knowledge-base-link-{{ ai_gen_id }}">{{ block.settings.downloads_link_2_text }}</a>
+            </li>
+          {% endif %}
+          {% if block.settings.downloads_link_3_text != blank %}
+            <li class="ai-knowledge-base-link-item-{{ ai_gen_id }}">
+              <a href="{{ block.settings.downloads_link_3_url }}" class="ai-knowledge-base-link-{{ ai_gen_id }}">{{ block.settings.downloads_link_3_text }}</a>
+            </li>
+          {% endif %}
+          {% if block.settings.downloads_link_4_text != blank %}
+            <li class="ai-knowledge-base-link-item-{{ ai_gen_id }}">
+              <a href="{{ block.settings.downloads_link_4_url }}" class="ai-knowledge-base-link-{{ ai_gen_id }}">{{ block.settings.downloads_link_4_text }}</a>
+            </li>
+          {% endif %}
+        </ul>
+
+        {% if block.settings.downloads_button_text != blank %}
+          <a href="{{ block.settings.downloads_button_url }}" class="ai-knowledge-base-button-{{ ai_gen_id }}">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            {{ block.settings.downloads_button_text }}
+          </a>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+
+  {% if block.settings.show_shortcuts %}
+    <div class="ai-knowledge-base-shortcuts-{{ ai_gen_id }}">
+      <div class="ai-knowledge-base-shortcut-card-{{ ai_gen_id }}">
+        <div class="ai-knowledge-base-shortcut-icon-{{ ai_gen_id }}">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+        </div>
+        <h3 class="ai-knowledge-base-shortcut-title-{{ ai_gen_id }}">{{ block.settings.shortcut_1_title }}</h3>
+        <p class="ai-knowledge-base-shortcut-description-{{ ai_gen_id }}">{{ block.settings.shortcut_1_description }}</p>
+        {% if block.settings.shortcut_1_button_text != blank %}
+          <a href="{{ block.settings.shortcut_1_button_url }}" class="ai-knowledge-base-button-{{ ai_gen_id }}">
+            {{ block.settings.shortcut_1_button_text }}
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+              <polyline points="15 3 21 3 21 9"></polyline>
+              <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+          </a>
+        {% endif %}
+      </div>
+
+      <div class="ai-knowledge-base-shortcut-card-{{ ai_gen_id }}">
+        <div class="ai-knowledge-base-shortcut-icon-{{ ai_gen_id }}">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.35-4.35"></path>
+          </svg>
+        </div>
+        <h3 class="ai-knowledge-base-shortcut-title-{{ ai_gen_id }}">{{ block.settings.shortcut_2_title }}</h3>
+        <p class="ai-knowledge-base-shortcut-description-{{ ai_gen_id }}">{{ block.settings.shortcut_2_description }}</p>
+        {% if block.settings.shortcut_2_button_text != blank %}
+          <a href="{{ block.settings.shortcut_2_button_url }}" class="ai-knowledge-base-button-{{ ai_gen_id }}">
+            {{ block.settings.shortcut_2_button_text }}
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+              <polyline points="15 3 21 3 21 9"></polyline>
+              <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  {% endif %}
+</knowledge-base-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class KnowledgeBase{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.initializeAccessibility();
+      }
+
+      initializeAccessibility() {
+        const links = this.querySelectorAll('.ai-knowledge-base-link-{{ ai_gen_id }}, .ai-knowledge-base-button-{{ ai_gen_id }}');
+        links.forEach(link => {
+          if (link.getAttribute('href') === '' || link.getAttribute('href') === null) {
+            link.setAttribute('aria-disabled', 'true');
+            link.style.pointerEvents = 'none';
+            link.style.opacity = '0.5';
+          }
+        });
+      }
+    }
+
+    customElements.define('knowledge-base-{{ ai_gen_id }}', KnowledgeBase{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Knowledge base portal",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Main header"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_header",
+      "label": "Show header",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "main_title",
+      "label": "Title",
+      "default": "Corporate Knowledge Base & Resource Portal"
+    },
+    {
+      "type": "text",
+      "id": "main_subtitle",
+      "label": "Subtitle",
+      "default": "Technical documentation, training resources, and operational guides for facility management professionals"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "section_padding",
+      "label": "Section padding",
+      "min": 20,
+      "max": 100,
+      "step": 10,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "section_spacing",
+      "label": "Section spacing",
+      "min": 20,
+      "max": 80,
+      "step": 10,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Equipment & machinery hub"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_equipment_hub",
+      "label": "Show equipment hub",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "equipment_title",
+      "label": "Title",
+      "default": "Commercial Equipment & Machinery Hub"
+    },
+    {
+      "type": "text",
+      "id": "equipment_subsection_1_title",
+      "label": "Subsection 1 title",
+      "default": "Proper Machine Operation Guides"
+    },
+    {
+      "type": "text",
+      "id": "equipment_link_1_text",
+      "label": "Link 1 text",
+      "default": "Industrial Dishwasher Operation Manual"
+    },
+    {
+      "type": "url",
+      "id": "equipment_link_1_url",
+      "label": "Link 1 URL"
+    },
+    {
+      "type": "text",
+      "id": "equipment_link_2_text",
+      "label": "Link 2 text",
+      "default": "Floor Scrubber Machine Setup & Use"
+    },
+    {
+      "type": "url",
+      "id": "equipment_link_2_url",
+      "label": "Link 2 URL"
+    },
+    {
+      "type": "text",
+      "id": "equipment_link_3_text",
+      "label": "Link 3 text",
+      "default": "Commercial Vacuum System Guide"
+    },
+    {
+      "type": "url",
+      "id": "equipment_link_3_url",
+      "label": "Link 3 URL"
+    },
+    {
+      "type": "text",
+      "id": "equipment_subsection_2_title",
+      "label": "Subsection 2 title",
+      "default": "Preventative Maintenance Checklists"
+    },
+    {
+      "type": "text",
+      "id": "equipment_link_4_text",
+      "label": "Link 4 text",
+      "default": "Monthly Equipment Inspection Checklist"
+    },
+    {
+      "type": "url",
+      "id": "equipment_link_4_url",
+      "label": "Link 4 URL"
+    },
+    {
+      "type": "text",
+      "id": "equipment_link_5_text",
+      "label": "Link 5 text",
+      "default": "Annual Machinery Service Schedule"
+    },
+    {
+      "type": "url",
+      "id": "equipment_link_5_url",
+      "label": "Link 5 URL"
+    },
+    {
+      "type": "header",
+      "content": "Product optimization"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_product_optimization",
+      "label": "Show product optimization",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "optimization_title",
+      "label": "Title",
+      "default": "Product Optimization & How-To Guides"
+    },
+    {
+      "type": "text",
+      "id": "optimization_link_1_text",
+      "label": "Link 1 text",
+      "default": "Chemical Dilution Ratio Calculator"
+    },
+    {
+      "type": "url",
+      "id": "optimization_link_1_url",
+      "label": "Link 1 URL"
+    },
+    {
+      "type": "text",
+      "id": "optimization_link_2_text",
+      "label": "Link 2 text",
+      "default": "Safe Handling of Industrial Cleaners"
+    },
+    {
+      "type": "url",
+      "id": "optimization_link_2_url",
+      "label": "Link 2 URL"
+    },
+    {
+      "type": "text",
+      "id": "optimization_link_3_text",
+      "label": "Link 3 text",
+      "default": "Surface-Specific Product Selection"
+    },
+    {
+      "type": "url",
+      "id": "optimization_link_3_url",
+      "label": "Link 3 URL"
+    },
+    {
+      "type": "text",
+      "id": "optimization_link_4_text",
+      "label": "Link 4 text",
+      "default": "Maximizing Product Efficiency Training"
+    },
+    {
+      "type": "url",
+      "id": "optimization_link_4_url",
+      "label": "Link 4 URL"
+    },
+    {
+      "type": "text",
+      "id": "optimization_link_5_text",
+      "label": "Link 5 text",
+      "default": "Environmental Best Practices Guide"
+    },
+    {
+      "type": "url",
+      "id": "optimization_link_5_url",
+      "label": "Link 5 URL"
+    },
+    {
+      "type": "text",
+      "id": "optimization_button_text",
+      "label": "Button text",
+      "default": "View All Training Resources"
+    },
+    {
+      "type": "url",
+      "id": "optimization_button_url",
+      "label": "Button URL"
+    },
+    {
+      "type": "header",
+      "content": "Technical downloads"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_technical_downloads",
+      "label": "Show technical downloads",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "downloads_title",
+      "label": "Title",
+      "default": "Technical Downloads & Documentation"
+    },
+    {
+      "type": "text",
+      "id": "downloads_link_1_text",
+      "label": "Link 1 text",
+      "default": "Equipment Cut Data Sheets (PDF)"
+    },
+    {
+      "type": "url",
+      "id": "downloads_link_1_url",
+      "label": "Link 1 URL"
+    },
+    {
+      "type": "text",
+      "id": "downloads_link_2_text",
+      "label": "Link 2 text",
+      "default": "Printable Dilution Ratio Charts"
+    },
+    {
+      "type": "url",
+      "id": "downloads_link_2_url",
+      "label": "Link 2 URL"
+    },
+    {
+      "type": "text",
+      "id": "downloads_link_3_text",
+      "label": "Link 3 text",
+      "default": "Quick Reference Brochures"
+    },
+    {
+      "type": "url",
+      "id": "downloads_link_3_url",
+      "label": "Link 3 URL"
+    },
+    {
+      "type": "text",
+      "id": "downloads_link_4_text",
+      "label": "Link 4 text",
+      "default": "Product Specification Sheets"
+    },
+    {
+      "type": "url",
+      "id": "downloads_link_4_url",
+      "label": "Link 4 URL"
+    },
+    {
+      "type": "text",
+      "id": "downloads_button_text",
+      "label": "Button text",
+      "default": "Download All Documents"
+    },
+    {
+      "type": "url",
+      "id": "downloads_button_url",
+      "label": "Button URL"
+    },
+    {
+      "type": "header",
+      "content": "Quick resource shortcuts"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_shortcuts",
+      "label": "Show shortcuts",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "shortcut_1_title",
+      "label": "Shortcut 1 title",
+      "default": "Safety Data Sheets (SDS)"
+    },
+    {
+      "type": "text",
+      "id": "shortcut_1_description",
+      "label": "Shortcut 1 description",
+      "default": "Access our complete SDS repository for all chemical products"
+    },
+    {
+      "type": "text",
+      "id": "shortcut_1_button_text",
+      "label": "Shortcut 1 button text",
+      "default": "View SDS Library"
+    },
+    {
+      "type": "url",
+      "id": "shortcut_1_button_url",
+      "label": "Shortcut 1 button URL"
+    },
+    {
+      "type": "text",
+      "id": "shortcut_2_title",
+      "label": "Shortcut 2 title",
+      "default": "Product Finder Tool"
+    },
+    {
+      "type": "text",
+      "id": "shortcut_2_description",
+      "label": "Shortcut 2 description",
+      "default": "Find the right product for your specific cleaning application"
+    },
+    {
+      "type": "text",
+      "id": "shortcut_2_button_text",
+      "label": "Shortcut 2 button text",
+      "default": "Launch Product Finder"
+    },
+    {
+      "type": "url",
+      "id": "shortcut_2_button_url",
+      "label": "Shortcut 2 button URL"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Main title size",
+      "min": 24,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "subtitle_size",
+      "label": "Subtitle size",
+      "min": 14,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "category_title_size",
+      "label": "Category title size",
+      "min": 18,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 22
+    },
+    {
+      "type": "range",
+      "id": "subsection_title_size",
+      "label": "Subsection title size",
+      "min": 14,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "link_size",
+      "label": "Link size",
+      "min": 13,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "shortcut_title_size",
+      "label": "Shortcut title size",
+      "min": 16,
+      "max": 28,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "shortcut_description_size",
+      "label": "Shortcut description size",
+      "min": 13,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title",
+      "default": "#0e1b4d"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle",
+      "default": "#5a6b8c"
+    },
+    {
+      "type": "color",
+      "id": "category_title_color",
+      "label": "Category title",
+      "default": "#0e1b4d"
+    },
+    {
+      "type": "color",
+      "id": "subsection_title_color",
+      "label": "Subsection title",
+      "default": "#0e1b4d"
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "Link",
+      "default": "#4770db"
+    },
+    {
+      "type": "color",
+      "id": "link_hover_color",
+      "label": "Link hover",
+      "default": "#0e1b4d"
+    },
+    {
+      "type": "color",
+      "id": "bullet_color",
+      "label": "Bullet point",
+      "default": "#4770db"
+    },
+    {
+      "type": "color",
+      "id": "shortcut_title_color",
+      "label": "Shortcut title",
+      "default": "#0e1b4d"
+    },
+    {
+      "type": "color",
+      "id": "shortcut_description_color",
+      "label": "Shortcut description",
+      "default": "#5a6b8c"
+    },
+    {
+      "type": "header",
+      "content": "Card style"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "card_border_thickness",
+      "label": "Border thickness",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Border color",
+      "default": "#e0e5f0"
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "card_padding",
+      "label": "Padding",
+      "min": 16,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "label": "Gap between cards",
+      "min": 16,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Divider",
+      "default": "#e0e5f0"
+    },
+    {
+      "type": "header",
+      "content": "Icon style"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "label": "Icon size",
+      "min": 40,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 56
+    },
+    {
+      "type": "color",
+      "id": "icon_background",
+      "label": "Background",
+      "default": "#4770db"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "icon_border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Button style"
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Background",
+      "default": "#0e1b4d"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_background",
+      "label": "Hover background",
+      "default": "#4770db"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_text_color",
+      "label": "Hover text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "button_border_thickness",
+      "label": "Border thickness",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "color",
+      "id": "button_border_color",
+      "label": "Border color",
+      "default": "#0e1b4d"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_border_color",
+      "label": "Hover border color",
+      "default": "#4770db"
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "button_padding_vertical",
+      "label": "Vertical padding",
+      "min": 8,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "button_padding_horizontal",
+      "label": "Horizontal padding",
+      "min": 16,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "button_text_size",
+      "label": "Text size",
+      "min": 13,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "header",
+      "content": "Shortcut card style"
+    },
+    {
+      "type": "color",
+      "id": "shortcut_background",
+      "label": "Background",
+      "default": "#f8f9fc"
+    },
+    {
+      "type": "color",
+      "id": "shortcut_border_color",
+      "label": "Border color",
+      "default": "#e0e5f0"
+    },
+    {
+      "type": "range",
+      "id": "shortcut_icon_size",
+      "label": "Icon size",
+      "min": 60,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "color",
+      "id": "shortcut_icon_background",
+      "label": "Icon background",
+      "default": "#4770db"
+    },
+    {
+      "type": "color",
+      "id": "shortcut_icon_color",
+      "label": "Icon color",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Knowledge base portal"
+    }
+  ]
+}
+{% endschema %}

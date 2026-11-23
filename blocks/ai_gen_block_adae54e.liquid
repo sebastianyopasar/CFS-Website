@@ -1,0 +1,549 @@
+{% doc %}
+  @prompt
+    Now I want another short sections which title is "Shop our brands"
+    
+    Then please have small columns and in every single one i just need an image that you can click and can redirect to another section of this website
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-brand-grid-{{ ai_gen_id }} {
+    padding: {{ block.settings.section_padding_top }}px 0 {{ block.settings.section_padding_bottom }}px;
+    background-color: {{ block.settings.background_color }};
+  }
+
+  .ai-brand-grid__container-{{ ai_gen_id }} {
+    max-width: {{ block.settings.container_width }}px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .ai-brand-grid__heading-{{ ai_gen_id }} {
+    text-align: {{ block.settings.heading_alignment }};
+    margin: 0 0 {{ block.settings.heading_spacing }}px;
+    color: {{ block.settings.heading_color }};
+    font-size: {{ block.settings.heading_size }}px;
+  }
+
+  .ai-brand-grid__grid-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat({{ block.settings.columns_desktop }}, 1fr);
+    gap: {{ block.settings.grid_gap }}px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .ai-brand-grid__item-{{ ai_gen_id }} {
+    position: relative;
+    overflow: hidden;
+    border-radius: {{ block.settings.image_border_radius }}px;
+    background-color: {{ block.settings.item_background_color }};
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .ai-brand-grid__item-{{ ai_gen_id }}:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  }
+
+  .ai-brand-grid__link-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+  }
+
+  .ai-brand-grid__image-wrapper-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    padding-bottom: {{ block.settings.image_aspect_ratio }}%;
+    overflow: hidden;
+  }
+
+  .ai-brand-grid__image-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: {{ block.settings.image_fit }};
+    padding: {{ block.settings.image_padding }}px;
+  }
+
+  .ai-brand-grid__placeholder-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f4f4f4;
+  }
+
+  .ai-brand-grid__placeholder-{{ ai_gen_id }} svg {
+    width: 60%;
+    height: 60%;
+    opacity: 0.3;
+  }
+
+  @media screen and (max-width: 989px) {
+    .ai-brand-grid__grid-{{ ai_gen_id }} {
+      grid-template-columns: repeat({{ block.settings.columns_tablet }}, 1fr);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-brand-grid__grid-{{ ai_gen_id }} {
+      grid-template-columns: repeat({{ block.settings.columns_mobile }}, 1fr);
+    }
+
+    .ai-brand-grid__heading-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.heading_size }}px * 0.8);
+    }
+  }
+{% endstyle %}
+
+<div class="ai-brand-grid-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-brand-grid__container-{{ ai_gen_id }}">
+    {% if block.settings.heading != blank %}
+      <h2 class="ai-brand-grid__heading-{{ ai_gen_id }}">{{ block.settings.heading }}</h2>
+    {% endif %}
+
+    <ul class="ai-brand-grid__grid-{{ ai_gen_id }}">
+      {% for i in (1..12) %}
+        {% liquid
+          assign image_key = 'brand_image_' | append: i
+          assign link_key = 'brand_link_' | append: i
+          assign brand_image = block.settings[image_key]
+          assign brand_link = block.settings[link_key]
+        %}
+
+        {% if brand_image != blank or brand_link != blank %}
+          <li class="ai-brand-grid__item-{{ ai_gen_id }}">
+            {% if brand_link != blank %}
+              <a href="{{ brand_link }}" class="ai-brand-grid__link-{{ ai_gen_id }}">
+            {% else %}
+              <div class="ai-brand-grid__link-{{ ai_gen_id }}">
+            {% endif %}
+              <div class="ai-brand-grid__image-wrapper-{{ ai_gen_id }}">
+                {% if brand_image != blank %}
+                  <img
+                    src="{{ brand_image | image_url: width: 600 }}"
+                    alt="{{ brand_image.alt | escape }}"
+                    loading="lazy"
+                    width="{{ brand_image.width }}"
+                    height="{{ brand_image.height }}"
+                    class="ai-brand-grid__image-{{ ai_gen_id }}"
+                  >
+                {% else %}
+                  <div class="ai-brand-grid__placeholder-{{ ai_gen_id }}">
+                    {{ 'image' | placeholder_svg_tag }}
+                  </div>
+                {% endif %}
+              </div>
+            {% if brand_link != blank %}
+              </a>
+            {% else %}
+              </div>
+            {% endif %}
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Shop our brands",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Shop our brands"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 16,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Heading size",
+      "default": 32
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Heading alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "heading_spacing",
+      "min": 10,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "label": "Heading spacing",
+      "default": 40
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#0e1b4d"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "label": "Columns on desktop",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "columns_tablet",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "label": "Columns on tablet",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "columns_mobile",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "label": "Columns on mobile",
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "label": "Grid gap",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "container_width",
+      "min": 800,
+      "max": 1600,
+      "step": 100,
+      "unit": "px",
+      "label": "Container width",
+      "default": 1200
+    },
+    {
+      "type": "header",
+      "content": "Brand images"
+    },
+    {
+      "type": "select",
+      "id": "image_aspect_ratio",
+      "label": "Image aspect ratio",
+      "options": [
+        {
+          "value": "100",
+          "label": "Square (1:1)"
+        },
+        {
+          "value": "75",
+          "label": "Landscape (4:3)"
+        },
+        {
+          "value": "66.67",
+          "label": "Landscape (3:2)"
+        },
+        {
+          "value": "56.25",
+          "label": "Landscape (16:9)"
+        }
+      ],
+      "default": "100"
+    },
+    {
+      "type": "select",
+      "id": "image_fit",
+      "label": "Image fit",
+      "options": [
+        {
+          "value": "contain",
+          "label": "Contain"
+        },
+        {
+          "value": "cover",
+          "label": "Cover"
+        }
+      ],
+      "default": "contain"
+    },
+    {
+      "type": "range",
+      "id": "image_padding",
+      "min": 0,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "label": "Image padding",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "image_border_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Border radius",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "item_background_color",
+      "label": "Item background",
+      "default": "#f4f4f4"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "section_padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "section_padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "Brand 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "brand_image_1",
+      "label": "Image"
+    },
+    {
+      "type": "url",
+      "id": "brand_link_1",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Brand 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "brand_image_2",
+      "label": "Image"
+    },
+    {
+      "type": "url",
+      "id": "brand_link_2",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Brand 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "brand_image_3",
+      "label": "Image"
+    },
+    {
+      "type": "url",
+      "id": "brand_link_3",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Brand 4"
+    },
+    {
+      "type": "image_picker",
+      "id": "brand_image_4",
+      "label": "Image"
+    },
+    {
+      "type": "url",
+      "id": "brand_link_4",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Brand 5"
+    },
+    {
+      "type": "image_picker",
+      "id": "brand_image_5",
+      "label": "Image"
+    },
+    {
+      "type": "url",
+      "id": "brand_link_5",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Brand 6"
+    },
+    {
+      "type": "image_picker",
+      "id": "brand_image_6",
+      "label": "Image"
+    },
+    {
+      "type": "url",
+      "id": "brand_link_6",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Brand 7"
+    },
+    {
+      "type": "image_picker",
+      "id": "brand_image_7",
+      "label": "Image"
+    },
+    {
+      "type": "url",
+      "id": "brand_link_7",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Brand 8"
+    },
+    {
+      "type": "image_picker",
+      "id": "brand_image_8",
+      "label": "Image"
+    },
+    {
+      "type": "url",
+      "id": "brand_link_8",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Brand 9"
+    },
+    {
+      "type": "image_picker",
+      "id": "brand_image_9",
+      "label": "Image"
+    },
+    {
+      "type": "url",
+      "id": "brand_link_9",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Brand 10"
+    },
+    {
+      "type": "image_picker",
+      "id": "brand_image_10",
+      "label": "Image"
+    },
+    {
+      "type": "url",
+      "id": "brand_link_10",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Brand 11"
+    },
+    {
+      "type": "image_picker",
+      "id": "brand_image_11",
+      "label": "Image"
+    },
+    {
+      "type": "url",
+      "id": "brand_link_11",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Brand 12"
+    },
+    {
+      "type": "image_picker",
+      "id": "brand_image_12",
+      "label": "Image"
+    },
+    {
+      "type": "url",
+      "id": "brand_link_12",
+      "label": "Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shop our brands"
+    }
+  ]
+}
+{% endschema %}
