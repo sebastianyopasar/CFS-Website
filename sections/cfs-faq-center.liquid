@@ -13,7 +13,7 @@
         {% for block in section.blocks %}
           {% if block.settings.topic == topic %}
             {% assign count = count | plus: 1 %}
-            <details class="cfs-faq-question" {{ block.shopify_attributes }}>
+            <details id="faq-question-{{ block.id | escape }}" class="cfs-faq-question" {{ block.shopify_attributes }}>
               <summary>{{ block.settings.question | escape }}</summary>
               <div class="cfs-faq-answer">{{ block.settings.answer }}</div>
             </details>
@@ -83,6 +83,17 @@
 (() => {
   const grid = document.getElementById('faq-title-{{ section.id }}').closest('.cfs-faq-grid').querySelector('.cfs-faq-grid__topics');
   const topics = Array.from(grid.children);
+  function openLinkedAnswer() {
+    const question = document.getElementById(location.hash.slice(1));
+    if (!question?.matches('.cfs-faq-question') || !grid.contains(question)) return;
+    const topic = question.closest('.cfs-faq-topic');
+    topics.forEach(card => card.open = card === topic);
+    grid.prepend(topic);
+    question.open = true;
+    requestAnimationFrame(() => question.scrollIntoView({block:'center'}));
+  }
+  openLinkedAnswer();
+  window.addEventListener('hashchange', openLinkedAnswer);
   let transition;
   grid.addEventListener('click', event => {
     const summary = event.target.closest('.cfs-faq-topic__toggle');
