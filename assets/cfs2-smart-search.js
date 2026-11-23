@@ -66,7 +66,7 @@
     if(item.excerpt){
       const source=document.createElement('small');
       source.style.display='block';
-      source.textContent='p. '+item.page+' · '+item.excerpt;
+      source.textContent=item.faq ? item.excerpt : 'p. '+item.page+' · '+item.excerpt;
       label.append(source);
     }
     link.append(media,label);
@@ -112,7 +112,7 @@
       controller = new AbortController();
       const signal = controller.signal;
       timer = setTimeout(async () => {
-        const guideRequest = window.CfsGuideSearch.search(query,5);
+        const guideRequest = Promise.all([window.CfsGuideSearch.search(query,5), window.CfsGuideSearch.searchFaq(query,3)]);
         let results = {};
         try {
           const url = new URL(form.action.replace(/\/$/, '') + '/suggest.json');
@@ -124,10 +124,11 @@
         const matches = product ? (await Promise.all((results.products || []).slice(0,4).map(item => dilutionResult(item,signal,form.action)))).filter(Boolean) : [];
         if (current !== revision) return;
         firstMatch = matches.length === 1 ? matches[0] : null;
-        const guides = await guideRequest;
+        const [guides, faqs] = await guideRequest;
         if (current !== revision) return;
         const sections = [
           ...group(form.dataset.dilutions, matches, 'product'),
+          ...group('FAQs', faqs, 'page'),
           ...group(form.dataset.guides, guides, 'document'),
           ...group(form.dataset.pages, results.pages, 'page'),
           ...group(form.dataset.articles, results.articles, 'article'),
