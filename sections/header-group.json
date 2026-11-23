@@ -1,0 +1,211 @@
+/*
+ * CFS 2.0 DEV staging file. Original is included in backups.
+ * Shopify theme editor may regenerate this file.
+ */
+{
+  "name": "t:sections.header.name",
+  "type": "header",
+  "sections": {
+    "cfs2_header": {
+      "type": "cfs2-header",
+      "settings": {
+        "main_menu": "header",
+        "phone": "1 (800) 661-3259",
+        "utility_text": "Canadian-owned since 1979"
+      },
+      "blocks": {
+        "cfs_favorites": {
+          "type": "shopify://apps/advanced-wishlist/blocks/header-icon/330d9272-08ea-4193-b3e0-475a69fa65fa",
+          "settings": {
+            "header_icon_size": 20,
+            "header_icon_thickness": "500",
+            "header_icon_color": "#0e1b4d",
+            "header_count_background_color": "#000000",
+            "header_count_text_color": "#ffffff",
+            "filled_icon": false,
+            "header_icon_design": "wishlist_page"
+          }
+        }
+      },
+      "block_order": [
+        "cfs_favorites"
+      ]
+    },
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "settings": {
+        "auto_rotate": false,
+        "change_slides_speed": 5,
+        "color_scheme": "scheme-4",
+        "show_line_separator": true,
+        "show_social": false,
+        "enable_country_selector": false,
+        "enable_language_selector": false
+      },
+      "disabled": true
+    },
+    "17743811262f6674ee": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_62aafff_7hL77i": {
+          "type": "ai_gen_block_62aafff",
+          "settings": {
+            "left_link_1_text": "Knowledge Base",
+            "left_link_1_url": "/pages/knowledge-base?view=cfs2-knowledge-portal",
+            "left_link_2_text": "Blog",
+            "left_link_2_url": "shopify://blogs/news",
+            "left_link_3_text": "",
+            "left_link_3_url": "",
+            "link_spacing": 20,
+            "right_text": "Get exclusive discounts and better pricing!",
+            "right_link_text": "+1 (800) 661-3259",
+            "right_link_url": "tel:18006613259",
+            "font_family": "montserrat_n4",
+            "background_color": "#9ab612",
+            "text_color": "#1c4897",
+            "link_color": "#0e1b4d",
+            "main_link_color": "#ffffff",
+            "font_size": 13,
+            "padding_vertical": 10,
+            "padding_horizontal": 20,
+            "container_width": 1600
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_62aafff_7hL77i"
+      ],
+      "settings": {},
+      "disabled": true
+    },
+    "header": {
+      "type": "header",
+      "blocks": {
+        "advanced_wishlist_header_icon_Ci6m3N": {
+          "type": "shopify://apps/advanced-wishlist/blocks/header-icon/330d9272-08ea-4193-b3e0-475a69fa65fa",
+          "settings": {
+            "header_icon_size": 20,
+            "header_icon_thickness": "500",
+            "header_icon_color": "#0e1b4d",
+            "header_count_background_color": "#000000",
+            "header_count_text_color": "#ffffff",
+            "filled_icon": false,
+            "header_icon_design": "wishlist_page"
+          }
+        }
+      },
+      "block_order": [
+        "advanced_wishlist_header_icon_Ci6m3N"
+      ],
+      "custom_css": [
+        "@media (max-width: 749px) {.header__heading-logo-wrapper img.header__heading-logo {width: 110% !important; max-width: 110% !important; }}"
+      ],
+      "settings": {
+        "social_icon_mode": "snippet",
+        "logo_position": "top-center",
+        "mobile_logo_position": "center",
+        "menu": "header",
+        "menu_type_desktop": "mega",
+        "sticky_header_type": "on-scroll-up",
+        "show_line_separator": false,
+        "color_scheme": "scheme-2",
+        "menu_color_scheme": "scheme-3",
+        "enable_country_selector": true,
+        "enable_language_selector": true,
+        "enable_customer_avatar": true,
+        "margin_bottom": 0,
+        "padding_top": 20,
+        "padding_bottom": 20
+      },
+      "disabled": true
+    },
+    "178602773569d2a77a": {
+      "type": "_blocks",
+      "settings": {},
+      "disabled": true
+    },
+    "announcement_bar_gUaeUH": {
+      "type": "announcement-bar",
+      "name": "t:sections.announcement-bar.presets.name",
+      "settings": {
+        "auto_rotate": false,
+        "change_slides_speed": 5,
+        "color_scheme": "",
+        "show_line_separator": true,
+        "show_social": false,
+        "enable_country_selector": false,
+        "enable_language_selector": false
+      },
+      "disabled": true
+    },
+    "1774533782839b4f1b": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_da21bb1_rVRHd6": {
+          "type": "ai_gen_block_da21bb1",
+          "disabled": true,
+          "settings": {
+            "desktop_width_percent": 85,
+            "section_height": 550,
+            "image_1_height": 300,
+            "image_2_height": 300,
+            "mobile_image_height": 250,
+            "mobile_slideshow_height": 400,
+            "image_border_radius": 20,
+            "slideshow_border_radius": 20,
+            "image_1": "shopify://shop_images/About_us_CFS.png",
+            "image_1_text": "",
+            "image_1_link": "shopify://pages/about-us",
+            "image_2": "shopify://shop_images/Shop_Now_CFS.png",
+            "image_2_text": "",
+            "image_2_link": "shopify://collections/all",
+            "overlay_color": "#0e1b4d",
+            "overlay_opacity": 0.8,
+            "overlay_text_color": "#ffffff",
+            "overlay_text_size": 18,
+            "slide_1_image": "shopify://shop_images/Hero_3.png",
+            "slide_1_link": "shopify://collections/contractors-choice",
+            "slide_2_image": "shopify://shop_images/Hero_1.png",
+            "slide_2_link": "shopify://collections/clearance",
+            "slide_3_image": "shopify://shop_images/Hero_2.png",
+            "slide_3_link": "shopify://pages/contact",
+            "autoplay": true,
+            "autoplay_speed": 5,
+            "dot_color": "#ffffff"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_da21bb1_rVRHd6"
+      ],
+      "settings": {},
+      "disabled": true
+    },
+    "announcement_bar_tdwnaM": {
+      "type": "announcement-bar",
+      "name": "t:sections.announcement-bar.presets.name",
+      "settings": {
+        "auto_rotate": false,
+        "change_slides_speed": 5,
+        "color_scheme": "",
+        "show_line_separator": true,
+        "show_social": false,
+        "enable_country_selector": false,
+        "enable_language_selector": false
+      },
+      "disabled": true
+    }
+  },
+  "order": [
+    "cfs2_header",
+    "announcement-bar",
+    "17743811262f6674ee",
+    "header",
+    "178602773569d2a77a",
+    "announcement_bar_gUaeUH",
+    "1774533782839b4f1b",
+    "announcement_bar_tdwnaM"
+  ]
+}

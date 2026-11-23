@@ -1,0 +1,3 @@
+{% layout none %}
+{%- assign language = request.locale.iso_code | split: '-' | first -%}
+{{- product.metafields.cfs_details[language].value.dilutions | json -}}

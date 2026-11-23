@@ -1,0 +1,246 @@
+{{ 'customer.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="customer account section-{{ section.id }}-padding">
+  <div>
+    <h1 class="customer__title">{{ 'customer.account.title' | t }}</h1>
+    {% render 'hulkapps-wishlist-account-btn' %}
+    <a href="{{ routes.account_logout_url }}">
+      <span class="svg-wrapper">
+        {{- 'icon-account.svg' | inline_asset_content -}}
+      </span>
+      {{ 'customer.log_out' | t }}
+    </a>
+  </div>
+
+  <div>
+
+    {%- comment -%} CUSTOMER DISCOUNT BLOCK {%- endcomment -%}
+    {% if customer and customer.tags contains 'cfs_disc_10_all' %}
+      <div class="cfs-account-pricing" style="margin: 1.5rem 0; padding: 1rem; border-radius: 8px; border: 1px solid #e8e8e8; background:#f9f9f9;">
+        <h2 style="margin: 0 0 0.25rem;">Your Pricing</h2>
+        <p style="margin: 0;">
+          You receive 10% off all qualifying items. Your discount is applied automatically at checkout.
+        </p>
+      </div>
+    {% endif %}
+    {%- comment -%} END CUSTOMER DISCOUNT BLOCK {%- endcomment -%}
+
+    <div>
+      <h2>{{ 'customer.orders.title' | t }}</h2>
+
+      {% paginate customer.orders by 20 %}
+        {%- if customer.orders.size > 0 -%}
+          <table role="table" class="order-history">
+            <caption class="visually-hidden">
+              {{ 'customer.orders.title' | t }}
+            </caption>
+            <thead role="rowgroup">
+              <tr role="row">
+                <th id="ColumnOrder" scope="col" role="columnheader">{{ 'customer.orders.order_number' | t }}</th>
+                <th id="ColumnDate" scope="col" role="columnheader">{{ 'customer.orders.date' | t }}</th>
+                <th id="ColumnPayment" scope="col" role="columnheader">{{ 'customer.orders.payment_status' | t }}</th>
+                <th id="ColumnFulfillment" scope="col" role="columnheader">
+                  {{ 'customer.orders.fulfillment_status' | t }}
+                </th>
+                <th id="ColumnTotal" scope="col" role="columnheader">{{ 'customer.orders.total' | t }}</th>
+              </tr>
+            </thead>
+            <tbody role="rowgroup">
+              {%- for order in customer.orders -%}
+                <tr role="row">
+                  <td
+                    id="RowOrder"
+                    role="cell"
+                    headers="ColumnOrder"
+                    data-label="{{ 'customer.orders.order_number' | t }}"
+                  >
+                    <a
+                      href="{{ order.customer_url }}"
+                      aria-label="{{ 'customer.orders.order_number_link' | t: number: order.name }}"
+                    >
+                      {{ order.name }}
+                    </a>
+                  </td>
+                  <td headers="RowOrder ColumnDate" role="cell" data-label="{{ 'customer.orders.date' | t }}">
+                    {{ order.created_at | time_tag: format: 'date' }}
+                  </td>
+                  <td
+                    headers="RowOrder ColumnPayment"
+                    role="cell"
+                    data-label="{{ 'customer.orders.payment_status' | t }}"
+                  >
+                    {{ order.financial_status_label }}
+                  </td>
+                  <td
+                    headers="RowOrder ColumnFulfillment"
+                    role="cell"
+                    data-label="{{ 'customer.orders.fulfillment_status' | t }}"
+                  >
+                    {{ order.fulfillment_status_label }}
+                  </td>
+                  <td headers="RowOrder ColumnTotal" role="cell" data-label="{{ 'customer.orders.total' | t }}">
+                    {{ order.total_net_amount | money_with_currency }}
+                  </td>
+                </tr>
+              {%- endfor -%}
+            </tbody>
+          </table>
+        {%- else -%}
+          <p>{{ 'customer.orders.none' | t }}</p>
+        {%- endif -%}
+
+        {%- if paginate.pages > 1 -%}
+          {%- if paginate.parts.size > 0 -%}
+            <nav class="pagination" role="navigation" aria-label="{{ 'general.pagination.label' | t }}">
+              <ul role="list">
+                {%- if paginate.previous -%}
+                  <li>
+                    <a href="{{ paginate.previous.url }}" aria-label="{{ 'general.pagination.previous' | t }}">
+                      <span class="svg-wrapper">
+                        {{- 'icon-caret.svg' | inline_asset_content -}}
+                      </span>
+                    </a>
+                  </li>
+                {%- endif -%}
+
+                {%- for part in paginate.parts -%}
+                  <li>
+                    {%- if part.is_link -%}
+                      <a href="{{ part.url }}" aria-label="{{ 'general.pagination.page' | t: number: part.title }}">
+                        {{- part.title -}}
+                      </a>
+                    {%- else -%}
+                      {%- if part.title == paginate.current_page -%}
+                        <span aria-current="page" aria-label="{{ 'general.pagination.page' | t: number: part.title }}">
+                          {{- part.title -}}
+                        </span>
+                      {%- else -%}
+                        <span>{{ part.title }}</span>
+                      {%- endif -%}
+                    {%- endif -%}
+                  </li>
+                {%- endfor -%}
+
+                {%- if paginate.next -%}
+                  <li>
+                    <a href="{{ paginate.next.url }}" aria-label="{{ 'general.pagination.next' | t }}">
+                      <span class="svg-wrapper">
+                        {{- 'icon-caret.svg' | inline_asset_content -}}
+                      </span>
+                    </a>
+                  </li>
+                {%- endif -%}
+              </ul>
+            </nav>
+          {%- endif -%}
+        {%- endif -%}
+      {% endpaginate %}
+    </div>
+
+    <div>
+      {% comment %} IMPROVED MEMBERSHIP BLOCK {% endcomment %}
+      <div style="margin-bottom: 3rem; border: 1px solid #e8e8e8; padding: 20px; border-radius: 8px; background-color: #f9f9f9;">
+        <h2 class="h4" style="margin-top: 0; color: #333;">Membership Status</h2>
+        
+        <div style="margin-bottom: 15px;">
+          <p style="margin: 0; font-size: 1.5rem;">
+            <strong>Linked Customer ID:</strong> 
+            {% if customer.metafields.custom.customer_id != blank %}
+              <span style="color: #28a745; font-weight: bold;">{{ customer.metafields.custom.customer_id }}</span>
+            {% else %}
+              <span style="color: #d9534f;">No ID linked yet</span>
+            {% endif %}
+          </p>
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
+
+        {% form 'contact' %}
+          {% if form.posted_successfully? %}
+            <p style="color: #28a745; background: #e6ffed; padding: 10px; border-radius: 4px; font-size: 1.3rem; font-weight: bold;">
+              ✓ Request sent! We will verify your ID and update your status shortly.
+            </p>
+          {% endif %}
+
+          {{ form.errors | default_errors }}
+
+          <p style="font-size: 1.3rem; color: #666; margin-bottom: 10px;">To link a new Customer ID, please enter it below:</p>
+
+          <input type="hidden" name="contact[email]" value="{{ customer.email }}">
+          <input type="hidden" name="contact[Subject]" value="Customer ID Verification Request">
+
+          <div class="field" style="margin-top: 10px;">
+            <input 
+              type="text" 
+              name="contact[Requested_Customer_ID]" 
+              id="CustomerIDRequest" 
+              placeholder="Enter your ID number"
+              style="width: 100%;"
+              required
+            >
+            <label for="CustomerIDRequest">Enter ID Number</label>
+          </div>
+
+          <button type="submit" class="button button--secondary" style="margin-top: 15px; width: 100%;">
+            Send for Verification
+          </button>
+        {% endform %}
+      </div>
+      {% comment %} END MEMBERSHIP BLOCK {% endcomment %}
+
+      <h2>{{ 'customer.account.details' | t }}</h2>
+
+      {{ customer.default_address | format_address }}
+
+      <a href="{{ routes.account_addresses_url }}">
+        {{ 'customer.account.view_addresses' | t }} ({{ customer.addresses_count }})
+      </a>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.main-account.name",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+  ]
+}
+{% endschema %}

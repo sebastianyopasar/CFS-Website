@@ -1,0 +1,262 @@
+<div class="cfs-calculator-container">
+  <div class="cfs-calculator-header">
+    <h3>Garbage Bag Sizing Calculator</h3>
+    <p>Select your receptacle type below to find the perfect bag fit.</p>
+    <div class="cfs-input-group">
+      <label for="cfs-receptacle-type" class="sr-only">Receptacle Type</label>
+      <select id="cfs-receptacle-type">
+        <option value="">-- Choose a Receptacle --</option>
+        </select>
+    </div>
+  </div>
+  
+  <div id="cfs-results-container" class="cfs-results">
+    <div class="cfs-empty-state">
+      <p>Your recommended bag sizes will appear here.</p>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Scoped CSS to prevent theme conflicts */
+  .cfs-calculator-container {
+    max-width: 850px;
+    margin: 2rem auto;
+    font-family: inherit; /* Inherits your Shopify theme's font */
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+    border: 1px solid #eaeaea;
+    overflow: hidden;
+  }
+  
+  .cfs-calculator-header {
+    background: #fdfdfd;
+    padding: 2rem;
+    border-bottom: 1px solid #eaeaea;
+    text-align: center;
+  }
+  
+  .cfs-calculator-header h3 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+    color: #111827;
+  }
+  
+  .cfs-calculator-header p {
+    color: #6b7280;
+    margin-bottom: 1.5rem;
+  }
+
+  .cfs-input-group {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .cfs-input-group select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #374151;
+    background-color: #fff;
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    transition: border-color 0.2s;
+  }
+
+  .cfs-input-group select:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  }
+
+  .cfs-results {
+    padding: 2rem;
+    background: #fafafa;
+    min-height: 200px;
+  }
+
+  .cfs-empty-state {
+    text-align: center;
+    color: #9ca3af;
+    padding: 3rem 0;
+    font-style: italic;
+  }
+
+  .cfs-result-card {
+    display: flex;
+    align-items: stretch;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .cfs-result-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.04);
+  }
+
+  /* Left Column: Receptacle Details */
+  .cfs-receptacle-info {
+    flex: 0 0 30%;
+    background: #f9fafb;
+    padding: 1.5rem;
+    border-right: 1px solid #e5e7eb;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .cfs-receptacle-info h4 {
+    margin: 0 0 0.25rem 0;
+    color: #111827;
+    font-size: 1.25rem;
+  }
+
+  .cfs-receptacle-info p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* Right Column: Bag Details */
+  .cfs-bag-info {
+    flex: 1;
+    padding: 1.5rem;
+    display: flex;
+    gap: 1rem;
+  }
+
+  .cfs-bag-type {
+    flex: 1;
+    background: #ffffff;
+    padding: 1rem;
+    border-radius: 6px;
+    border: 1px solid #f3f4f6;
+  }
+
+  .cfs-bag-type span.badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+  }
+
+  .cfs-bag-type.lld span.badge {
+    background: #e0f2fe;
+    color: #0369a1;
+  }
+
+  .cfs-bag-type.hd span.badge {
+    background: #fef9c3;
+    color: #a16207;
+  }
+
+  .cfs-bag-type strong {
+    display: block;
+    color: #1f2937;
+    font-size: 1.125rem;
+  }
+
+  /* Mobile Responsive Stacking */
+  @media (max-width: 640px) {
+    .cfs-result-card {
+      flex-direction: column;
+    }
+    .cfs-receptacle-info {
+      flex: none;
+      border-right: none;
+      border-bottom: 1px solid #e5e7eb;
+      padding: 1rem;
+    }
+    .cfs-bag-info {
+      flex-direction: column;
+      padding: 1rem;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // Array derived directly from the training document
+    const bagData = [
+      { type: "Rectangle Wastebasket", gal: "3.5", lld: "20x22, 24x22", hd: "20x22, 24x22" },
+      { type: "Rectangle Wastebasket", gal: "7", lld: "22x24, 24x22", hd: "22x24, 24x22" },
+      { type: "Rectangle Wastebasket", gal: "10", lld: "24x22, 26x36", hd: "24x22, 26x36" },
+      { type: "Round Base", gal: "22", lld: "30x38, 35x47, 35x50", hd: "30x38, 35x50" },
+      { type: "Slim Jim", gal: "23", lld: "28x40, 30x38, 35x50", hd: "30x38, 35x50" },
+      { type: "Ranger", gal: "35", lld: "28x40, 35x50", hd: "36x50" },
+      { type: "Ranger", gal: "45", lld: "35x47, 35x50, 42x48", hd: "36x50, 43x48" },
+      { type: "Round Utility", gal: "20", lld: "26x36", hd: "26x36" },
+      { type: "Round Utility", gal: "30", lld: "26x36", hd: "26x36" },
+      { type: "Round Utility", gal: "32", lld: "30x38", hd: "30x38" },
+      { type: "Round Utility", gal: "44", lld: "35x47, 35x50", hd: "36x50" },
+      { type: "Round Utility", gal: "55", lld: "42x48", hd: null },
+      { type: "Drum", gal: "55", lld: "42x48", hd: null },
+      { type: "Tilt 'N Wheel", gal: "50", lld: "36x24x65", hd: null }
+    ];
+
+    const selectEl = document.getElementById('cfs-receptacle-type');
+    const resultsContainer = document.getElementById('cfs-results-container');
+    
+    // Extract unique receptacle types for the dropdown
+    const uniqueTypes = [...new Set(bagData.map(item => item.type))];
+    uniqueTypes.forEach(type => {
+      const option = document.createElement('option');
+      option.value = type;
+      option.textContent = type;
+      selectEl.appendChild(option);
+    });
+
+    // Handle selection changes
+    selectEl.addEventListener('change', (e) => {
+      const selectedType = e.target.value;
+      
+      if (!selectedType) {
+        resultsContainer.innerHTML = '<div class="cfs-empty-state"><p>Your recommended bag sizes will appear here.</p></div>';
+        return;
+      }
+
+      resultsContainer.innerHTML = ''; // Clear previous results
+      const filteredData = bagData.filter(item => item.type === selectedType);
+      
+      filteredData.forEach(item => {
+        // Only generate the High Density block if data exists for it
+        const hdBlock = item.hd 
+          ? `<div class="cfs-bag-type hd">
+               <span class="badge">High Density (HD)</span>
+               <strong>${item.hd}</strong>
+             </div>` 
+          : '';
+        
+        const cardHtml = `
+          <div class="cfs-result-card">
+            <div class="cfs-receptacle-info">
+              <h4>${item.gal} Gallon</h4>
+              <p>${item.type}</p>
+            </div>
+            <div class="cfs-bag-info">
+              <div class="cfs-bag-type lld">
+                <span class="badge">Low Density (LLD)</span>
+                <strong>${item.lld}</strong>
+              </div>
+              ${hdBlock}
+            </div>
+          </div>
+        `;
+        resultsContainer.insertAdjacentHTML('beforeend', cardHtml);
+      });
+    });
+  });
+</script>

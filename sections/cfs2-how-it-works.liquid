@@ -1,0 +1,63 @@
+{{ 'cfs2.css' | asset_url | stylesheet_tag }}
+<section class="cfs2-section cfs2-how" id="cfs2-how-it-works">
+  <div class="cfs2-container">
+    <div class="cfs2-how__intro">
+      {% if section.settings.eyebrow != blank %}<div class="cfs2-eyebrow">{{ section.settings.eyebrow | escape }}</div>{% endif %}
+      <h2>{{ section.settings.heading | escape }}</h2>
+      {% if section.settings.intro != blank %}<p>{{ section.settings.intro | escape }}</p>{% endif %}
+    </div>
+    <div class="cfs2-how__grid">
+      <article class="cfs2-how__step">
+        <span class="cfs2-how__num" aria-hidden="true">01</span>
+        <h3>{{ section.settings.step_1_title | escape }}</h3>
+        <p>{{ 'cfs2.storefront.searchNote' | t | escape }}</p>
+        <a href="{{ routes.search_url }}">{{ 'cfs2.storefront.search' | t | escape }} →</a>
+      </article>
+      <article class="cfs2-how__step">
+        <span class="cfs2-how__num" aria-hidden="true">02</span>
+        <h3>{{ section.settings.step_2_title | escape }}</h3>
+        <p>{{ section.settings.step_2_description | escape }}</p>
+        <a href="{{ routes.all_products_collection_url }}">{{ section.settings.step_2_cta | escape }} →</a>
+      </article>
+      <article class="cfs2-how__step">
+        <span class="cfs2-how__num" aria-hidden="true">03</span>
+        <h3>{{ section.settings.step_3_title | escape }}</h3>
+        <p>{{ section.settings.step_3_description | escape }}</p>
+        {% if section.settings.contact_url != blank %}
+          <a href="{{ section.settings.contact_url }}">{{ section.settings.step_3_cta | escape }} →</a>
+        {% else %}
+          <a href="{{ routes.search_url }}">{{ section.settings.step_3_cta | escape }} →</a>
+        {% endif %}
+      </article>
+    </div>
+    {% if section.settings.footer_text != blank %}
+      <p class="cfs2-how__footer">{{ section.settings.footer_text | escape }}
+        {% if section.settings.checklist_url != blank %}<a href="{{ section.settings.checklist_url }}">{{ section.settings.checklist_cta | escape }} →</a>{% endif %}
+      </p>
+    {% endif %}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "CFS 2.0 How It Works",
+  "settings": [
+    {"type":"text","id":"eyebrow","label":"Small label","default":"GETTING STARTED"},
+    {"type":"text","id":"heading","label":"Heading","default":"Everything you need, made simpler."},
+    {"type":"textarea","id":"intro","label":"Introduction","default":"Already know your item number? Need help finding the right supply? Here are three easy ways to get started."},
+    {"type":"text","id":"step_1_title","label":"Step 1 title","default":"Know your SKU?"},
+    {"type":"textarea","id":"step_1_description","label":"Step 1 description","default":"Search by product name or item number."},
+    {"type":"text","id":"step_1_cta","label":"Step 1 link text","default":"Search the catalog"},
+    {"type":"text","id":"step_2_title","label":"Step 2 title","default":"Browse by need"},
+    {"type":"textarea","id":"step_2_description","label":"Step 2 description","default":"Explore products by category, facility type or cleaning task."},
+    {"type":"text","id":"step_2_cta","label":"Step 2 link text","default":"Browse products"},
+    {"type":"text","id":"step_3_title","label":"Step 3 title","default":"Need a recommendation?"},
+    {"type":"textarea","id":"step_3_description","label":"Step 3 description","default":"Tell our team what you manage and what you need to restock."},
+    {"type":"text","id":"step_3_cta","label":"Step 3 link text","default":"Contact CFS"},
+    {"type":"url","id":"contact_url","label":"Contact page URL"},
+    {"type":"text","id":"footer_text","label":"Footer line","default":"Starting from scratch? Use our facility supplies checklist."},
+    {"type":"text","id":"checklist_cta","label":"Checklist link text","default":"Build your checklist"},
+    {"type":"url","id":"checklist_url","label":"Optional checklist page URL (set once created)"}
+  ],
+  "presets": [{"name":"CFS 2.0 How It Works"}]
+}
+{% endschema %}

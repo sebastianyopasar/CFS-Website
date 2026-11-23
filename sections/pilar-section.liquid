@@ -1,0 +1,399 @@
+{%- style -%}
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap');
+
+  .industrial-wrap {
+    font-family: 'Montserrat', sans-serif;
+    max-width: 1500px;
+    margin: 100px auto;
+    padding: 0 30px;
+    color: #1a1a1a;
+  }
+
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+  }
+
+  .pillar-card {
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 60px 35px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.12);
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    border: 1px solid #f0f0f0;
+  }
+
+  .pillar-card:hover { transform: translateY(-20px); box-shadow: 0 20px 50px rgba(0,0,0,0.15); }
+
+  .pillar-number {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    width: 75px;
+    height: 75px;
+    border: 4px solid #e0e6ed;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    color: #4a5568;
+    font-size: 2rem;
+  }
+
+  .pillar-card h3 {
+    font-weight: 900;
+    font-size: 2.2rem; 
+    line-height: 1.1;
+    text-transform: uppercase;
+    margin: 25px 0;
+    min-height: 100px;
+    color: #000;
+  }
+
+  .pillar-card .sub-brand {
+    font-weight: 800;
+    color: #333;
+    margin-bottom: 15px;
+    font-size: 1.6rem;
+  }
+
+  .pillar-card .brief-desc {
+    font-size: 1.4rem;
+    line-height: 1.6;
+    color: #4a5568;
+    margin-bottom: 30px;
+  }
+
+  .card-features label {
+    font-weight: 900;
+    font-size: 1.4rem;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 15px;
+    color: #000;
+  }
+
+  .card-features ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 700;
+  }
+
+  .card-features li { margin-bottom: 12px; }
+
+  .card-features li::before {
+    content: "•";
+    color: #0062cc;
+    margin-right: 12px;
+    font-weight: 900;
+    font-size: 1.8rem;
+  }
+
+  /* BUTTON INTERACTION */
+  .card-cta {
+    background-color: #0062cc;
+    color: white !important;
+    padding: 25px 0;
+    width: 100%;
+    border-radius: 14px;
+    font-weight: 900;
+    text-decoration: none;
+    font-size: 1.7rem;
+    transition: all 0.2s ease-in-out;
+    text-align: center;
+    display: block;
+    border: none;
+    cursor: pointer;
+  }
+
+  .card-cta:hover { 
+    background: #004a99; 
+    transform: scale(1.03);
+  }
+
+  /* Visual "Bigger" Pop when clicked */
+  .card-cta:active { 
+    transform: scale(1.15);
+    box-shadow: 0 0 30px rgba(0, 98, 204, 0.5);
+  }
+
+  /* --- MODAL OVERLAY (THIS WAS MISSING) --- */
+  .overlay-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255,255,255,0.99); /* Nearly solid white for premium look */
+    z-index: 9999;
+    display: none; /* Hidden by default */
+    overflow-y: auto;
+    padding: 50px 0;
+  }
+
+  .overlay-modal.active {
+    display: block; /* Shown when JS triggers openPillar */
+    animation: fadeIn 0.3s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .modal-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 70px;
+    position: relative;
+  }
+
+  .modal-header {
+    border-left: 25px solid #0062cc;
+    padding-left: 45px;
+    margin-bottom: 60px;
+    display: flex;
+    align-items: center;
+  }
+
+  .modal-num-tag {
+    font-size: 7rem;
+    font-weight: 900;
+    color: #e2e8f0;
+    margin-right: 35px;
+    line-height: 1;
+  }
+
+  .modal-header h2 {
+    font-weight: 900;
+    font-size: 5rem;
+    line-height: 1;
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  .modal-inner p {
+    font-size: 2rem;
+    line-height: 1.8;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 40px;
+  }
+
+  .feat-list-expanded div {
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+    line-height: 1.5;
+  }
+
+  .feat-list-expanded strong { font-weight: 900; color: #000; }
+
+  .close-btn {
+    position: absolute;
+    top: -20px;
+    right: 40px;
+    cursor: pointer;
+    text-align: center;
+    z-index: 10000;
+  }
+
+  .close-btn span { font-size: 6rem; line-height: 1; display: block; }
+  .close-btn label { font-size: 1.3rem; font-weight: 900; text-transform: uppercase; display: block; }
+
+  @media (max-width: 1024px) {
+    .pillars-grid { grid-template-columns: repeat(2, 1fr); }
+    .modal-header h2 { font-size: 3.5rem; }
+  }
+  @media (max-width: 600px) {
+    .pillars-grid { grid-template-columns: 1fr; }
+    .modal-header h2 { font-size: 2.5rem; }
+    .modal-num-tag { font-size: 4.5rem; }
+    .pillar-card h3 { font-size: 1.8rem; }
+    .modal-inner p { font-size: 1.5rem; }
+  }
+{%- endstyle -%}
+
+<div class="industrial-wrap">
+  <div class="pillars-grid">
+    <!-- Pillar 1 -->
+    <div class="pillar-card" onclick="openPillar('p1')">
+      <div class="pillar-number">1</div>
+      
+      <!-- Top Product Images -->
+      <img src="https://cdn.shopify.com/s/files/1/0728/6308/8863/files/Kruger_dispenser_black.png?v=1778686462" alt="Kruger Dispenser" style="height: 100px; width: auto; margin-bottom: 20px; object-fit: contain;" width="100" height="100">
+      <img src="https://cdn.shopify.com/s/files/1/0728/6308/8863/files/Tork_dispenser.avif?v=1778686462" alt="Tork Dispenser" style="height: 100px; width: auto; margin-bottom: 20px; object-fit: contain;" width="100" height="100">
+      
+      <h3>Hygiene Dispensers</h3>
+      <div class="sub-brand"></div>
+      
+      <!-- SIDE-BY-SIDE LOGO CONTAINER -->
+      <div style="display: flex; justify-content: center; align-items: center; gap: 20px; margin-bottom: 20px; width: 100%;">
+        <img src="https://cdn.shopify.com/s/files/1/0728/6308/8863/files/Tork-logo-1.png?v=1778088274" alt="Tork Logo" style="height: 50px; width: auto; object-fit: contain;" width="100" height="50">
+        <img src="https://cdn.shopify.com/s/files/1/0728/6308/8863/files/Kruger_1.png?v=1778088274" alt="Kruger Logo" style="height: 50px; width: auto; object-fit: contain;" width="100" height="50">
+      </div>
+
+      <p class="brief-desc">High-capacity systems for hand and surface hygiene.</p>
+      
+      <div class="card-features">
+        <label>Features</label>
+        <ul>
+          <li>Durability</li>
+          <li>Low Maintenance</li>
+          <li>Easy Refills</li>
+        </ul>
+      </div>
+      <div class="card-cta">Request a visit</div>
+    </div>
+
+    <!-- Pillar 2 -->
+    <div class="pillar-card" onclick="openPillar('p2')">
+      <div class="pillar-number">2</div>
+      <img src="https://cdn.shopify.com/s/files/1/0728/6308/8863/files/OIP_1_fab3a237-785b-46da-8f4c-3d68c7b542f6.webp?v=1778688722" alt="Kruger Dispenser" style="height: 100px; width: auto; margin-bottom: 20px; object-fit: contain;" width="100" height="100">
+      <img src="https://cdn.shopify.com/s/files/1/0728/6308/8863/files/cq5dam.web.1280.1280.jpg?v=1778688722" alt="Kruger Dispenser" style="height: 100px; width: auto; margin-bottom: 20px; object-fit: contain;" width="100" height="100">
+      
+      <h3>Industrial Dishwashers & Floor Scrubbers</h3>
+      <!-- SIDE-BY-SIDE LOGO CONTAINER -->
+      <div style="display: flex; justify-content: center; align-items: center; gap: 20px; margin-bottom: 20px; width: 100%;">
+        <img src="https://cdn.shopify.com/s/files/1/0728/6308/8863/files/Tennant_1.png?v=1778088274" alt="Tork Logo" style="height: 50px; width: auto; object-fit: contain;" width="100" height="50">
+        <img src="https://cdn.shopify.com/s/files/1/0728/6308/8863/files/CMA_LOGO.png?v=1778088274" alt="Kruger Logo" style="height: 50px; width: auto; object-fit: contain;" width="100" height="50">
+      </div>
+      <p class="brief-desc">Powerful equipment for large-scale cleaning.</p>
+      <div class="card-features">
+        <label>Features</label>
+        <ul><li>Heavy-duty design</li><li>Efficient operation</li><li>Superior cleaning</li></ul>
+      </div>
+      <div class="card-cta">Request a Demo</div>
+    </div>
+
+    <!-- Pillar 3 -->
+    <div class="pillar-card" onclick="openPillar('p3')">
+      <div class="pillar-number">3</div>
+      <img src="https://cdn.shopify.com/s/files/1/0728/6308/8863/files/OIP_7.webp?v=1778688894" alt="Kruger Dispenser" style="height: 100px; width: auto; margin-bottom: 20px; object-fit: contain;" width="100" height="100">
+      <img src="https://cdn.shopify.com/s/files/1/0728/6308/8863/files/1066_G3800_-_FASTDRAW_1.webp?v=1778688894" alt="Kruger Dispenser" style="height: 100px; width: auto; margin-bottom: 20px; object-fit: contain;" width="100" height="100">
+      <h3>Chemical Dilution Systems</h3>
+      <!-- SIDE-BY-SIDE LOGO CONTAINER -->
+      <div style="display: flex; justify-content: center; align-items: center; gap: 20px; margin-bottom: 20px; width: 100%;">
+        <img src="https://cdn.shopify.com/s/files/1/0728/6308/8863/files/Betco_logo.png?v=1778089130" alt="Tork Logo" style="height: 50px; width: auto; object-fit: contain;" width="100" height="50">
+        <img src="https://cdn.shopify.com/s/files/1/0728/6308/8863/files/Precision_logo.png?v=1778090657" alt="Kruger Logo" style="height: 50px; width: auto; object-fit: contain;" width="100" height="50">
+      </div>
+      <p class="brief-desc">Precise chemical dosing and dilution solutions.</p>
+      <div class="card-features">
+        <label>Features</label>
+        <ul><li>Accuracy</li><li>Safety</li><li>Cost efficiency</li></ul>
+      </div>
+      <div class="card-cta">Request a Demo</div>
+    </div>
+
+    <!-- Pillar 4 -->
+    <div class="pillar-card" onclick="openPillar('p4')">
+      <div class="pillar-number">4</div>
+      <img src="https://cdn.shopify.com/s/files/1/0728/6308/8863/files/Person_training_on_scrubber_machine_202605131221_1.jpg?v=1778689352" alt="Kruger Dispenser" style="height: 100px; width: auto; margin-bottom: 20px; object-fit: contain;" width="100" height="100">
+      <img src="https://cdn.shopify.com/s/files/1/0728/6308/8863/files/Person_training_on_scrubber_machine_202605131222.jpg?v=1778689352" alt="Kruger Dispenser" style="height: 100px; width: auto; margin-bottom: 20px; object-fit: contain;" width="100" height="100">
+      <h3>Technical Training</h3>
+      <p class="brief-desc">Specialized training for operational excellence.</p>
+      <div class="card-features">
+        <label>Features</label>
+        <ul><li>On-site/Online</li><li>Safety protocols</li><li>Maintenance</li></ul>
+      </div>
+      <div class="card-cta">Request a Demo</div>
+    </div>
+  </div>
+</div>
+
+<div id="pillar-modal" class="overlay-modal">
+  <div class="modal-inner">
+    <div class="close-btn" onclick="closePillar()">
+      <span>&times;</span><label>Close</label>
+    </div>
+    <div id="modal-content-inject"></div>
+    <div style="text-align:center; margin-top:60px;">
+       <a href="/pages/contact" class="card-cta" style="width: auto; padding: 25px 80px;">Request a Demo</a>
+    </div>
+  </div>
+</div>
+
+<script>
+const content = {
+  p1: { 
+    n: "1", 
+    t: "Hygiene Dispensers", 
+    img: "https://cdn.shopify.com/s/files/1/0728/6308/8863/files/Black_dispenser_white_towel_disp__202605131447.jpg?v=1778698104", // Update this link
+    d: "Our process begins with an on-site visit to your facility to understand your current measures. We focus on providing the best products to ensure worker satisfaction and facility efficiency, rather than cutting edges on quality.", 
+    f: ["Durability: Built for high-traffic and longevity.", "Low maintenance: Intuitive systems that reduce labor time.", "Waste reduction: Optimized dispensing to lower overhead costs."] 
+  },
+  p2: { 
+    n: "2", 
+    t: "Industrial Equipment", 
+    img: "https://cdn.shopify.com/s/files/1/0728/6308/8863/files/Floor_scrubber_in_warehouse_202605131454.jpg?v=1778698501", // Update this link
+    d: "We visit your facilities to evaluate your specific needs before suggesting purchase or rental options. By analyzing your current workflow, we ensure our dishwashers and scrubbers provide an overall improvement in efficiency.", 
+    f: ["Heavy-duty engineering: Industrial-grade performance.", "Optimized efficiency: Faster turnaround times for cleaning cycles.", "Client satisfaction: Solutions built for heavy daily usage."] 
+  },
+  p3: { 
+    n: "3", 
+    t: "Chemical Dilution", 
+    img: "https://cdn.shopify.com/s/files/1/0728/6308/8863/files/Worker_filling_spray_bottle_gree__202605131503.png?v=1778699207", // Update this link
+    d: "We get to know your business to determine which dilution options fit best. By using concentrate products, we help you reduce waste and save money without sacrificing the effectiveness of your cleaning protocols.", 
+    f: ["Accuracy: Precise dosing for consistent results.", "Safety: Minimized worker exposure to raw chemicals.", "Cost efficiency: Smart dilution for spray bottles and mop buckets."] 
+  },
+  p4: { 
+    n: "4", 
+    t: "Technical Training", 
+    img: "https://cdn.shopify.com/s/files/1/0728/6308/8863/files/cq5dam.web.1280.1280_1.jpg?v=1778700014", // Update this link
+    d: "Being client-focused means ensuring your team is successful. Our technicians provide on-site training and documentation specifically tailored to your facility's requirements and equipment setup.", 
+    f: ["On-site training: Personalized sessions for your staff.", "Safety protocols: Ensuring operational excellence.", "Preferential service: Priority access to our technical expertise."] 
+  }
+};
+
+function openPillar(id) {
+  const item = content[id];
+  
+  // Logic for features: Bold and properly formatted text
+  let feats = item.f.map(str => {
+    const parts = str.split(':');
+    return `<div>• <strong>${parts[0]}</strong>:${parts[1]}</div>`;
+  }).join('');
+
+  document.getElementById('modal-content-inject').innerHTML = `
+    <div class="modal-header">
+      <div class="modal-num-tag">${item.n}</div>
+      <h2>${item.t}</h2>
+    </div>
+    <p>${item.d}</p>
+    <div class="feat-list-expanded">
+      <strong style="text-transform: uppercase;">FEATURES</strong>
+      <div style="margin-top:25px;">${feats}</div>
+    </div>
+    <div class="modal-hero-wrap" style="margin-top:40px;">
+      <img src="${item.img}" alt="${item.t}" style="width:100%; height:auto; border-radius:30px; display:block; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+    </div>
+  `;
+  
+  document.getElementById('pillar-modal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closePillar() {
+  document.getElementById('pillar-modal').classList.remove('active');
+  document.body.style.overflow = 'auto';
+}
+</script>
+
+{% schema %}
+{
+  "name": "Service Pillars",
+  "settings": [],
+  "presets": [
+    { "name": "Service Pillars" }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,65 @@
+{{ 'cfs2.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'cfs2-cleaning-kollege-index.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'cfs2-smart-search.js' | asset_url }}" defer="defer"></script>
+
+<div class="cfs2-header-root" id="cfs2-header-{{ section.id }}">
+  <div class="cfs2-utility">
+    <div class="cfs2-container cfs2-utility-inner">
+      <div class="cfs2-utility-left">
+        {% if section.settings.phone != blank %}<a href="tel:{{ section.settings.phone | remove: ' ' | remove: '(' | remove: ')' | remove: '-' | escape }}">{{ section.settings.phone | escape }}</a>{% endif %}
+        {% if section.settings.utility_text != blank %}<span>{{ 'cfs2.storefront.ownership' | t | escape }}</span>{% endif %}
+      </div>
+      <div class="cfs2-utility-right">
+        <a href="{{ blogs['news'].url }}">{{ 'cfs2.nav.blog' | t | escape }}</a> <span aria-hidden="true">|</span> <a href="{{ pages['knowledge-base'].url }}?view=cfs2-knowledge-portal">{{ 'cfs2.nav.kb' | t | escape_once }}</a>
+      </div>
+    </div>
+  </div>
+  <div class="cfs2-container cfs2-main-header">
+    <details class="cfs2-mobile-nav">
+      <summary aria-label="{{ 'cfs2.header.menu' | t | escape }}"><span aria-hidden="true">☰</span><span class="cfs2-visually-hidden">{{ 'cfs2.header.menu' | t }}</span></summary>
+      <nav class="cfs2-mobile-nav-panel" aria-label="{{ 'cfs2.header.menu' | t | escape }}">
+        <div class="cfs2-mobile-panel-title">{{ 'cfs2.header.menu' | t }}</div>
+        {% render 'cfs-native-nav', section: section, mode: 'mobile' %}
+        {% if shop.customer_accounts_enabled %}<a href="{{ routes.account_url }}">{{ 'cfs2.header.account' | t }}</a>{% endif %}
+        {% render 'cfs-native-languages', section: section, mode: 'mobile' %}
+      </nav>
+    </details>
+    <a class="cfs2-brand" href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }}">
+      {% if settings.logo != blank %}
+        {{ settings.logo | image_url: width: 420 | image_tag: width: 210, loading: 'eager', alt: shop.name, class: 'cfs2-logo' }}
+      {% else %}<span>CFS <small>Corporate Facility Supply</small></span>{% endif %}
+    </a>
+    <form class="cfs2-search-form" method="get" action="{{ routes.search_url }}" role="search" data-cfs2-smart-search data-dilutions="{{ 'cfs2.product_sheet.dilutions' | t | escape }}" data-products="{{ 'cfs2.storefront.products' | t | escape }}" data-collections="{{ 'cfs2.storefront.collections' | t | escape }}" data-guides="{{ 'cfs2.storefront.guides' | t | escape }}" data-pages="{{ 'cfs2.storefront.pages' | t | escape }}" data-articles="{{ 'cfs2.storefront.articles' | t | escape }}" data-empty="{{ 'cfs2.storefront.empty' | t | escape }}">
+      <div class="cfs2-smart-search-results" data-cfs2-smart-search-results hidden></div>
+      <label class="cfs2-visually-hidden" for="cfs2-global-search-{{ section.id }}">{{ 'cfs2.header.search_label' | t }}</label>
+      <svg aria-hidden="true" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+      <input id="cfs2-global-search-{{ section.id }}" name="q" type="search" placeholder="{{ 'cfs2.header.search_placeholder' | t | escape }}" autocomplete="off" required>
+      <button type="submit" aria-label="{{ 'cfs2.header.search_label' | t | escape }}"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></button>
+    </form>
+    <div class="cfs2-header-actions">
+      {% if shop.customer_accounts_enabled %}<a class="cfs2-action-account" href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" aria-label="{{ 'cfs2.header.account' | t | escape }}"><svg aria-hidden="true" viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-5 16-5 16 0"/></svg><span>{{ 'cfs2.header.account' | t }}</span></a>{% endif %}
+      {% for block in section.blocks %}{% render block %}{% endfor %}
+      <a class="cfs2-action-cart" href="{{ routes.cart_url }}" aria-label="{{ 'cfs2.header.cart' | t | escape }}: {{ cart.item_count }}"><svg aria-hidden="true" viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 4h2l2.5 12h11.8L22 7H6"/><circle cx="9" cy="20" r="1.5"/><circle cx="19" cy="20" r="1.5"/></svg><span class="cfs2-action-caption">{{ 'cfs2.header.cart' | t }} ({{ cart.item_count }})</span>{% if cart.item_count > 0 %}<span class="cfs2-cart-badge" aria-hidden="true">{{ cart.item_count }}</span>{% endif %}</a>
+    </div>
+  </div>
+  <div class="cfs2-navigation-wrap">
+    <div class="cfs2-container cfs2-navigation">
+      <div class="cfs2-native-slot">{% render 'cfs-native-nav', section: section, mode: 'desktop' %}</div>
+      {% render 'cfs-native-languages', section: section, mode: 'desktop' %}
+    </div>
+  </div>
+</div>
+
+<script src="{{ 'cfs-native-nav.js' | asset_url }}" defer></script>
+{% schema %}
+{
+  "name": "CFS 2.0 Header",
+  "enabled_on": {"groups": ["header"]},
+  "blocks": [{"type":"@app"}],
+  "settings": [
+    {"type":"link_list","id":"main_menu","label":"Main navigation menu","default":"main-menu"},
+    {"type":"text","id":"phone","label":"Public support phone","default":"1 (800) 661-3259"},
+    {"type":"text","id":"utility_text","label":"Utility bar message","default":"Canadian-owned since 1979"}
+  ]
+}
+{% endschema %}

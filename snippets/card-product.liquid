@@ -1,0 +1,140 @@
+{% comment %}
+    Optimized Product Card for Corporate Facility Supply
+    - Fixed Layout Shift (CLS) for Image and Badges
+    - Enhanced Performance score logic
+{% endcomment %}
+
+{%- unless skip_styles -%}
+  {{ 'component-rating.css' | asset_url | stylesheet_tag }}
+  {{ 'component-volume-pricing.css' | asset_url | stylesheet_tag }}
+  {{ 'component-price.css' | asset_url | stylesheet_tag }}
+  {{ 'quick-order-list.css' | asset_url | stylesheet_tag }}
+  {{ 'quantity-popover.css' | asset_url | stylesheet_tag }}
+{%- endunless -%}
+
+{%- if card_product and card_product != empty -%}
+  {%- liquid
+    assign ratio = 1
+    if card_product.featured_media and media_aspect_ratio == 'portrait'
+      assign ratio = 0.8
+    elsif card_product.featured_media and media_aspect_ratio == 'adapt'
+      assign ratio = card_product.featured_media.aspect_ratio
+    endif
+    if ratio == 0 or ratio == null
+      assign ratio = 1
+    endif
+  -%}
+  
+  <div class="card-wrapper product-card-wrapper underline-links-hover">
+    <div
+      class="card card--{{ settings.card_style }} {% if card_product.featured_media %} card--media{% else %} card--text{% endif %} {% if settings.card_style == 'card' %} color-{{ settings.card_color_scheme }} gradient{% endif %} {% if image_shape and image_shape != 'default' %} card--shape{% endif %} {% if extend_height %} card--extend-height{% endif %} {% if card_product.featured_media == nil and settings.card_style == 'card' %} ratio{% endif %} {% if horizontal_class %} card--horizontal{% endif %}"
+      style="--ratio-percent: {{ 1 | divided_by: ratio | times: 100 }}%;"
+    >
+      <div
+        class="card__inner {% if settings.card_style == 'standard' %}color-{{ settings.card_color_scheme }} gradient{% endif %}{% if card_product.featured_media or settings.card_style == 'standard' %} ratio{% endif %}"
+        style="--ratio-percent: {{ 1 | divided_by: ratio | times: 100 }}%;"
+      >
+        {%- if card_product.featured_media -%}
+          <div class="card__media{% if image_shape and image_shape != 'default' %} shape--{{ image_shape }} color-{{ settings.card_color_scheme }} gradient{% endif %}">
+            <div class="media media--transparent media--hover-effect">
+              
+              {% comment %} Reserved space for badges to prevent CLS {% endcomment %}
+              <div class="product-badges-wrapper" style="min-height: 30px;">
+                {% assign product_tags = card_product.tags | join: ',' %}
+                {% if product_tags contains 'cleaners' %}<div class="product-badge badge-cleaners">CLEANERS</div>{% endif %}
+                {% if product_tags contains 'degreasers' %}<div class="product-badge badge-degreasers">DEGREASERS</div>{% endif %}
+                {% if product_tags contains 'floor-care' %}<div class="product-badge badge-floor-care">FLOOR CARE</div>{% endif %}
+                {% if product_tags contains 'carpet-care' %}<div class="product-badge badge-carpet-care">CARPET CARE</div>{% endif %}
+                {% if product_tags contains 'deodorizers' %}<div class="product-badge badge-deodorizers">DEODORIZERS</div>{% endif %}
+                {% if product_tags contains 'biologicals' %}<div class="product-badge badge-biologicals">BIOLOGICALS</div>{% endif %}
+                {% if product_tags contains 'washroom-cleaners' %}<div class="product-badge badge-washroom">WASHROOM</div>{% endif %}
+                {% if product_tags contains 'hand-care' %}<div class="product-badge badge-hand-care">HAND CARE</div>{% endif %}
+                {% if product_tags contains 'dish-laundry' %}<div class="product-badge badge-dish">DISH & LAUNDRY</div>{% endif %}
+                {% if product_tags contains 'heavy-duty' %}<div class="product-badge-secondary">HEAVY DUTY</div>{% endif %}
+                {% if product_tags contains 'eco' %}<div class="product-badge-secondary">ECO</div>{% endif %}
+                {% if product_tags contains 'concentrate' %}<div class="product-badge-secondary">CONCENTRATE</div>{% endif %}
+                {% if product_tags contains 'food-safe' %}<div class="product-badge-secondary">FOOD SAFE</div>{% endif %}
+              </div>
+
+              <img
+                srcset="{%- if card_product.featured_media.width >= 165 -%}{{ card_product.featured_media | image_url: width: 165 }} 165w,{%- endif -%}
+                  {%- if card_product.featured_media.width >= 360 -%}{{ card_product.featured_media | image_url: width: 360 }} 360w,{%- endif -%}
+                  {%- if card_product.featured_media.width >= 533 -%}{{ card_product.featured_media | image_url: width: 533 }} 533w,{%- endif -%}
+                  {{ card_product.featured_media | image_url }} {{ card_product.featured_media.width }}w"
+                src="{{ card_product.featured_media | image_url: width: 533 }}"
+                sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 130 | divided_by: 4 }}px, calc((100vw - 35px) / 2)"
+                alt="{{ card_product.featured_media.alt | escape }}"
+                class="motion-reduce"
+                {% unless lazy_load == false %}loading="lazy"{% endunless %}
+                width="{{ card_product.featured_media.width }}"
+                height="{{ card_product.featured_media.height }}"
+                style="object-fit: contain; aspect-ratio: {{ ratio }};"
+              >
+
+              {%- if card_product.media != null and show_secondary_image -%}
+                <img
+                  srcset="{%- if card_product.media.width >= 165 -%}{{ card_product.media | image_url: width: 165 }} 165w,{%- endif -%}
+                    {{ card_product.media | image_url }} {{ card_product.media.width }}w"
+                  src="{{ card_product.media | image_url: width: 533 }}"
+                  sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 130 | divided_by: 4 }}px, calc((100vw - 35px) / 2)"
+                  alt="{{ card_product.media.alt | escape }}"
+                  class="motion-reduce"
+                  loading="lazy"
+                  width="{{ card_product.media.width }}"
+                  height="{{ card_product.media.height }}"
+                  style="object-fit: contain; aspect-ratio: {{ ratio }};"
+                >
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endif -%}
+
+        <div class="card__content">
+          <div class="card__information">
+            <h3 class="card__heading" {% if card_product.featured_media == nil and settings.card_style == 'standard' %} id="title-{{ section_id }}-{{ card_product.id }}"{% endif %}>
+              <a href="{{ card_product.url }}" class="full-unstyled-link">
+                {{ card_product.title | escape }}
+              </a>
+            </h3>
+          </div>
+        </div>
+      </div>
+
+      <div class="card__content">
+        <div class="card__information">
+          <h3 class="card__heading{% if card_product.featured_media or settings.card_style == 'standard' %} h5{% endif %}">
+            <a href="{{ card_product.url }}" class="full-unstyled-link">
+              {{ card_product.title | escape }}
+            </a>
+          </h3>
+          <div class="card-information">
+            {%- if show_vendor -%}
+              <div class="caption-with-letter-spacing light">{{ card_product.vendor }}</div>
+            {%- endif -%}
+            {% render 'price', product: card_product, price_class: '', show_compare_at_price: true %}
+          </div>
+        </div>
+        
+        {% comment %} Quick Add Logic {% endcomment %}
+        <div class="quick-add no-js-hidden">
+            {%- assign product_form_id = 'quick-add-' | append: section_id | append: card_product.id -%}
+            {%- if card_product.variants.size > 1 -%}
+              <a href="{{ card_product.url }}" class="quick-add__submit button button--full-width button--secondary">
+                {{ 'products.product.choose_options' | t }}
+              </a>
+            {%- else -%}
+              <product-form>
+                {%- form 'product', card_product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+                  <input type="hidden" name="id" value="{{ card_product.selected_or_first_available_variant.id }}">
+                  <button type="submit" name="add" class="quick-add__submit button button--full-width button--secondary" {% if card_product.selected_or_first_available_variant.available == false %}disabled{% endif %}>
+                    <span>{%- if card_product.selected_or_first_available_variant.available -%}{{ 'products.product.add_to_cart' | t }}{%- else -%}{{ 'products.product.sold_out' | t }}{%- endif -%}</span>
+                    {%- render 'loading-spinner' -%}
+                  </button>
+                {%- endform -%}
+              </product-form>
+            {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endif -%}

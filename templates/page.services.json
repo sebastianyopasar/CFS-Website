@@ -1,0 +1,58 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "custom_liquid_xUqp3f": {
+      "type": "custom-liquid",
+      "name": "t:sections.custom-liquid.presets.name",
+      "settings": {
+        "custom_liquid": "<div class=\"industrial-wrap\">\n  <!-- Dynamic Header Section -->\n  <div style=\"text-align: center; margin-bottom: 0px;\">\n    <h2 style=\"font-weight: 900; font-size: 6rem; text-transform: ; letter-spacing: 1px; margin-bottom: 0px;\">\n      Our Total Cleaning Solutions\n    </h2>\n    <p style=\"font-size: 2rem; color: #4a5568; font-weight: 500; max-width: 800px; margin: 0 auto;\">\n      From free of charge dispenser setups to industrial machine rentals and expert training, we provide the tools and knowledge to elevate your facility's standards.\n    </p>\n  </div>\n\n  <div class=\"pillars-grid\">\n    <!-- Rest of your pillar code... -->",
+        "color_scheme": "",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "pilar_section_AngmHA": {
+      "type": "pilar-section",
+      "name": "Service Pillars",
+      "settings": {}
+    },
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "177498639193a7f3c4": {
+      "type": "_blocks",
+      "settings": {}
+    },
+    "custom_liquid_Nxn48q": {
+      "type": "custom-liquid",
+      "disabled": true,
+      "name": "t:sections.custom-liquid.presets.name",
+      "settings": {
+        "custom_liquid": "",
+        "color_scheme": "",
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    }
+  },
+  "order": [
+    "custom_liquid_xUqp3f",
+    "pilar_section_AngmHA",
+    "main",
+    "177498639193a7f3c4",
+    "custom_liquid_Nxn48q"
+  ]
+}

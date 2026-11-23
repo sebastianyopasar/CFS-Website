@@ -1,0 +1,26 @@
+{% layout none %}
+   <div class="cfs2-products-grid">
+     {% for product in collection.products limit: 4 %}
+       {% assign variant = product.selected_or_first_available_variant %}
+       <article class="cfs2-product-card">
+         <a class="cfs2-product-media" href="{{ product.url }}">
+           {% if product.featured_image != blank %}{{ product.featured_image | image_url: width: 420 | image_tag: loading: 'lazy', widths: '150, 250, 420', sizes: '(max-width: 600px) 48vw, 25vw', alt: product.featured_image.alt }}{% else %}{{ 'product-1' | placeholder_svg_tag }}{% endif %}
+         </a>
+         <div class="cfs2-product-info">
+           {% if variant.sku != blank %}<span class="cfs2-product-sku">SKU: {{ variant.sku | escape }}</span>{% endif %}
+           <a href="{{ product.url }}">{{ product.title | escape }}</a>
+           {% if customer %}<div class="cfs2-product-price">{{ variant.price | money }}</div>
+           {% if product.has_only_default_variant and variant.available %}
+             <form method="post" action="{{ routes.cart_add_url }}">
+               <input type="hidden" name="id" value="{{ variant.id }}">
+               <label class="cfs2-visually-hidden" for="cfs2-qty-bestsellers-{{ product.id }}">{{ 'cfs2.quick.qty' | t }}</label>
+               <input id="cfs2-qty-bestsellers-{{ product.id }}" type="number" min="1" max="1000" step="1" name="quantity" value="1" required>
+               <button class="cfs2-button" type="submit">{{ 'cfs2.products.add' | t }}</button>
+             </form>
+           {% elsif variant.available %}<a class="cfs2-button" href="{{ product.url }}">{{ 'cfs2.products.options' | t }}</a>
+           {% else %}<button class="cfs2-button" disabled>{{ 'cfs2.products.sold_out' | t }}</button>{% endif %}
+           {% else %}<a class="cfs2-button" href="{{ routes.account_login_url }}">{{ 'cfs2.home_updates.sign_in_price' | t }}</a>{% endif %}
+         </div>
+       </article>
+     {% endfor %}
+   </div>

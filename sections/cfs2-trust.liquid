@@ -1,0 +1,35 @@
+{{ 'cfs2.css' | asset_url | stylesheet_tag }}
+<section class="cfs2-section cfs2-trust">
+  <div class="cfs2-container">
+    <div class="cfs2-eyebrow">{{ 'cfs2.trust.eyebrow' | t }}</div>
+    <h2>{{ 'cfs2.trust.heading' | t }}</h2>
+    <p>{{ 'cfs2.trust.description' | t }}</p>
+    {% assign defaults = 'healthcare-facilities|hospitality|education|property-management|industrial|foodservice|offices|retail|recreation-centres|long-term-care|greenhouses|cleaning-contractors' | split: '|' %}
+    <div class="cfs-sector-loop">
+      <div class="cfs-sector-window" tabindex="0" role="region" aria-label="{{ 'cfs2.trust.heading' | t | escape_once }}"><div class="cfs-sector-track">
+        {% for copy in (1..2) %}
+          <ul role="list" {% if copy == 2 %}aria-hidden="true"{% endif %}>
+            {% for block in section.blocks %}
+              {% assign handle = block.settings.name | handleize %}
+              <li {% if copy == 1 %}{{ block.shopify_attributes }}{% endif %}>
+                {% if block.settings.logo %}
+                  {{ block.settings.logo | image_url: width: 200 | image_tag: loading: 'lazy', alt: block.settings.name }}
+                {% elsif defaults contains handle %}
+                  {% assign key = 'cfs2.home_updates.sectors.' | append: handle %}{{ key | t }}
+                {% else %}{{ block.settings.name | escape }}{% endif %}
+              </li>
+            {% endfor %}
+          </ul>
+        {% endfor %}
+      </div></div>
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name":"CFS 2.0 Trust",
+  "blocks":[{"type":"client_or_sector","name":"Sector or approved client","settings":[{"type":"text","id":"name","label":"Industry or client name"},{"type":"image_picker","id":"logo","label":"Approved logo (optional)"}]}],
+  "max_blocks":24,
+  "presets":[{"name":"CFS 2.0 Trust"}]
+}
+{% endschema %}

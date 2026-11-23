@@ -1,0 +1,39 @@
+{{ 'cfs2.css' | asset_url | stylesheet_tag }}
+<section class="cfs2-section cfs2-industries" id="cfs2-industries">
+  <div class="cfs2-container">
+    <div class="cfs2-section-heading"><div>
+      <div class="cfs2-eyebrow">{{ 'cfs2.industries.eyebrow' | t }}</div>
+      <h2>{{ 'cfs2.industries.heading' | t }}</h2>
+      <p>{{ 'cfs2.industries.subtitle' | t }}</p>
+    </div>{% if section.settings.all_url != blank %}<a class="cfs2-link" href="{{ section.settings.all_url }}">{{ 'cfs2.industries.all' | t }} →</a>{% endif %}</div>
+    <div class="cfs2-industries-grid">
+      {% for block in section.blocks %}
+        <div class="cfs2-industry-card" {{ block.shopify_attributes }}>
+          <div class="cfs2-industry-media">
+            {% if block.settings.image != blank %}{{ block.settings.image | image_url: width: 640 | image_tag: loading: 'lazy', widths: '240, 360, 480, 640', sizes: '(max-width: 600px) 50vw, (max-width: 989px) 50vw, 25vw', alt: block.settings.title }}{% elsif block.settings.image_url != blank %}<img src="{{ block.settings.image_url | escape }}" alt="{{ block.settings.title | escape }}" loading="lazy">{% else %}{{ 'image' | placeholder_svg_tag }}{% endif %}
+          </div>
+          <div class="cfs2-industry-body">
+            <h3>{{ block.settings.title | escape }}</h3>
+            <p>{{ block.settings.description | escape }}</p>
+            {% if block.settings.link != blank %}<a class="cfs2-link" href="{{ block.settings.link }}">{{ 'cfs2.industries.explore' | t }} →</a>{% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+ "name":"CFS 2.0 Industries",
+ "settings":[{"type":"url","id":"all_url","label":"View all industries link"}],
+ "blocks":[{"type":"industry","name":"Industry card","settings":[
+  {"type":"image_picker","id":"image","label":"Industry photo"},
+    {"type":"url","id":"image_url","label":"Image URL (optional)"} ,
+  {"type":"text","id":"title","label":"Industry name"},
+  {"type":"textarea","id":"description","label":"Description"},
+  {"type":"url","id":"link","label":"Industry page link"}
+ ]}],
+ "max_blocks":8,
+ "presets":[{"name":"CFS 2.0 Industries"}]
+}
+{% endschema %}

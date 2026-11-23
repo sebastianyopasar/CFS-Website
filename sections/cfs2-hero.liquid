@@ -1,0 +1,45 @@
+{{ 'cfs2.css' | asset_url | stylesheet_tag }}
+<section class="cfs2-section cfs2-hero" id="cfs2-home-hero" style="--cfs-photo-shift: {{ section.settings.photo_shift | default: 8 }}%;">
+  {% if section.settings.background != blank %}
+    {{ section.settings.background | image_url: width: 2200 | image_tag: class: 'cfs2-hero-image', loading: 'eager', widths: '640, 960, 1280, 1600, 2000, 2200', sizes: '100vw', alt: '' }}
+  {% else %}
+    <img src="{{ 'cfs-hero-products.jpg' | asset_url }}" class="cfs2-hero-image" width="1280" height="800" fetchpriority="high" alt="">
+  {% endif %}
+  {% if section.settings.mobile_background != blank %}
+    {{ section.settings.mobile_background | image_url: width: 1000 | image_tag: class: 'cfs2-hero-image cfs2-hero-image-mobile', loading: 'eager', widths: '375, 600, 750, 1000', sizes: '100vw', alt: '' }}
+  {% else %}
+    <img src="{{ 'cfs-hero-products.jpg' | asset_url }}" class="cfs2-hero-image cfs2-hero-image-mobile" width="1280" height="800" alt="">
+  {% endif %}
+  <div class="cfs2-container">
+    <div class="cfs2-hero-copy">
+      <div class="cfs2-hero-eyebrow">{{ 'cfs2.storefront.eyebrow' | t | escape }}</div>
+      <h1>{{ 'cfs2.storefront.heading1' | t | escape }}<br><strong>{{ 'cfs2.storefront.heading2' | t | escape }}</strong></h1>
+      <p>{{ 'cfs2.storefront.history' | t | escape }}</p>
+
+    </div>
+    <div class="cfs2-hero-card">
+      <div class="cfs2-actions">
+        <a class="cfs2-button cfs2-button-lime" href="{% if section.settings.shop_url != blank %}{{ section.settings.shop_url }}{% else %}{{ routes.all_products_collection_url }}{% endif %}">{{ 'cfs2.hero.shop' | t }}</a>
+        <a class="cfs2-button cfs2-button-outline" href="{{ pages['about-us'].url }}">{{ 'cfs2.storefront.about' | t | escape }}</a>
+      </div>
+      <div class="cfs2-request">
+        <strong>{{ 'cfs2.quick.missing' | t }}</strong>
+        {% if section.settings.request_url != blank %}<div><a href="{{ section.settings.request_url }}">{{ 'cfs2.quick.request' | t }} →</a></div>{% endif %}
+        <p>{{ 'cfs2.quick.contact_note' | t }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+ "name":"CFS 2.0 Hero",
+ "settings":[
+   {"type":"image_picker","id":"background","label":"Desktop background photograph"},
+   {"type":"range","id":"photo_shift","label":"Move desktop photo left","unit":"%","min":0,"max":20,"step":1,"default":8},
+   {"type":"image_picker","id":"mobile_background","label":"Mobile photograph (no embedded text)","info":"Select a clean warehouse or facility photo. If empty, mobile shows a solid navy background so promotional text never overlaps headings."},
+   {"type":"url","id":"shop_url","label":"Shop products link (defaults to all products)"},
+   {"type":"url","id":"request_url","label":"Request a Product destination"}
+ ],
+ "presets":[{"name":"CFS 2.0 Hero"}]
+}
+{% endschema %}

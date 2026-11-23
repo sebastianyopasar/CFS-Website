@@ -1,0 +1,25 @@
+{{ 'cfs2.css' | asset_url | stylesheet_tag }}
+<section class="cfs2-benefits cfs2-section" aria-label="{{ 'cfs2.benefits.label' | t | escape }}">
+  <div class="cfs2-container cfs2-benefits-grid">
+    {% for block in section.blocks %}
+      {% case block.settings.icon %}
+{% when 'delivery' %}
+<div class="cfs2-benefit" {{ block.shopify_attributes }}><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M2 5h12v12H2zm12 4h4l4 5v3h-8"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg><div><strong>{{ 'cfs2.storefront.delivery' | t | escape }}</strong><span>{{ 'cfs2.storefront.deliveryNote' | t | escape }}</span></div></div>
+{% when 'document' %}
+<div class="cfs2-benefit" {{ block.shopify_attributes }}><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M19 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h10m-8 8 4 4L22 4"/></svg><div><strong>{{ 'cfs2.storefront.returns' | t | escape }}</strong><span>{{ 'cfs2.storefront.returnsNote' | t | escape }}</span></div></div>
+{% when 'support' %}
+<div class="cfs2-benefit" {{ block.shopify_attributes }}><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M3 4h18v13H8l-5 4z"/></svg><div><strong>{{ 'cfs2.storefront.support' | t | escape }}</strong><span>{{ 'cfs2.storefront.supportNote' | t | escape }}</span></div></div>
+{% endcase %}
+    {% endfor %}
+  </div>
+</section>
+{% schema %}
+{
+  "name":"CFS 2.0 Benefits",
+  "max_blocks":3,
+  "blocks":[{"type":"benefit","name":"Benefit","settings":[
+    {"type":"select","id":"icon","label":"Symbol","options":[{"value":"delivery","label":"Delivery"},{"value":"document","label":"Returns and exchanges"},{"value":"support","label":"Support"}],"default":"delivery"}
+  ]}],
+  "presets":[{"name":"CFS 2.0 Benefits"}]
+}
+{% endschema %}

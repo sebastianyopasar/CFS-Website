@@ -1,0 +1,22 @@
+{{ 'cfs2.css' | asset_url | stylesheet_tag }}
+<section class="cfs2-section cfs2-cta">
+  <div class="cfs2-container cfs2-cta-grid">
+    <div><div class="cfs2-eyebrow" style="color:var(--cfs2-lime)">{{ 'cfs2.cta.eyebrow' | t }}</div><h2>{{ section.settings.heading | escape }}</h2><p>{{ section.settings.description | escape }}</p></div>
+    <div class="cfs2-cta-actions">
+      <a class="cfs2-button cfs2-button-lime" href="{% if section.settings.shop_url != blank %}{{ section.settings.shop_url }}{% else %}{{ routes.all_products_collection_url }}{% endif %}">{{ 'cfs2.cta.products' | t }}</a>
+      {% if section.settings.contact_url != blank %}<a class="cfs2-button cfs2-button-outline" href="{{ section.settings.contact_url }}">{{ 'cfs2.cta.contact' | t }}</a>{% endif %}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name":"CFS 2.0 Final CTA",
+  "settings":[
+    {"type":"text","id":"heading","label":"Heading","default":"Everything Your Business Needs, All in One Place."},
+    {"type":"textarea","id":"description","label":"Description","default":"Whether you are restocking essentials or sourcing specialized products, our team is here to help."},
+    {"type":"url","id":"shop_url","label":"Shop URL (defaults to all products)"},
+    {"type":"url","id":"contact_url","label":"Contact URL"}
+  ],
+  "presets":[{"name":"CFS 2.0 Final CTA"}]
+}
+{% endschema %}

@@ -1,0 +1,71 @@
+{% assign bio = false %}
+{% for variant in product.variants %}
+  {% assign sku = variant.sku | strip | upcase %}
+  {% if sku == 'BDBIOMAGICGREEN' %}{% assign bio = true %}{% break %}{% endif %}
+{% endfor %}
+{% if bio %}
+  <section class="cfs-story quick-add-hidden">
+    <h2>{{ 'cfs2.product_sheet.bio_title' | t }}</h2>
+
+    <ul class="cfs-benefits">
+      {% for i in (1..3) %}
+        {% assign key = 'cfs2.product_sheet.benefit' | append: i %}
+        <li><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          {% case i %}
+            {% when 1 %}<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><path d="m12 12 8-8"/>
+            {% when 2 %}<path d="M12 8c-3-3-9-2-9 4 0 5 4 9 7 8l2-.6 2 .6c3 1 7-3 7-8 0-6-6-7-9-4Zm0 0c0-4 2-6 5-6-1 3-2 4-5 5"/>
+            {% when 3 %}<path d="M9 3h6m-5 0v7L4 19q-1 2 2 2h12q3 0 2-2l-6-9V3M7 16h10"/>
+          {% endcase %}
+        </svg>{{ key | t }}</li>
+      {% endfor %}
+    </ul>
+    <h3>{{ 'cfs2.product_sheet.uses' | t }}</h3>
+    <ul class="cfs-applications">
+      {% for i in (1..3) %}
+        {% assign key = 'cfs2.product_sheet.use' | append: i %}
+        {% assign setting = 'bio_use_' | append: i %}
+        {% assign photo = block.settings[setting] %}
+        <li>{% if photo != blank %}{{ photo | image_url: width: 560 | image_tag: loading: 'lazy', alt: '' }}{% endif %}<span>{{ key | t }}</span></li>
+      {% endfor %}
+    </ul>
+  </section>
+{% endif %}
+{%- assign lang = request.locale.iso_code | split: '-' | first -%}
+{%- assign sheet = product.metafields.cfs_details[lang].value -%}
+{%- assign fields = 'features,dilutions,sds,cdt' | split: ',' -%}
+{%- assign first_panel = true -%}
+{% capture panels %}
+  {% if product.description != blank %}
+    {% assign description_id = 'cfs-detail-' | append: section.id | append: '-' | append: product.id | append: '-description' %}
+    <input class="cfs-sheet-choice" type="radio" id="{{ description_id }}" name="sheet-{{ section.id }}-{{ product.id }}" checked>
+    <label for="{{ description_id }}">{{ 'products.product.description' | t }}</label>
+    <div class="cfs-sheet-panel"><div class="rte">{{ product.description }}</div></div>
+    {% assign first_panel = false %}
+  {% endif %}
+  {% for field in fields %}
+    {% assign entries = sheet[field] %}
+    {% if entries == blank %}{% continue %}{% endif %}
+    {% assign id = 'cfs-detail-' | append: section.id | append: '-' | append: product.id | append: '-' | append: field %}
+    {% assign label_key = 'cfs2.product_sheet.' | append: field %}
+    <input class="cfs-sheet-choice" data-cfs-field="{{ field }}" type="radio" id="{{ id }}" name="sheet-{{ section.id }}-{{ product.id }}" {% if first_panel %}checked{% endif %}>
+    <label for="{{ id }}">{{ label_key | t }}</label>
+    <div class="cfs-sheet-panel">
+      <ul>
+        {% for entry in entries %}
+          {% if field == 'sds' or field == 'cdt' %}
+            {% assign filename = entry | split: '?' | first | split: '/' | last | url_decode %}
+            <li><a href="{{ entry | escape }}">{{ filename | escape }}</a></li>
+          {% else %}
+            <li>{{ entry | escape }}</li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
+    {% assign first_panel = false %}
+  {% endfor %}
+{% endcapture %}
+{% unless first_panel %}
+  <section class="cfs-description quick-add-hidden" {{ block.shopify_attributes }}>
+    <div class="cfs-sheet" role="group" aria-label="{{ 'cfs2.product_sheet.details' | t | escape_once }}">{{ panels }}</div>
+  </section>
+{% endunless %}

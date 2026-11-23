@@ -1,0 +1,6 @@
+{
+  "sections": {
+    "main": {"type":"cfs2-knowledge-portal","settings":{}}
+  },
+  "order": ["main"]
+}

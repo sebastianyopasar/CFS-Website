@@ -1,0 +1,221 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "1778082647492c23b0": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_3df622e_gUK7cw": {
+          "type": "ai_gen_block_3df622e",
+          "settings": {
+            "headline": "Why Choose Corporate Facility Supply",
+            "description": "<p>Since 1979, we've been committed to continuous improvement and excellence in facility supply solutions. Serving supermarkets, greenhouses, and large enterprises across Canada, we deliver the quality and reliability your operations demand.</p>",
+            "highlight_1_enabled": true,
+            "highlight_1_title": "40+ Years of Excellence",
+            "highlight_1_description": "Trusted since 1979 for quality and reliability",
+            "highlight_2_enabled": true,
+            "highlight_2_title": "Southern Ontario Operations",
+            "highlight_2_description": "Dedicated service and support",
+            "highlight_3_enabled": true,
+            "highlight_3_title": "Versatile Facility Solutions",
+            "highlight_3_description": "Janitorial, food service, cleaning, and safety products",
+            "cta_text": "Explore Our Solutions",
+            "cta_link": "shopify://pages/services",
+            "image": "shopify://shop_images/Screenshot_2026-05-06_115719.png_202605061344.jpg",
+            "image_min_height": 500,
+            "image_border_radius": 20,
+            "container_width": 1100,
+            "column_gap": 60,
+            "content_spacing": 24,
+            "highlight_spacing": 20,
+            "mobile_layout": "content_first",
+            "background_color": "#ffffff",
+            "headline_color": "#0e1b4d",
+            "text_color": "#4a5568",
+            "icon_background": "#4770db",
+            "icon_color": "#ffffff",
+            "headline_size": 48,
+            "description_size": 18,
+            "highlight_title_size": 18,
+            "highlight_desc_size": 15,
+            "icon_size": 56,
+            "icon_border_radius": 12,
+            "button_background": "#0e1b4d",
+            "button_text_color": "#ffffff",
+            "button_hover_background": "#4770db",
+            "button_hover_text_color": "#ffffff",
+            "button_font_size": 16,
+            "button_padding_vertical": 14,
+            "button_padding_horizontal": 32,
+            "button_border_radius": 40,
+            "section_padding_top": 80,
+            "section_padding_bottom": 80
+          },
+          "blocks": {}
+        },
+        "ai_gen_block_92f1248_iWbwfT": {
+          "type": "ai_gen_block_92f1248",
+          "settings": {
+            "heading": "Trusted by Industry Leaders",
+            "subtext": "<p>Our premium brand partnerships with industry-leading manufacturers enable us to deliver the highest level of quality and service to our clients throughout Southern Ontario.</p>",
+            "text_alignment": "center",
+            "logo_1": "shopify://shop_images/Tennant_1.png",
+            "logo_2": "shopify://shop_images/Tork-logo-1.png",
+            "logo_3": "shopify://shop_images/Kruger_1.png",
+            "logo_4": "shopify://shop_images/CMA_LOGO.png",
+            "logo_5": "shopify://shop_images/ProTeam_1.png",
+            "logo_6": "shopify://shop_images/Betco_logo.png",
+            "columns_desktop": 6,
+            "columns_tablet": 3,
+            "columns_mobile": 2,
+            "grid_gap": 30,
+            "container_width": 1100,
+            "logo_max_width": 180,
+            "logo_min_height": 100,
+            "logo_padding": 20,
+            "logo_border_radius": 12,
+            "logo_border_width": 1,
+            "logo_background": "#ffffff",
+            "logo_border_color": "#e5e5e5",
+            "logo_grayscale": 50,
+            "logo_opacity": 0.7,
+            "heading_size": 36,
+            "heading_weight": "700",
+            "subtext_size": 16,
+            "background_color": "#f9f9f9",
+            "heading_color": "#0e1b4d",
+            "subtext_color": "#666666",
+            "section_padding_top": 60,
+            "section_padding_bottom": 60,
+            "header_spacing": 40,
+            "subtext_spacing": 15
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_3df622e_gUK7cw",
+        "ai_gen_block_92f1248_iWbwfT"
+      ],
+      "settings": {}
+    },
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 36,
+        "padding_bottom": 28
+      }
+    },
+    "177869516146a33ccf": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_714e784_HCGcrW": {
+          "type": "ai_gen_block_714e784",
+          "settings": {
+            "headline": "Our Proprietary Brands",
+            "intro_text": "We offer more than 120 proprietary products formulated for the high standards of our Southern Ontario clients.",
+            "text_alignment": "center",
+            "headline_size": 48,
+            "intro_size": 19,
+            "brand_1_enabled": true,
+            "brand_1_name": "EcoStandard Solutions",
+            "brand_1_description": "Environmentally responsible cleaning and facility maintenance products that meet rigorous performance standards.",
+            "brand_1_logo": "shopify://shop_images/Eco-standard.png",
+            "brand_1_link": "shopify://collections/eco-standard-solutions",
+            "brand_2_enabled": true,
+            "brand_2_name": "Precision",
+            "brand_2_description": "Professional-grade tools and equipment engineered for accuracy and reliability in demanding commercial environments.",
+            "brand_2_logo": "shopify://shop_images/Precision_logo.png",
+            "brand_2_link": "shopify://collections/precision",
+            "brand_3_enabled": true,
+            "brand_3_name": "Contractor's Choice",
+            "brand_3_description": "Heavy-duty supplies trusted by contractors for superior durability and performance on the toughest job sites.",
+            "brand_3_logo": "shopify://shop_images/Contractors_choice_Logo.png",
+            "brand_3_link": "shopify://collections/contractors-choice",
+            "container_width": 1200,
+            "section_padding_top": 60,
+            "section_padding_bottom": 60,
+            "header_spacing": 40,
+            "headline_margin": 16,
+            "brands_top_margin": 40,
+            "brand_spacing": 24,
+            "content_gap": 40,
+            "brand_padding": 32,
+            "brand_border_radius": 18,
+            "brand_border_width": 1,
+            "brand_name_size": 24,
+            "brand_description_size": 16,
+            "logo_width": 180,
+            "logo_height": 120,
+            "logo_padding": 16,
+            "logo_border_radius": 12,
+            "background_color": "#ffffff",
+            "headline_color": "#0e1b4d",
+            "intro_color": "#0e1b4d",
+            "brand_bg_color": "#ffffff",
+            "brand_border_color": "#e5e5e5",
+            "brand_name_color": "#0e1b4d",
+            "brand_description_color": "#0e1b4d",
+            "logo_bg_color": "#f8f8f8"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_714e784_HCGcrW"
+      ],
+      "settings": {}
+    },
+    "custom_liquid_Nxn48q": {
+      "type": "custom-liquid",
+      "name": "t:sections.custom-liquid.presets.name",
+      "settings": {
+        "custom_liquid": "",
+        "color_scheme": "",
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
+    "1778082422fec2e682": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_6791e9a_DbzhNa": {
+          "type": "ai_gen_block_6791e9a",
+          "disabled": true,
+          "settings": {
+            "heading_text": "Welcome to our store",
+            "heading_tag": "h2",
+            "font_size": 60,
+            "font_weight": "700",
+            "text_alignment": "center",
+            "text_color": "#ffffff",
+            "desktop_width_percent": 100,
+            "glow_color": "#4770db",
+            "glow_intensity": 20,
+            "animation_speed": 2
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_6791e9a_DbzhNa"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "1778082647492c23b0",
+    "main",
+    "177869516146a33ccf",
+    "custom_liquid_Nxn48q",
+    "1778082422fec2e682"
+  ]
+}

@@ -1,0 +1,483 @@
+<style>
+  /* Premium Calculator & Step-by-Step Styling */
+  .cfs-calc-container {
+    max-width: 900px; /* Widened for better step-by-step layout */
+    margin: 40px auto; 
+    padding: 35px; 
+    background: #ffffff; 
+    border-radius: 12px; 
+    box-shadow: 0 10px 40px rgba(0,0,0,0.08); 
+    font-family: inherit;
+    border: 1px solid #eaeaea;
+  }
+  .cfs-calc-header { text-align: center; margin-bottom: 25px; }
+  .cfs-calc-header h2 { color: #1a252f; font-size: 2.2em; margin-bottom: 10px; font-weight: 700; }
+  .cfs-calc-intro { color: #5c6b7a; font-size: 1.1em; line-height: 1.6; max-width: 700px; margin: 0 auto; }
+
+  /* Navigation & Views */
+  .cfs-view { display: none; animation: fadeIn 0.3s ease-in-out; }
+  .cfs-view.active-view { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  
+  .back-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: none; border: none; color: #3b82f6; font-weight: 600;
+    cursor: pointer; padding: 0 0 20px 0; font-size: 1.05em; transition: color 0.2s;
+  }
+  .back-btn:hover { color: #1d4ed8; }
+  .view-title { color: #0f172a; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; margin-bottom: 20px; font-size: 1.5em; }
+
+  /* Grid System for Categories */
+  .category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 25px;
+  }
+  .tab-btn {
+    padding: 18px 20px;
+    background: #f8fafc;
+    border: 2px solid #cbd5e1;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #334155;
+    transition: all 0.2s ease;
+    font-size: 1.05em;
+    text-align: center;
+  }
+  .tab-btn:hover { background: #f1f5f9; border-color: #94a3b8; transform: translateY(-2px); }
+  .tab-btn.highlight { background: #2563eb; color: white; border-color: #2563eb; }
+  .tab-btn.highlight:hover { background: #1d4ed8; }
+
+  /* Custom Dropdown Styling */
+  .custom-select-wrapper { position: relative; width: 100%; margin-bottom: 20px; }
+  .custom-select { position: relative; cursor: pointer; }
+  .select-selected { background-color: #f8fafc; padding: 12px 15px; border: 1px solid #cbd5e1; border-radius: 6px; display: flex; align-items: center; min-height: 52px; font-weight: 500;}
+  .select-selected::after { content: "▼"; position: absolute; right: 15px; font-size: 12px; color: #64748b; }
+  .select-items { position: absolute; background-color: #ffffff; border: 1px solid #cbd5e1; border-top: none; z-index: 99; top: 100%; left: 0; right: 0; max-height: 280px; overflow-y: auto; border-radius: 0 0 6px 6px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+  .select-items div { padding: 10px 15px; display: flex; align-items: center; border-bottom: 1px solid #f1f5f9; cursor: pointer; }
+  .select-items div:hover { background-color: #f1f5f9; }
+  .product-img-thumb { width: 40px; height: 40px; object-fit: contain; margin-right: 15px; border: 1px solid #e2e8f0; border-radius: 4px; background: #fff; }
+  .select-hide { display: none; }
+  
+  /* Inputs & Results */
+  .calc-interface { display: flex; flex-direction: column; gap: 20px; }
+  .cfs-input-group label { font-weight: 600; display: block; margin-bottom: 8px; color: #334155; font-size: 0.95em; }
+  .cfs-input-group input { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; background-color: #f8fafc; font-size: 1em; }
+  .cfs-input-group input:focus { outline: none; border-color: #3b82f6; background-color: #ffffff; }
+
+  .results-container { display: flex; gap: 15px; margin-top: 15px; }
+  .result-box { flex: 1; padding: 20px 15px; text-align: center; border-radius: 10px; border: 2px solid; background: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.04); }
+  .yield-box { border-color: #3b82f6; }
+  .cost-box { border-color: #10b981; background-color: #ecfdf5; }
+  
+  /* Specialized Banners */
+  .blocked-calc-banner { background-color: #fffbeb; border-left: 4px solid #f59e0b; padding: 20px; margin-top: 15px; border-radius: 0 8px 8px 0; }
+  .blocked-calc-banner h3 { color: #b45309; margin: 0 0 10px 0; font-size: 1.2em;}
+  .blocked-calc-banner p { color: #78350f; margin: 0; line-height: 1.6; font-size: 1.05em; }
+  
+  #value-breakdown { background-color: #f0f9ff; border: 1px solid #bae6fd; border-radius: 8px; padding: 15px; text-align: center; margin-top: 15px; }
+  #product-desc { background: #f8fafc; padding: 12px 15px; border-left: 4px solid #3b82f6; border-radius: 4px; font-style: italic; color: #475569;}
+
+  /* Buttons */
+  .cfs-btn { display: inline-flex; align-items: center; justify-content: center; padding: 14px 28px; font-size: 1.1em; font-weight: bold; text-decoration: none; border-radius: 8px; transition: all 0.2s ease; cursor: pointer; border: none; }
+  .btn-primary { background-color: #2563eb; color: #ffffff; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); }
+  .btn-primary:hover { background-color: #1d4ed8; color: #ffffff; }
+  .btn-success { background-color: #10b981; color: #ffffff; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); }
+  .btn-success:hover { background-color: #059669; color: #ffffff; }
+  .btn-secondary { background-color: #ffffff; color: #0f172a; border: 2px solid #0f172a; margin-top: 15px; }
+  .b2b-callout { margin-top: 40px; padding: 30px 20px; background: linear-gradient(145deg, #f8fafc, #f1f5f9); border: 1px solid #e2e8f0; border-radius: 12px; text-align: center; }
+</style>
+
+<div id="calculator-app" class="cfs-calc-container">
+  <div class="cfs-calc-header">
+    <h2>Cost-in-use Calculator</h2>
+    <p class="cfs-calc-intro">Select an operational category below to explore specific products and benchmark the true cost-in-use of our highly-concentrated formulas.</p>
+  </div>
+
+  <div id="view-step-1" class="cfs-view active-view">
+    <div class="category-grid">
+      <button class="tab-btn highlight" onclick="navToStep2('dilutable')">Dilutable Chemicals</button>
+      <button class="tab-btn" onclick="navToProductView('paper', 'Paper Solutions')">Paper Solutions</button>
+      <button class="tab-btn" onclick="navToProductView('soaps', 'Soaps & Sanitizers')">Soaps & Sanitizers</button>
+      <button class="tab-btn" onclick="navToProductView('floor', 'Floor Care')">Floor Care</button>
+      <button class="tab-btn" onclick="navToProductView('other', 'Other Solutions')">Other Solutions</button>
+    </div>
+  </div>
+
+  <div id="view-step-2" class="cfs-view">
+    <button class="back-btn" onclick="goBackTo(1)">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg> Back to Main Menu
+    </button>
+    <h3 class="view-title">Select a Chemical Classification</h3>
+    <div class="category-grid">
+      <button class="tab-btn" onclick="navToProductView('cat100', '100 Cleaners')">100 Cleaners</button>
+      <button class="tab-btn" onclick="navToProductView('cat200', '200 Degreasers')">200 Degreasers</button>
+      <button class="tab-btn" onclick="navToProductView('cat400', '400 Carpet Care')">400 Carpet Care</button>
+      <button class="tab-btn" onclick="navToProductView('cat500', '500 Deodorizers')">500 Deodorizers</button>
+      <button class="tab-btn" onclick="navToProductView('cat600', '600 Biologicals')">600 Biologicals</button>
+      <button class="tab-btn" onclick="navToProductView('cat700', '700 Washroom Cleaners')">700 Washroom Cleaners</button>
+    </div>
+  </div>
+
+  <div id="view-step-3" class="cfs-view">
+    <button id="btn-back-to-2" class="back-btn" onclick="goBackTo(2)" style="display:none;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg> Back to Chemical Classifications
+    </button>
+    <button id="btn-back-to-1" class="back-btn" onclick="goBackTo(1)" style="display:none;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg> Back to Main Menu
+    </button>
+    
+    <h3 id="current-category-title" class="view-title">Category Name</h3>
+
+    <div class="custom-select-wrapper">
+      <div class="custom-select" id="custom-select-container">
+        <div class="select-selected" id="select-selected"><span>-- Choose a Product --</span></div>
+        <div class="select-items select-hide" id="select-items"></div>
+      </div>
+    </div>
+    <p id="product-desc" style="display: none;"></p>
+
+    <div id="blocked-calc-msg" class="blocked-calc-banner" style="display: none;">
+      <h3>Looking for a specialized program?</h3>
+      <p>This type of product will highly benefit your business, but commercial machine operations are incredibly specific. Every situation is different based on water hardness, equipment calibration, and soil loads. <br><br><strong>Please contact our team directly—we will audit your facility and provide you with an appropriate, fully-customized solution and pricing structure.</strong></p>
+    </div>
+
+    <div id="active-calc-interface" class="calc-interface" style="display: none;">
+      <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+        <div class="cfs-input-group" style="flex: 1; min-width: 150px;">
+          <label for="calc-price">Unit/Case Cost ($):</label>
+          <input type="number" id="calc-price" step="0.01">
+        </div>
+        <div class="cfs-input-group" style="flex: 1; min-width: 150px;">
+          <label id="label-size" for="calc-size">Volume/Quantity:</label>
+          <input type="number" id="calc-size" step="0.1">
+        </div>
+        <div class="cfs-input-group" id="group-dilution" style="flex: 1; min-width: 150px;">
+          <label id="label-dilution" for="calc-dilution">Performance Ratio:</label>
+          <input type="number" id="calc-dilution">
+        </div>
+      </div>
+
+      <div class="results-container">
+        <div class="result-box yield-box">
+          <h3 style="margin: 0; font-size: 1em; color: #1d4ed8; text-transform: uppercase;">Total Estimated Yield</h3>
+          <p style="font-size: 0.85em; margin: 4px 0 8px 0; color: #1e3a8a;" id="label-rtu-yield">Usable Output</p>
+          <p id="rtu-yield" style="font-size: 1.8em; font-weight: 800; color: #3b82f6; margin: 0;">0.0</p>
+        </div>
+        <div class="result-box cost-box">
+          <h3 style="margin: 0; font-size: 1em; color: #047857; text-transform: uppercase;">Your True Cost</h3>
+          <p style="font-size: 0.85em; margin: 4px 0 8px 0; color: #064e3b;" id="label-rtu-cfs">Cost per Unit</p>
+          <p id="rtu-cost" style="font-size: 2em; font-weight: 800; color: #10b981; margin: 0;">$0.00</p>
+        </div>
+      </div>
+      <div id="value-breakdown" style="display: none;"></div>
+    </div>
+
+    <div id="action-area" style="display: none; margin-top: 30px; justify-content: center; gap: 15px; flex-wrap: wrap;">
+      <a href="#" id="dynamic-buy-btn" class="cfs-btn btn-primary">View Product Details</a>
+      <a href="#" id="dynamic-cart-btn" class="cfs-btn btn-success">Add to Cart</a>
+    </div>
+  </div>
+
+  <div class="b2b-callout">
+    <h3 style="margin: 0 0 10px 0; color: #0f172a; font-size: 1.4em;">Would you like to access discounted pricing?</h3>
+    <p style="margin: 0 0 20px 0; color: #334155; font-size: 1.05em; line-height: 1.5;">If you are managing high-volume operations, consider becoming a Corporate Facility Supply client to get dedicated support and discounted pricing.</p>
+    <a href="/pages/contact" class="cfs-btn btn-secondary">Contact Our Team</a>
+  </div>
+</div>
+
+<script>
+  // Safely inject product data, tags, and specific collections
+  const rawCatalogData = [
+    {% for product in collections['cost-calculator-products'].products limit: 250 %}
+      {
+        id: {{ product.id | json }},
+        variant_id: {{ product.selected_or_first_available_variant.id | json }},
+        name: {{ product.title | json }},
+        url: {{ product.url | json }},
+        price: {{ product.price | divided_by: 100.00 | json }},
+        dilution_raw: {{ product.metafields.custom.dilution_ratio | default: 0 | json }},
+        size_raw: {{ product.metafields.custom.container_size_gallons | default: 0 | json }},
+        image: {{ product.featured_image | image_url: width: 100 | json }},
+        description: {{ product.description | strip_html | truncatewords: 25 | json }},
+        tags: {{ product.tags | json }},
+        collections: {{ product.collections | map: 'title' | json }}
+      }{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  ];
+
+  // Helper to check if a product belongs to a specific numerical classification collection
+  const inCollection = (p, name) => p.collections.some(c => c.includes(name));
+  const hasTag = (p, tag) => p.tags.some(t => t.toLowerCase() === tag.toLowerCase());
+
+  // Master Catalog routed into the new classifications
+  const masterCatalog = {
+    cat100: rawCatalogData.filter(p => inCollection(p, '100') || hasTag(p, 'calc-100')),
+    cat200: rawCatalogData.filter(p => inCollection(p, '200') || hasTag(p, 'calc-200')),
+    cat400: rawCatalogData.filter(p => inCollection(p, '400') || hasTag(p, 'calc-400')),
+    cat500: rawCatalogData.filter(p => inCollection(p, '500') || hasTag(p, 'calc-500')),
+    cat600: rawCatalogData.filter(p => inCollection(p, '600') || hasTag(p, 'calc-600')),
+    cat700: rawCatalogData.filter(p => inCollection(p, '700') || hasTag(p, 'calc-700')),
+    floor: rawCatalogData.filter(p => inCollection(p, '300') || hasTag(p, 'calc-floor')),
+    soaps: rawCatalogData.filter(p => inCollection(p, '800') || hasTag(p, 'calc-handcare')),
+    paper: rawCatalogData.filter(p => hasTag(p, 'calc-rolls') || hasTag(p, 'calc-sheets')),
+    other: rawCatalogData.filter(p => hasTag(p, 'calc-machine'))
+  };
+
+  let activeListId = '';
+  let activeDataCategory = '';
+  let currentSelectedProduct = null;
+  let isDilutableFlow = false;
+
+  // DOM Elements
+  const view1 = document.getElementById('view-step-1');
+  const view2 = document.getElementById('view-step-2');
+  const view3 = document.getElementById('view-step-3');
+  const catTitle = document.getElementById('current-category-title');
+  const btnBack1 = document.getElementById('btn-back-to-1');
+  const btnBack2 = document.getElementById('btn-back-to-2');
+  const blockedMsg = document.getElementById('blocked-calc-msg');
+  const activeCalc = document.getElementById('active-calc-interface');
+  const actionArea = document.getElementById('action-area');
+  const selectSelected = document.getElementById("select-selected");
+  const selectItemsContainer = document.getElementById("select-items");
+  
+  // Input & Labels
+  const priceInput = document.getElementById("calc-price");
+  const sizeInput = document.getElementById("calc-size");
+  const dilutionInput = document.getElementById("calc-dilution");
+  const groupDilution = document.getElementById("group-dilution");
+  const labelSize = document.getElementById("label-size");
+  const labelDilution = document.getElementById("label-dilution");
+  const labelRtuYield = document.getElementById("label-rtu-yield");
+  const labelRtuCfs = document.getElementById("label-rtu-cfs");
+  const rtuCostDisplay = document.getElementById("rtu-cost");
+  const rtuYieldDisplay = document.getElementById("rtu-yield");
+  const valueBreakdown = document.getElementById("value-breakdown");
+  const descDisplay = document.getElementById("product-desc");
+
+  // Navigation Logic
+  function hideAllViews() { view1.classList.remove('active-view'); view2.classList.remove('active-view'); view3.classList.remove('active-view'); }
+  function goBackTo(step) {
+    hideAllViews();
+    if (step === 1) { view1.classList.add('active-view'); isDilutableFlow = false; }
+    if (step === 2) { view2.classList.add('active-view'); }
+    resetCalculatorState();
+  }
+  function navToStep2() {
+    isDilutableFlow = true;
+    hideAllViews();
+    view2.classList.add('active-view');
+  }
+  
+  function navToProductView(listId, titleStr) {
+    activeListId = listId;
+    
+    // Determine the overarching logic category
+    if(listId.startsWith('cat')) { activeDataCategory = 'dilutable'; }
+    else { activeDataCategory = listId; }
+
+    hideAllViews();
+    catTitle.textContent = titleStr;
+    view3.classList.add('active-view');
+
+    // Manage correct back button display
+    if (isDilutableFlow) { btnBack1.style.display = 'none'; btnBack2.style.display = 'inline-flex'; }
+    else { btnBack2.style.display = 'none'; btnBack1.style.display = 'inline-flex'; }
+
+    resetCalculatorState();
+    setupCalculatorLabels();
+    renderDropdown();
+  }
+
+  function resetCalculatorState() {
+    currentSelectedProduct = null;
+    selectSelected.innerHTML = "<span>-- Choose a Product --</span>";
+    priceInput.value = ""; sizeInput.value = ""; dilutionInput.value = "";
+    descDisplay.style.display = "none"; actionArea.style.display = "none";
+    activeCalc.style.display = "none"; blockedMsg.style.display = "none";
+    valueBreakdown.style.display = "none";
+  }
+
+  function setupCalculatorLabels() {
+    if (activeDataCategory === 'dilutable') {
+      labelSize.textContent = "Container Volume (Liters):";
+      labelDilution.textContent = "Strategic Dilution (1:X):";
+      labelRtuYield.textContent = "RTU Solution";
+      labelRtuCfs.textContent = "Cost per RTU Liter";
+      groupDilution.style.display = "block";
+    } else if (activeDataCategory === 'floor') {
+      labelSize.textContent = "Container Volume (Liters):";
+      labelDilution.textContent = "Coverage (Sq. Ft. / Liter):";
+      labelRtuYield.textContent = "Square Coverage";
+      labelRtuCfs.textContent = "Cost per Sq. Ft.";
+      groupDilution.style.display = "block";
+    } else if (activeDataCategory === 'paper') {
+      labelSize.textContent = "Total Units (Rolls/Packs):";
+      labelDilution.textContent = "Meters or Sheets per Unit:";
+      labelRtuYield.textContent = "Linear/Sheet Count";
+      labelRtuCfs.textContent = "Cost per Use/Meter";
+      groupDilution.style.display = "block";
+    } else if (activeDataCategory === 'soaps') {
+      labelSize.textContent = "Total Washes per Container:";
+      groupDilution.style.display = "none"; 
+      labelRtuYield.textContent = "Hand Washes";
+      labelRtuCfs.textContent = "Cost per Wash";
+    }
+  }
+
+  function renderDropdown() {
+    selectItemsContainer.innerHTML = "";
+    const products = masterCatalog[activeListId] || [];
+    if(products.length === 0) {
+      selectItemsContainer.innerHTML = "<div style='padding: 10px 15px; color:#94a3b8;'>No products loaded in this specific category yet.</div>";
+      return;
+    }
+    products.forEach(item => {
+      let optionDiv = document.createElement("div");
+      optionDiv.innerHTML = `<img src="${item.image}" alt="${item.name}" class="product-img-thumb" onerror="this.style.display='none'"><span style="font-weight: 500; color: #334155;">${item.name}</span>`;
+      optionDiv.addEventListener("click", () => {
+        selectSelected.innerHTML = optionDiv.innerHTML;
+        currentSelectedProduct = item;
+        
+        // Show interface logic
+        if (activeDataCategory === 'other') {
+          blockedMsg.style.display = "block";
+          activeCalc.style.display = "none";
+        } else {
+          blockedMsg.style.display = "none";
+          activeCalc.style.display = "flex";
+          
+          priceInput.value = item.price;
+          if (activeDataCategory === 'soaps') {
+            sizeInput.value = item.dilution_raw || 3000;
+            dilutionInput.value = 0;
+          } else {
+            sizeInput.value = item.size_raw;
+            dilutionInput.value = item.dilution_raw;
+          }
+          calculateRTU();
+        }
+
+        // Always show action buttons
+        document.getElementById("dynamic-buy-btn").href = item.url;
+        document.getElementById("dynamic-cart-btn").href = `/cart/add?id=${item.variant_id}&quantity=1`;
+        actionArea.style.display = "flex";
+        
+        if(item.description && item.description.length > 5) {
+          descDisplay.innerHTML = `<strong>Overview:</strong> ${item.description}`;
+          descDisplay.style.display = "block";
+        } else { descDisplay.style.display = "none"; }
+        
+        selectItemsContainer.classList.add("select-hide");
+      });
+      selectItemsContainer.appendChild(optionDiv);
+    });
+  }
+
+  function calculateRTU() {
+    const price = parseFloat(priceInput.value) || 0;
+    const size = parseFloat(sizeInput.value) || 0;
+    const dilution = parseFloat(dilutionInput.value) || 0;
+    let yieldAmount = 0; let rtuCost = 0; let html = "";
+
+    if (price <= 0 || size <= 0) {
+      rtuCostDisplay.textContent = "$0.00";
+      rtuYieldDisplay.textContent = "0";
+      valueBreakdown.style.display = "none";
+      return;
+    }
+
+    if (activeDataCategory === 'dilutable') {
+      yieldAmount = size + (size * dilution);
+      rtuCost = price / yieldAmount;
+      rtuYieldDisplay.innerHTML = `${yieldAmount.toFixed(1)} <span style="font-size: 0.5em;">Liters</span>`;
+      
+      const bottles24 = Math.floor(yieldAmount / 0.71);
+      const bottles32 = Math.floor(yieldAmount / 0.94);
+      
+      html = `<h4 style="margin:0 0 8px 0;">Yield Analysis (1:${dilution}):</h4><p style="margin:0; color:#0c4a6e; line-height: 1.5;">Unlock the true power of concentration! This container yields enough ready-to-use solution to fill approximately <strong>${bottles24}</strong> standard 24 oz (710 ml) spray bottles, or <strong>${bottles32}</strong> large 32 oz (946 ml) spray bottles.</p>`;
+    
+    } else if (activeDataCategory === 'floor') {
+      yieldAmount = size * dilution;
+      rtuCost = price / yieldAmount;
+      rtuYieldDisplay.innerHTML = `${Math.floor(yieldAmount)} <span style="font-size: 0.5em;">Sq. Ft.</span>`;
+      html = `<h4 style="margin:0 0 5px 0;">Floor Finish/Stripper Capability:</h4><p style="margin:0; color:#0c4a6e;">With a coverage rate of ${dilution} sq.ft. per liter, this handles approx <strong>${Math.floor(yieldAmount)} Square Feet</strong> of flooring.</p>`;
+    
+    } else if (activeDataCategory === 'paper') {
+      yieldAmount = size * dilution;
+      rtuCost = price / yieldAmount;
+      rtuYieldDisplay.innerHTML = `${Math.floor(yieldAmount)} <span style="font-size: 0.5em;">Units</span>`;
+      html = `<h4 style="margin:0 0 5px 0;">Case Capacity:</h4><p style="margin:0; color:#0c4a6e;">This provides a continuous supply of <strong>${Math.floor(yieldAmount)}</strong> usable meters or sheets for your facility.</p>`;
+    
+    } else if (activeDataCategory === 'soaps') {
+      yieldAmount = size; 
+      rtuCost = price / yieldAmount;
+      rtuYieldDisplay.innerHTML = `${Math.floor(yieldAmount)} <span style="font-size: 0.5em;">Washes</span>`;
+    }
+
+    rtuCostDisplay.textContent = `$${rtuCost.toFixed(3)}`;
+    if(html) { valueBreakdown.innerHTML = html; valueBreakdown.style.display = "block"; } 
+    else { valueBreakdown.style.display = "none"; }
+  }
+
+  // Dropdown UI Interaction
+  selectSelected.addEventListener("click", (e) => { e.stopPropagation(); selectItemsContainer.classList.toggle("select-hide"); });
+  document.addEventListener("click", (e) => { if (!e.target.closest('#custom-select-container')) selectItemsContainer.classList.add("select-hide"); });
+  priceInput.addEventListener("input", calculateRTU);
+  sizeInput.addEventListener("input", calculateRTU);
+  dilutionInput.addEventListener("input", calculateRTU);
+
+  // Deep Linking URL Engine Update
+  function checkUrlParameters() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const targetProduct = urlParams.get('select_product');
+    const incomingCat = urlParams.get('category'); 
+
+    if (incomingCat) {
+      let catKey = incomingCat === 'handcare' ? 'soaps' : 
+                   incomingCat === 'machine' ? 'other' : 
+                   (incomingCat === 'rolls' || incomingCat === 'sheets') ? 'paper' : incomingCat;
+      
+      // If chemical, assume it opens Dilutable view (step 2) unless specific listId is provided
+      if(catKey === 'chemical') {
+        navToStep2();
+      } else if(masterCatalog[catKey]) {
+        navToProductView(catKey, catKey.toUpperCase());
+      }
+    }
+
+    if (targetProduct) {
+      // Find which list the product belongs to dynamically
+      let foundListId = null;
+      let foundProduct = null;
+      for (const [key, prodArray] of Object.entries(masterCatalog)) {
+        foundProduct = prodArray.find(p => p.id === targetProduct);
+        if(foundProduct) { foundListId = key; break; }
+      }
+
+      if (foundProduct && foundListId) {
+        // Auto-navigate to correct view
+        if (foundListId.startsWith('cat')) {
+          isDilutableFlow = true;
+          navToProductView(foundListId, foundListId.replace('cat', '') + ' Classification');
+        } else {
+          isDilutableFlow = false;
+          navToProductView(foundListId, foundListId.toUpperCase());
+        }
+
+        // Simulate click
+        setTimeout(() => {
+          const matchingOption = Array.from(selectItemsContainer.children).find(div => div.innerText.includes(foundProduct.name));
+          if(matchingOption) matchingOption.click();
+          
+          const calcElement = document.getElementById('calculator-app');
+          if (calcElement) calcElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 150);
+      }
+    }
+  }
+  checkUrlParameters();
+</script>

@@ -1,0 +1,34 @@
+{{ 'cfs2.css' | asset_url | stylesheet_tag }}
+<section class="cfs2-section cfs2-brands" aria-labelledby="brands-{{ section.id }}">
+  <div class="cfs2-container">
+    <h2 id="brands-{{ section.id }}">{{ 'cfs2.brands.title' | t }}</h2>
+    <ul role="list">
+      {% for block in section.blocks %}
+        {% assign collection = block.settings.collection %}
+        {% if collection != blank %}
+          <li {{ block.shopify_attributes }}>
+            <a href="{{ collection.url }}">
+              {% assign logo = block.settings.logo | default: collection.image %}
+              {% if logo %}
+                {{ logo | image_url: width: 640 | image_tag: widths: '160, 320, 480, 640', sizes: '(max-width: 600px) 60vw, 25vw', loading: 'lazy', alt: collection.title }}
+              {% else %}
+                {{ collection.title | escape }}
+              {% endif %}
+            </a>
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "CFS Shop our brands",
+  "settings": [],
+  "blocks": [{"type":"brand","name":"Brand","settings":[
+    {"type":"collection","id":"collection","label":"Brand collection"},
+    {"type":"image_picker","id":"logo","label":"Brand logo"}
+  ]}],
+  "presets": [{"name":"CFS Shop our brands"}]
+}
+{% endschema %}

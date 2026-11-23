@@ -1,0 +1,625 @@
+/* CFS 2.0 REVIEW — generated from the uploaded unpublished theme; original saved in STAGING_BACKUPS. */
+{
+  "sections": {
+    "cfs2_hero": {
+      "type": "cfs2-hero",
+      "settings": {
+        "shop_url": "shopify://collections/all",
+        "request_url": "shopify://pages/contact"
+      }
+    },
+    "cfs2_benefits": {
+      "type": "cfs2-benefits",
+      "settings": {},
+      "blocks": {
+        "cfs2_benefits_block_1": {
+          "type": "benefit",
+          "settings": {
+            "icon": "delivery"
+          }
+        },
+        "cfs2_benefits_block_2": {
+          "type": "benefit",
+          "settings": {
+            "icon": "document"
+          }
+        },
+        "cfs2_benefits_block_4": {
+          "type": "benefit",
+          "settings": {
+            "icon": "support"
+          }
+        }
+      },
+      "block_order": [
+        "cfs2_benefits_block_1",
+        "cfs2_benefits_block_2",
+        "cfs2_benefits_block_4"
+      ]
+    },
+    "cfs2_industries": {
+      "type": "cfs2-industries",
+      "settings": {},
+      "blocks": {
+        "cfs2_industries_block_1": {
+          "type": "industry",
+          "settings": {
+            "title": "Office & Workplace",
+            "description": "Cleaning, paper, washroom and breakroom essentials."
+          }
+        },
+        "cfs2_industries_block_2": {
+          "type": "industry",
+          "settings": {
+            "title": "Industrial & Manufacturing",
+            "description": "Heavy-duty cleaning, safety and operational supplies."
+          }
+        },
+        "cfs2_industries_block_3": {
+          "type": "industry",
+          "settings": {
+            "title": "Restaurant & Foodservice",
+            "description": "Foodservice, sanitation and kitchen essentials."
+          }
+        },
+        "cfs2_industries_block_4": {
+          "type": "industry",
+          "settings": {
+            "title": "Property Management",
+            "description": "Supplies for clean, safe and well-managed facilities."
+          }
+        }
+      },
+      "block_order": [
+        "cfs2_industries_block_1",
+        "cfs2_industries_block_2",
+        "cfs2_industries_block_3",
+        "cfs2_industries_block_4"
+      ]
+    },
+    "cfs2_products": {
+      "type": "cfs2-products",
+      "settings": {
+        "collection": "all"
+      }
+    },
+    "cfs2_why": {
+      "type": "cfs2-why",
+      "settings": {
+        "heading": "More Than a Supplier. Your Facility Partner.",
+        "description": "Since 1979, we have helped commercial and institutional teams source supplies and practical support to keep facilities running.",
+        "button_link": "shopify://pages/why-us"
+      },
+      "blocks": {
+        "cfs2_why_block_1": {
+          "type": "reason",
+          "settings": {
+            "title": "Wide product range"
+          }
+        },
+        "cfs2_why_block_2": {
+          "type": "reason",
+          "settings": {
+            "title": "Experienced product support"
+          }
+        },
+        "cfs2_why_block_3": {
+          "type": "reason",
+          "settings": {
+            "title": "One-source convenience"
+          }
+        },
+        "cfs2_why_block_4": {
+          "type": "reason",
+          "settings": {
+            "title": "Regional customer service"
+          }
+        }
+      },
+      "block_order": [
+        "cfs2_why_block_1",
+        "cfs2_why_block_2",
+        "cfs2_why_block_3",
+        "cfs2_why_block_4"
+      ]
+    },
+    "cfs2_trust": {
+      "type": "cfs2-trust",
+      "settings": {},
+      "blocks": {
+        "cfs2_trust_block_1": {
+          "type": "client_or_sector",
+          "settings": {
+            "name": "Healthcare Facilities"
+          }
+        },
+        "cfs2_trust_block_2": {
+          "type": "client_or_sector",
+          "settings": {
+            "name": "Hospitality"
+          }
+        },
+        "cfs2_trust_block_3": {
+          "type": "client_or_sector",
+          "settings": {
+            "name": "Education"
+          }
+        },
+        "cfs2_trust_block_4": {
+          "type": "client_or_sector",
+          "settings": {
+            "name": "Property Management"
+          }
+        },
+        "cfs2_trust_block_5": {
+          "type": "client_or_sector",
+          "settings": {
+            "name": "Industrial"
+          }
+        },
+        "foodservice": {
+          "type": "client_or_sector",
+          "settings": {
+            "name": "Foodservice"
+          }
+        },
+        "offices": {
+          "type": "client_or_sector",
+          "settings": {
+            "name": "Offices"
+          }
+        },
+        "retail": {
+          "type": "client_or_sector",
+          "settings": {
+            "name": "Retail"
+          }
+        },
+        "recreation_centres": {
+          "type": "client_or_sector",
+          "settings": {
+            "name": "Recreation Centres"
+          }
+        },
+        "long_term_care": {
+          "type": "client_or_sector",
+          "settings": {
+            "name": "Long-Term Care"
+          }
+        },
+        "greenhouses": {
+          "type": "client_or_sector",
+          "settings": {
+            "name": "Greenhouses"
+          }
+        },
+        "cleaning_contractors": {
+          "type": "client_or_sector",
+          "settings": {
+            "name": "Cleaning Contractors"
+          }
+        }
+      },
+      "block_order": [
+        "cfs2_trust_block_1",
+        "cfs2_trust_block_2",
+        "cfs2_trust_block_3",
+        "cfs2_trust_block_4",
+        "cfs2_trust_block_5",
+        "foodservice",
+        "offices",
+        "retail",
+        "recreation_centres",
+        "long_term_care",
+        "greenhouses",
+        "cleaning_contractors"
+      ]
+    },
+    "cfs2_cta": {
+      "type": "cfs2-cta",
+      "settings": {
+        "heading": "Everything Your Business Needs, All in One Place.",
+        "description": "Whether you are restocking essentials or sourcing specialized products, our team is here to help.",
+        "contact_url": "shopify://pages/contact",
+        "shop_url": "shopify://collections/all"
+      }
+    },
+    "17745421447dc0bc65": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_62aafff_jhUQnL": {
+          "type": "ai_gen_block_62aafff",
+          "name": "Announcement bar",
+          "disabled": true,
+          "settings": {
+            "left_link_1_text": "",
+            "left_link_1_url": "",
+            "left_link_2_text": "",
+            "left_link_2_url": "",
+            "left_link_3_text": "Fall Specials Are Here! Your FALLCFS2026 code is ready to use",
+            "left_link_3_url": "shopify://collections/fall-specials-2026",
+            "link_spacing": 20,
+            "right_text": "",
+            "right_link_text": "Shop our specials from Sep. 15 – Oct. 15!",
+            "right_link_url": "shopify://collections/fall-specials-2026",
+            "font_family": "montserrat_n7",
+            "background_color": "#e03838",
+            "text_color": "#ffffff",
+            "link_color": "#ffffff",
+            "main_link_color": "#ffffff",
+            "font_size": 14,
+            "padding_vertical": 10,
+            "padding_horizontal": 50,
+            "container_width": 1400
+          },
+          "blocks": {}
+        },
+        "ai_gen_block_32cc292_PaaXMi": {
+          "type": "ai_gen_block_32cc292",
+          "name": "Announcement bar",
+          "settings": {
+            "message": "",
+            "link_text": "",
+            "collection": "",
+            "content_width": 1200,
+            "text_alignment": "center",
+            "font_size": 14,
+            "padding_vertical": 10,
+            "padding_horizontal": 20,
+            "margin_top": 0,
+            "margin_bottom": 0,
+            "background_color": "#ffffff",
+            "text_color": "#ffffff",
+            "link_color": "#fbfbfb",
+            "link_hover_color": "#ffffff",
+            "link_style": "underline",
+            "link_weight": "bold"
+          },
+          "blocks": {}
+        },
+        "ai_gen_block_7b569e1_mEJXQA": {
+          "type": "ai_gen_block_7b569e1",
+          "settings": {
+            "desktop_width_percent": 80,
+            "column_gap": 16,
+            "left_column_gap": 32,
+            "left_image_height": 250,
+            "mobile_left_image_height": 200,
+            "left_border_radius": 20,
+            "left_image_1": "shopify://shop_images/About_us_CFS.avif",
+            "left_text_1": "Since 1979, CFS has provided reliable cleaning and facility solutions across Southern Ontario",
+            "left_link_1": "shopify://pages/about-us",
+            "left_image_2": "shopify://shop_images/Shop_Now_CFS.avif",
+            "left_text_2": "Explore over 120 in-house cleaning products built for consistent, professional results.",
+            "left_link_2": "shopify://collections/our-products",
+            "overlay_color": "#0e1b4d",
+            "overlay_opacity": 0.8,
+            "overlay_text_color": "#ffffff",
+            "overlay_text_size": 18,
+            "right_column_height": 550,
+            "mobile_slideshow_height": 200,
+            "right_border_radius": 20,
+            "autoplay_speed": 7,
+            "slide_image_1": "shopify://shop_images/Hero_3_1.avif",
+            "slide_link_1": "shopify://collections/our-products",
+            "slide_image_2": "shopify://shop_images/Hero_2.avif",
+            "slide_link_2": "shopify://pages/contact",
+            "slide_image_3": "shopify://shop_images/Hero_1.avif",
+            "slide_link_3": "shopify://collections/clearance",
+            "dot_color": "#ffffff"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_62aafff_jhUQnL",
+        "ai_gen_block_32cc292_PaaXMi",
+        "ai_gen_block_7b569e1_mEJXQA"
+      ],
+      "settings": {},
+      "disabled": true
+    },
+    "1761836832655439ad": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_32cc292_e4pkAB": {
+          "type": "ai_gen_block_32cc292",
+          "name": "Announcement bar",
+          "settings": {
+            "message": "",
+            "link_text": "",
+            "collection": "",
+            "content_width": 1200,
+            "text_alignment": "center",
+            "font_size": 14,
+            "padding_vertical": 10,
+            "padding_horizontal": 20,
+            "margin_top": 0,
+            "margin_bottom": 0,
+            "background_color": "#fbfbfb",
+            "text_color": "#ffffff",
+            "link_color": "#4770db",
+            "link_hover_color": "#ffffff",
+            "link_style": "underline",
+            "link_weight": "bold"
+          },
+          "blocks": {}
+        },
+        "ai_gen_block_e660b9d_j64TA3": {
+          "type": "ai_gen_block_e660b9d",
+          "settings": {
+            "text": "<p>High-quality cleaning and safety solutions trusted across Ontario. With over <strong>45 years of service</strong>, we help businesses stay spotless, compliant, and operating at their best.</p>",
+            "background_color": "#1c4897",
+            "text_color": "#ffffff",
+            "font_size": 19,
+            "text_alignment": "center",
+            "padding_vertical": 6,
+            "padding_horizontal": 45,
+            "max_width": 1600
+          },
+          "blocks": {}
+        },
+        "ai_gen_block_051aa21_TEijrQ": {
+          "type": "ai_gen_block_051aa21",
+          "settings": {
+            "feature_1_title": "Free Shipping",
+            "feature_1_description": "Within Niagara Region*",
+            "feature_2_title": "Returns and Exchanges*",
+            "feature_2_description": "",
+            "feature_3_title": "24/7 Customer Support",
+            "feature_3_description": "",
+            "background_color": "#ffffff",
+            "text_color": "#0e1b4d",
+            "icon_color": "#0e1b4d",
+            "icon_size": 64,
+            "title_size": 21,
+            "description_size": 16,
+            "container_width": 1400,
+            "gap": 40,
+            "item_gap": 12,
+            "padding_top": 28,
+            "padding_bottom": 4
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_32cc292_e4pkAB",
+        "ai_gen_block_e660b9d_j64TA3",
+        "ai_gen_block_051aa21_TEijrQ"
+      ],
+      "settings": {},
+      "disabled": true
+    },
+    "slideshow": {
+      "type": "slideshow",
+      "settings": {
+        "layout": "full_bleed",
+        "slide_height": "adapt_image",
+        "slider_visual": "counter",
+        "auto_rotate": false,
+        "change_slides_speed": 5,
+        "image_behavior": "none",
+        "show_text_below": true,
+        "accessibility_info": "Slideshow about our brand"
+      },
+      "disabled": true
+    },
+    "custom_liquid_aqzz7b": {
+      "type": "custom-liquid",
+      "name": "t:sections.custom-liquid.presets.name",
+      "settings": {
+        "custom_liquid": "",
+        "color_scheme": "",
+        "padding_top": 0,
+        "padding_bottom": 20
+      },
+      "disabled": true
+    },
+    "17618417974cf10283": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_adae54e_GN9GaN": {
+          "type": "ai_gen_block_adae54e",
+          "settings": {
+            "heading": "Shop our brands",
+            "heading_size": 60,
+            "heading_alignment": "center",
+            "heading_spacing": 10,
+            "heading_color": "#0e1b4d",
+            "columns_desktop": 3,
+            "columns_tablet": 3,
+            "columns_mobile": 1,
+            "grid_gap": 25,
+            "container_width": 1200,
+            "image_aspect_ratio": "56.25",
+            "image_fit": "contain",
+            "image_padding": 8,
+            "image_border_radius": 14,
+            "background_color": "#ffffff",
+            "item_background_color": "#ffffff",
+            "section_padding_top": 50,
+            "section_padding_bottom": 30,
+            "brand_image_1": "shopify://shop_images/Eco-standard_1.avif",
+            "brand_link_1": "shopify://collections/eco-standard-solutions",
+            "brand_image_2": "shopify://shop_images/Precision_logo.avif",
+            "brand_link_2": "shopify://collections/precision",
+            "brand_image_3": "shopify://shop_images/Contractors_choice_Logo.avif",
+            "brand_link_3": "shopify://collections/contractors-choice",
+            "brand_link_4": "",
+            "brand_link_5": "",
+            "brand_link_6": "",
+            "brand_link_7": "",
+            "brand_link_8": "",
+            "brand_link_9": "",
+            "brand_link_10": "",
+            "brand_link_11": "",
+            "brand_link_12": ""
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_adae54e_GN9GaN"
+      ],
+      "settings": {},
+      "disabled": true
+    },
+    "featured-collection-0": {
+      "type": "featured-collection",
+      "settings": {
+        "collection": "",
+        "products_to_show": 4,
+        "title": "Featured products",
+        "heading_size": "h2",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "columns_desktop": 4,
+        "enable_desktop_slider": false,
+        "full_width": false,
+        "show_view_all": false,
+        "view_all_style": "solid",
+        "color_scheme": "scheme-1",
+        "image_ratio": "portrait",
+        "image_shape": "default",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "standard",
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 60,
+        "padding_bottom": 60
+      },
+      "disabled": true
+    },
+    "pagefly-home": {
+      "type": "pagefly-home",
+      "disabled": true,
+      "settings": {}
+    },
+    "1772206703168c4f47": {
+      "type": "apps",
+      "blocks": {
+        "massy_b2b_wholesale_massy_registration_form_UjntU6": {
+          "type": "shopify://apps/massy-b2b-wholesale/blocks/massy-registration-form/755249cf-b2d3-401e-a5e9-91307113bce4",
+          "settings": {
+            "form_url_handle": "https://corporatefacilitysupply.com/apps/massy/pages/registration-form/custompricing-1"
+          }
+        }
+      },
+      "block_order": [
+        "massy_b2b_wholesale_massy_registration_form_UjntU6"
+      ],
+      "settings": {
+        "include_margins": true
+      },
+      "disabled": true
+    },
+    "17860271147e5d9df4": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_f5dcee1_mK3NUC": {
+          "type": "ai_gen_block_f5dcee1",
+          "disabled": true,
+          "settings": {
+            "min_height": 500,
+            "column_gap": 20,
+            "border_radius": 20,
+            "slide_1_heading": "Slide 1 Heading",
+            "slide_1_subtext": "This is the subtext for slide 1",
+            "slide_1_button_text": "Shop now",
+            "slide_1_button_link": "",
+            "slide_2_heading": "Slide 2 Heading",
+            "slide_2_subtext": "This is the subtext for slide 2",
+            "slide_2_button_text": "Learn more",
+            "slide_2_button_link": "",
+            "slide_3_heading": "Slide 3 Heading",
+            "slide_3_subtext": "This is the subtext for slide 3",
+            "slide_3_button_text": "Discover",
+            "slide_3_button_link": "",
+            "slide_image_fit": "cover",
+            "autoplay": true,
+            "autoplay_speed": 5,
+            "content_padding": 30,
+            "content_overlay_color": "#00000080",
+            "content_text_color": "#ffffff",
+            "heading_size": 32,
+            "subtext_size": 16,
+            "button_bg_color": "#0e1b4d",
+            "button_hover_bg_color": "#4770db",
+            "button_text_color": "#ffffff",
+            "button_font_size": 14,
+            "button_border_radius": 40,
+            "control_button_color": "#ffffffcc",
+            "control_button_hover_color": "#ffffff",
+            "control_icon_color": "#0e1b4d",
+            "dot_color": "#ffffff",
+            "fixed_image_link": "",
+            "fixed_image_fit": "cover",
+            "fixed_image_width": 100,
+            "fixed_image_height": 100
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_f5dcee1_mK3NUC"
+      ],
+      "settings": {},
+      "disabled": true
+    },
+    "cfs2_brands": {
+      "type": "cfs2-brands",
+      "blocks": {
+        "brand_1": {
+          "type": "brand",
+          "settings": {
+            "collection": "eco-standard-solutions",
+            "logo": "shopify://shop_images/Eco-standard_1.avif"
+          }
+        },
+        "brand_2": {
+          "type": "brand",
+          "settings": {
+            "collection": "precision",
+            "logo": "shopify://shop_images/Precision_logo.avif"
+          }
+        },
+        "brand_3": {
+          "type": "brand",
+          "settings": {
+            "collection": "contractors-choice",
+            "logo": "shopify://shop_images/Contractors_choice_Logo.avif"
+          }
+        }
+      },
+      "block_order": [
+        "brand_1",
+        "brand_2",
+        "brand_3"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "cfs2_hero",
+    "cfs2_benefits",
+    "cfs2_brands",
+    "cfs2_industries",
+    "cfs2_products",
+    "cfs2_why",
+    "cfs2_trust",
+    "cfs2_cta",
+    "17745421447dc0bc65",
+    "1761836832655439ad",
+    "slideshow",
+    "custom_liquid_aqzz7b",
+    "17618417974cf10283",
+    "featured-collection-0",
+    "pagefly-home",
+    "1772206703168c4f47",
+    "17860271147e5d9df4"
+  ]
+}
