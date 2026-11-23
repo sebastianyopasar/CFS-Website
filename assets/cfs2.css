@@ -695,3 +695,12 @@
     overflow-wrap: anywhere;
   }
 }
+
+/* Knowledge search: informational sources before catalog suggestions */
+.cfs2-smart-search-results .cfs2-all-search-results{display:block;padding:12px 10px;border-top:1px solid #d8dfdc;font-weight:700;text-decoration:underline}
+.cfs-knowledge-results{margin:0 auto 2.5rem}
+.cfs-knowledge-results h2{font-size:clamp(1.8rem,2.4vw,2.6rem)}
+.cfs-knowledge-results p{margin-bottom:1rem}
+.cfs-knowledge-list{list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.cfs-knowledge-list li{border:1px solid #d8dfdc;border-radius:8px;padding:14px}
+.cfs-knowledge-list a{text-decoration:underline;text-underline-offset:3px}

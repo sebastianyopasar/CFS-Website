@@ -1,5 +1,6 @@
 {{ 'cfs2.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'cfs2-cleaning-kollege-index.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'cfs-guide-search.js' | asset_url }}" data-pages="{{ 'cfs-guide-pages.json' | asset_url }}" defer></script>
 <script src="{{ 'cfs2-smart-search.js' | asset_url }}" defer="defer"></script>
 
 <div class="cfs2-header-root" id="cfs2-header-{{ section.id }}">
